@@ -1,0 +1,19 @@
+<% title "Standard Article Subparagraphs" %>
+
+<table>
+  <tr>
+    <th>Standard Article Paragraph</th>
+    <th>Description</th>
+  </tr>
+  <% for standard_article_subparagraph in @standard_article_subparagraphs %>
+    <tr>
+      <td><%=h standard_article_subparagraph.standard_article_paragraph_id %></td>
+      <td><%=h standard_article_subparagraph.description %></td>
+      <td><%= link_to "Show", standard_article_subparagraph %></td>
+      <td><%= link_to "Edit", edit_standard_article_subparagraph_path(standard_article_subparagraph) %></td>
+      <td><%= link_to "Destroy", standard_article_subparagraph, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Standard Article Subparagraph", new_standard_article_subparagraph_path %></p>

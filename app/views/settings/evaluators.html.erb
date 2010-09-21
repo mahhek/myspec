@@ -1,0 +1,81 @@
+<% title "Admin Settings"%>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'help_tickets/apps_info' %>
+  </div>
+	<div class="lt_button_container">
+		<%= render :partial => 'help_tickets/support_info' %>
+	  </div>
+</div>
+<div class="right_page">
+	<h3>Invite Evaluation</h3>
+	<% semantic_form_for @evaluator, :url => invite_evaluator_path do |f|-%>
+		<%#=f.error_messages%>
+	    <%f.inputs do %>
+			<%=f.input :email, :label => "Email Address"%>
+		<% end %>
+		<%f.buttons do%>
+			<%=f.commit_button "Invite"%>
+		<% end %>
+	<% end -%>
+	<br/>
+	
+	<h3>Evaluator Requests</h3>
+	<table id="">
+      <tr>
+		<th class="sec-name-small">Name</th>
+		<th class="eval-date">Request Date</th>
+		<th class="team-position">Permission</th>
+		<th class="team-email">Email</th>
+		<th class="sub-rem"></th>
+      </tr>
+      <% for evaluator_request in @evaluator_requests %>
+        <tr class="<%= cycle("othertdalter", "") %>">
+			<td><%=link_to "#{evaluator_request.first_name} #{evaluator_request.middle_name} #{evaluator_request.last_name}", evaluator_request%></td>
+			<td><%=evaluator_request.created_at.strftime("%m-%d-%Y")%></td>
+			<td>
+				            <% role = evaluator_request.user.roles %>
+				            <%unless role.blank?%>
+				              <%=h role.first.name
+				            %>
+				            <%end%>
+				              </td>
+			<td><%=evaluator_request.email%></td>
+			<!-- <td><%#= evaluator.active? ? "Confirmed" : "Pending"%></td> -->
+			<td><%= link_to image_tag("/images/minus.png"), evaluator_request, :confirm => 'Are you sure want to remove this?', :method => :delete %></td>
+        </tr>
+      <% end %>
+    </table>
+	<br/>
+	<h3>Evaluators</h3>
+	<table id="">
+      <tr>
+		<th class="sec-name-small">Name</th>
+		<th class="eval-date">Expire Date</th>
+		
+		<th class="team-position">Permission</th>
+		<th class="team-email">Email</th>
+		<th class="sub-rem"></th>
+      </tr>
+      <% for evaluator_request in @evaluator_requests_received %>
+        <tr class="<%= cycle("othertdalter", "") %>">
+			<td><%=link_to "#{evaluator_request.first_name} #{evaluator_request.middle_name} #{evaluator_request.last_name}", evaluator_request%></td>
+			<td><%=(evaluator_request.updated_at + 3.months).strftime("%m-%d-%Y")%></td>
+			<td>
+				            <% role = evaluator_request.user.roles %>
+				            <%unless role.blank?%>
+				              <%=h role.first.name
+				            %>
+				            <%end%>
+				              </td>
+			<td><%=evaluator_request.email%></td>
+			<!-- <td><%#= evaluator_request.active? ? "Confirmed" : "Pending"%></td> -->
+			<td><%= link_to image_tag("/images/minus.png"), evaluator_request, :confirm => 'Are you sure want to remove this?', :method => :delete %></td>
+        </tr>
+      <% end %>
+    </table>
+	<br/>
+	
+	<br/>
+	
+</div>

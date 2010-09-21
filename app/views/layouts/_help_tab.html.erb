@@ -1,0 +1,22 @@
+	<%unless current_user.is_suspended || current_user.is_unpaid? %>
+    Welcome,<%= link_to current_user.email, profile_path %>
+<%end%>
+<%unless current_user.is_unpaid? %>
+
+
+ <span>
+   <% replies = HelpTicketMessage.find_by_sql("select * from help_ticket_messages where user_type = 2 and is_read = 0 and help_ticket_id IN (select id from help_tickets where user_id = #{current_user.id})") %>
+ <%unless replies.blank?%>
+  <span class="help">
+ <%= replies.size %>
+    </span>
+
+<%end%>
+   <%=link_to "Help", new_help_ticket_path, :style=> "margin-left:1px;"%></span>
+
+   <%end%>
+  	<% if current_user %>
+    	<%= link_to "Logout", logout_path %>
+  	<% else %>
+    	<%= link_to "Login", login_path, :class=> ( params[:controller] == "user_sessions" ?  "current" : nil) %>
+  	<% end %>

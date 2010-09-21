@@ -1,0 +1,12 @@
+<% form_for @standard_article_paragraph do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :standard_part_article_id %><br />
+    <%= f.text_field :standard_part_article_id %>
+  </p>
+  <p>
+    <%= f.label :paragraph_id %><br />
+    <%= f.text_field :paragraph_id %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

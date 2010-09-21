@@ -1,0 +1,116 @@
+<% title "Admin Settings"%>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'help_tickets/apps_info' %>
+  </div>
+	<div class="lt_button_container">
+		<%= render :partial => 'help_tickets/support_info' %>
+	  </div>
+</div>
+<div class="right_page">
+	
+    <h3>Professionals Requested</h3>
+	<table id="">
+      <tr>
+		<th class="sec-name-small">Name</th>
+		<th class="eval-date">Request Date</th>
+		<th class="team-position">Status</th>
+		<th class="team-email">Email</th>
+		<th class="sub-rem"></th>
+      </tr>
+      <%unless @pending_professionals.blank?%>
+      <% for professional in @pending_professionals %>
+        <tr class="<%= cycle("othertdalter", "") %>">
+			<td><%=link_to "#{professional.name}", "/settings/professional_detail/#{professional.id}"%></td>
+			<td><%=professional.created_at.strftime("%m-%d-%Y")%></td>
+			<td>
+				    <%= professional.status %>
+				              </td>
+			<td><%=professional.email%></td>
+			<!-- <td><%#= evaluator.active? ? "Confirmed" : "Pending"%></td> -->
+			<td><%= link_to image_tag("/images/minus.png"), professional, :confirm => 'Are you sure want to remove this?', :method => :delete %></td>
+        </tr>
+      <% end %>
+      <%end%>
+    </table>
+	<br/>
+    <h3>Registered Professionals</h3>
+	<table id="">
+      <tr>
+		<th class="sec-name-small">Name</th>
+		<th class="eval-date">Request Date</th>
+		<th class="team-position">Permium</th>
+		<th class="team-email">Email</th>
+		<th class="sub-rem"></th>
+      </tr>
+      <%unless @active_professionals.blank?%>
+      <% for a_professional in @active_professionals %>
+        <tr class="<%= cycle("othertdalter", "") %>">
+			<td><%=link_to "#{a_professional.name}", "/settings/professional_detail/#{a_professional.id}"%></td>
+			<td><%=a_professional.created_at.strftime("%m-%d-%Y")%></td>
+			<td>
+				    <%= a_professional.premium_provider %>
+				              </td>
+			<td><%=a_professional.email%></td>
+			<!-- <td><%#= evaluator.active? ? "Confirmed" : "Pending"%></td> -->
+			<td><%= link_to image_tag("/images/minus.png"), a_professional, :confirm => 'Are you sure want to remove this?', :method => :delete %></td>
+        </tr>
+      <% end %>
+      <%end%>
+    </table>
+    <br/>
+    <h3>Expired Professionals</h3>
+	<table id="">
+      <tr>
+		<th class="sec-name-small">Name</th>
+		<th class="eval-date">Expiration Date</th>
+		<th class="team-position">Status</th>
+		<th class="team-email">Email</th>
+		<th class="sub-rem"></th>
+      </tr>
+      <%unless @expired_professionals.blank?%>
+      <% for e_professional in @expired_professionals %>
+        <tr class="<%= cycle("othertdalter", "") %>">
+			<td><%=link_to "#{e_professional.name}", "/settings/professional_detail/#{e_professional.id}"%></td>
+			<td><%=e_professional.expiry_date.strftime("%m-%d-%Y")%></td>
+			<td>
+            expired
+			</td>
+			<td>
+            <%=e_professional.email%>
+            </td>
+			<!-- <td><%#= evaluator.active? ? "Confirmed" : "Pending"%></td> -->
+			<td><%= link_to image_tag("/images/minus.png"), e_professional, :confirm => 'Are you sure want to remove this?', :method => :delete %></td>
+        </tr>
+      <% end %>
+      <%end%>
+    </table>
+
+    <br/>
+    <h3>Denied Professionals</h3>
+	<table id="">
+      <tr>
+		<th class="sec-name-small">Name</th>
+		<th class="eval-date">Request Date</th>
+		<th class="team-position">Status</th>
+		<th class="team-email">Email</th>
+		<th class="sub-rem"></th>
+      </tr>
+      <%unless @denied_professionals.blank?%>
+      <% for d_professional in @denied_professionals %>
+        <tr class="<%= cycle("othertdalter", "") %>">
+			<td><%=link_to "#{d_professional.name}", "/settings/professional_detail/#{d_professional.id}"%></td>
+			<td><%=d_professional.created_at.strftime("%m-%d-%Y")%></td>
+			<td>
+            expired
+			</td>
+			<td>
+            <%=d_professional.email%>
+            </td>
+			<!-- <td><%#= evaluator.active? ? "Confirmed" : "Pending"%></td> -->
+			<td><%= link_to image_tag("/images/minus.png"), d_professional, :confirm => 'Are you sure want to remove this?', :method => :delete %></td>
+        </tr>
+      <% end %>
+      <%end%>
+    </table>
+</div>

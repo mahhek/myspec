@@ -1,0 +1,27 @@
+<% title "Section Note" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => "/clients/client_info" %>
+  </div>
+  <div class="lt_button_container">
+	<div><%= link_to "Notes", section_notes_path(:job_id => @job.id, :specification_section_id => @specification_section.id),:class => "button-left"  %></div>
+  </div>
+</div>
+<div class="right_page">
+	<p>
+	  <strong>Specification Section:</strong>
+	  <%=h @section_note.specification_section_id %>
+	</p>
+	<p>
+	  <strong>User:</strong>
+	  <%=h @section_note.user_id %>
+	</p>
+	<p>
+	  <strong>Title:</strong>
+	  <%=h @section_note.title %>
+	</p>
+	<p>
+	  <strong>Note:</strong>
+	  <%=h @section_note.note %>
+	</p>
+</div>

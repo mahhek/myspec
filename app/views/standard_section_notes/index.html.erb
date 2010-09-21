@@ -1,0 +1,201 @@
+<% title "Standard Section Notes" %>
+<% javascript 'standard_notes'%>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => 'standard_sections/standard_information' %>
+  </div>
+  <div class="lt_button_container">
+	<div><%=h link_to "Standard Section", standard_spec_edit_path(:id => @standard_section.id), :class => "button-left"%></div>
+  </div>
+</div>
+<div class="right_page">
+<div>
+			<h3>Notes of standard section</h3>
+			<% form_for @standard_section_note, :url => {:action => "create", :standard_section_id=> params[:standard_section_id], :mode=> params[:mode], :type=> params[:type], :sid=> params[:sid]} do |f| %>
+		  		<%= f.error_messages %>
+				<%=f.hidden_field :standard_section_id%>
+				<!-- <div class="label">
+									<%=f.label :title %>
+								</div>
+								<div class="value">
+									<%=f.text_field :title, :size => 50%>
+								</div> -->
+				<div class="label">
+                  <%if params[:mode].blank? && params[:type].blank?%>
+					<%=label_tag "General Note"%>
+                  <%elsif params[:mode] == "1" && params[:type] == "g"%>
+                    <%=label_tag "General Note"%>
+                  <%elsif params[:mode] == "1" && params[:type] == "a"%>
+                    <%=label_tag "Edit Article Note for #{@spa.article.name}"%>
+                  <%elsif params[:mode] == "1" && params[:type] == "p"%>
+                    <%=label_tag "Edit Paragraph Note for #{@sap.paragraph.name}"%>
+                  <%elsif params[:mode] == "1" && params[:type] == "s"%>
+                    <%=label_tag "Edit SubParagraph Note"%>
+                  <%end%>
+				</div>
+				<div class="value">
+                 <%if params[:mode].blank? && params[:type].blank?%>
+                  <%=text_area_tag "note", "", :rows => 6, :cols => 74%>
+                  <%elsif params[:mode] == "1" && params[:type] == "g"%>
+                  <%=text_area_tag "note", @section_note.description, :rows => 6, :cols => 74%>
+                  <%elsif params[:mode] == "1" && params[:type] == "a"%>
+                  <%=text_area_tag "note", @spa.note, :rows => 6, :cols => 74%>
+                  <%elsif params[:mode] == "1" && params[:type] == "p"%>
+                  <%=text_area_tag "note", @sap.note, :rows => 6, :cols => 74%>
+                  <%elsif params[:mode] == "1" && params[:type] == "s"%>
+                  <%=text_area_tag "note", @ssp.note, :rows => 6, :cols => 74%>
+                  <%end%>
+				</div>
+				<!--<div class="label">
+					<%=label_tag "Part"%>
+				</div>
+				<div class="value">
+					<%=select_tag "part", options_for_select([["--select part--",""],["General",1],["Products",2],["Execution",3]]), :class => "part_select"%>
+				</div>
+				<div id="art">
+					<div class="label">
+						<%=label_tag "Article"%>
+					</div>
+					<div class="value">
+						<%=select_tag "article", options_for_select(StandardPartArticle.part_id_eq(1).standard_section_id_eq(@standard_section.id).collect {|p| ["#{p.article.name}",p.id]}), :class => "article_select"%>
+					</div>
+				</div>
+				<div id="para">
+					<div class="label">
+						<%=label_tag "Paragraph"%>
+					</div>
+					<div class="value">
+						<%=select_tag "paragraph", :class => "paragraph_select"%>
+					</div>
+				</div>
+				<div id="subpara">
+					<div class="label">
+						<%=label_tag "Subparagraph"%>
+					</div>
+					<div class="value">
+						<%=select_tag "subparagraph", :class => "subparagraph_select"%>
+					</div>
+				</div>-->
+				<div class="label">&nbsp;</div>
+				<div class="value">
+					<%=f.submit "Save Note"%>
+				</div>
+		<% end %>
+	</div>
+    <div>
+			<h3>Existing Notes</h3>
+                <table id="jobs_table">
+				  <tr>
+						
+				    	<th class="part-check">Type</th>
+                        <th class="div-name">Name</th>
+						<th class="">Description</th>
+                        <th class="part-check"></th>
+					
+				  </tr>
+				  <%
+					i = 1
+					unless @section_note.blank?
+                      %>
+                      <tr class="<%= cycle("othertdalter", "") %>">
+                        
+                        <td>G</td>
+                        <td>
+                            <%= link_to "General Note", "/standard_section_notes?standard_section_id=#{@section_note.standard_section_id}&mode=1&type=g" %>
+                        </td>
+                        <td><%= @section_note.description %></td>
+                        <td style="text-align:center;"><%= link_to image_tag("/images/minus.png"), "/standard_section_notes/delete_note/#{@section_note.standard_section_id}?type=g", :confirm => 'Are you sure?', :method => :delete %></td>
+				    </tr>
+                      <%
+                    end
+                    
+                    unless @standard_section_articles.blank?
+                      i += 1
+                      @standard_section_articles.each do |standard_section_article|
+                      %>
+                      <tr class="<%= cycle("othertdalter", "") %>">
+                        
+                        <td>A</td>
+                        <td>
+                          <%= link_to standard_section_article.article.name, "/standard_section_notes?standard_section_id=#{params[:standard_section_id]}&mode=1&type=a&sid=#{standard_section_article.id}" %>
+                        </td>
+                        <td><%= standard_section_article.note %></td>
+                        <td style="text-align:center;"><%= link_to image_tag("/images/minus.png"), "/standard_section_notes/delete_note/#{standard_section_article.id}?type=a", :confirm => 'Are you sure?', :method => :delete %></td>
+				    </tr>
+
+                    <%
+                      @standard_section_paragraphs = StandardArticleParagraph.find_all_by_standard_part_article_id(standard_section_article.id)
+                      unless @standard_section_paragraphs.blank?
+                        i += 1
+                        @standard_section_paragraphs.each do |standard_section_paragraph|
+                          %>
+                          
+                          <tr class="<%= cycle("othertdalter", "") %>">
+                          
+                          <td>P</td>
+                          <td>
+                            <%= link_to standard_section_paragraph.paragraph.name, "/standard_section_notes?standard_section_id=#{params[:standard_section_id]}&mode=1&type=p&sid=#{standard_section_paragraph.id}" %>
+
+                          </td>
+                          <td><%= standard_section_paragraph.note %></td>
+                          <td style="text-align:center;"><%= link_to image_tag("/images/minus.png"), "/standard_section_notes/delete_note/#{standard_section_paragraph.id}?type=p", :confirm => 'Are you sure?', :method => :delete %></td>
+                          </tr>
+                          <%
+                             
+                          @standard_section_subpars = StandardSubparagraph.find_all_by_standard_article_paragraph_id(standard_section_paragraph.id)
+                          unless @standard_section_subpars.blank?
+                            i += 1
+                            j = 1
+                            @standard_section_subpars.each do |standard_section_subpar|
+                              %>
+                          <tr class="<%= cycle("othertdalter", "") %>">
+                            
+                            <td>S</td>
+                            <td><%= link_to j, "/standard_section_notes?standard_section_id=#{params[:standard_section_id]}&mode=1&type=s&sid=#{standard_section_subpar.id}" %></td>
+                            <td><%= standard_section_subpar.note %></td>
+                            <td style="text-align:center;"><%= link_to image_tag("/images/minus.png"), "", :confirm => 'Are you sure?', :method => :delete %></td>
+                          </tr>
+
+                              <%
+                                j += 1
+                                i += 1
+                            end
+                          end
+                        end
+                      end
+                  end
+                  end%>
+
+				  <%
+					i += 1
+					%>
+				</table>
+    </div>
+      <div>
+			<!-- <h3>Notes</h3>
+			            </div>
+				<table id="jobs_table">
+				  <tr>
+						<th class="sub-no">No</th>
+				    	<th class="div-name">Title</th>
+						<th class="div-info">Description</th>
+						<th class="sub-author">Author</th>
+						<th class="sub-date">Date</th>
+					<th></th>
+				  </tr>
+				  <% 
+					i = 1
+					for section_note in @standard_section.standard_section_notes %>
+				    <tr class="<%= cycle("othertdalter", "") %>">
+						<td><%=h i %></td>
+				      <td><%=h link_to section_note.title, edit_standard_section_note_path(section_note) %></td>
+				      <td><%=h section_note.description %></td>
+						<td><%=h section_note.user.username %></td>
+						<td><%=h section_note.created_at.strftime("%m-%d-%Y") %></td>
+				      <td><%= link_to image_tag("/images/minus.png"), section_note, :confirm => 'Are you sure?', :method => :delete %></td>
+				    </tr>
+				  <% 
+					i += 1
+					end %>
+				</table> -->
+</div>

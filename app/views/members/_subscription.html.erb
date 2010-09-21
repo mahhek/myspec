@@ -1,0 +1,65 @@
+<div id="subscription">
+		<h3>Current Subscription (<%=User.find(as_user).billing_plan.plan_type.name.upcase%>)</h3>
+		<ul class="usagebars usagestats">
+          <%if current_user.parent_id.nil?%>
+          <%user = current_user%>
+          <%else%>
+          <%user = current_user.parent%>
+          <%end%>
+			<!-- <li class="name">
+							<dl>
+						      	<dt class="numbers"><em>$ <%=user.current_billing%><br/>/month</em></dt>
+								<dt class="label">
+									&nbsp;
+							      </dt>  
+								<dd></dd>
+						    </dl>	
+						</li> -->
+			<li class="usage limit-users">
+				<% if current_user.billing_plan.plan_type_id == 1 %>
+				<dl class="over">
+		      		<dt class="numbers">
+		        			<em>1</em>/1
+		      		</dt>
+					<dt class="label">
+						Team Members
+				      </dt>
+		      		<dd class="bar">
+		        		<span style="width: 100%;">100%</span>
+		      		</dd>
+		    	</dl>
+				<% else %>
+				<dl class="<%=user.member_stat%>">
+		      		<dt class="numbers">
+							<em><%=user.total_member%></em>/<%=user.max_member%>
+		      		</dt>
+					<dt class="label">
+						Team Members
+				      </dt>
+		      		<dd class="bar">
+		        		<span style="width: <%=user.member_stat_count%>%;"><%=user.member_stat_count%>%</span>
+		      		</dd>
+		    	</dl>
+				<% end %>
+			</li>
+			<li class="usage limit-space">
+										<dl class="<%=current_user.storage_stat%>">
+								      		<dt class="numbers">
+								        		<em><%=number_to_human_size(current_user.storage_count)%></em>/5 GB
+								      		</dt>
+								      		<dt class="label">Storage</dt>
+								      		<dd class="bar">
+								        		<span style="width: <%=current_user.storage_percentage%>%;"><%=current_user.storage_percentage%>%</span>
+								      		</dd>
+								    	</dl>
+									</li>
+  <li class="usage limit-users"  style="float:left;list-style-type:none;margin:0 0 0 30px;width:250px;">
+                                    <span id="current_charge" style="font-size:24px;font-weight:bold;line-height:28px">$<%=(current_user.current_billing)%></span> / month
+                                    <br/>
+                                    <span>Subscription Fee</span>
+
+                                    </li>
+
+                                    
+		</ul>
+</div>

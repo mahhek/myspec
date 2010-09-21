@@ -1,0 +1,92 @@
+<% title "Articles" %>
+<div class="left_page">
+  <div class="lt_nav_container"></div>
+  <div class="lt_button_container">
+    <div><%= link_to "New Article", new_article_path, :class => "button-left" %></div>
+     <div><%= link_to "Back", section_requests_path, :class => "button-left" %></div>
+  </div>
+</div>
+<div class="right_page">
+  <h3>Article Master List</h3>
+<table id="jobs_table">
+  <tr>
+    <th width="20px;"></th>
+	<th  style="width:680px;">Name</th>
+	<th  style="width:15px;"></th>
+	<th  style="width:10px;"></th>
+  </tr>
+  <tr>
+	<td><a href="javascript:toggle_tr('1');"><img src="/images/plus.jpg" height="10px" width="10px" id="img_1"/></a></td>
+  	<td><%= Part.find(1).name %></td>
+  	<td></td>
+  	<td></td>
+  </tr>
+  <% for article in @articles_1 %>
+    <tr class="<%= cycle("othertdalter", "") %>"  style="display:none" name="tr_1">
+      <td></td>
+		<td><%= link_to article.name, "/paragraphs?art_id=#{article.number}&part_id=1" %></td>
+        <td><%= link_to (image_tag "/images/g-icon-editor.png", :size => "15x15"), edit_article_path(article)  %></td>
+		<td><%= link_to image_tag('/images/minus.png'), article, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+	<tr>
+		<td><a href="javascript:toggle_tr('2');"><img src="/images/plus.jpg" height="10px" width="10px" id="img_2"/></a></td>
+  		<td><%= Part.find(2).name %></td>
+  		<td></td>
+  		<td></td>
+  	</tr>
+  <% for article in @articles_2 %>
+    <tr class="<%= cycle("othertdalter", "") %>"  style="display:none" name="tr_2">
+		<td></td>
+		<td><%= link_to article.name, "/paragraphs?art_id=#{article.number}&part_id=2" %></td>
+        <td><%= link_to (image_tag "/images/g-icon-editor.png", :size => "15x15"), edit_article_path(article)  %></td>
+		<td><%= link_to image_tag('/images/minus.png'), article, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+	<tr>
+		<td><a href="javascript:toggle_tr('3');"><img src="/images/plus.jpg" height="10px" width="10px" id="img_3"/></a></td>
+  		<td><%= Part.find(3).name %></td>
+  		<td></td>
+  		<td></td>
+  	</tr>
+  <% for article in @articles_3 %>
+    <tr class="<%= cycle("othertdalter", "") %>"  style="display:none" name="tr_3">
+		<td></td>
+		<td><%= link_to article.name, "/paragraphs?art_id=#{article.number}&part_id=3" %></td>
+        <td><%= link_to (image_tag "/images/g-icon-editor.png", :size => "15x15"), edit_article_path(article)  %></td>
+		<td><%= link_to image_tag('/images/minus.png'), article, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+<script>
+      function toggle_tr(count)
+      {
+        
+        trs = document.getElementsByTagName('tr')
+        var checkboxOptions = [];
+        for(var i=0;i<trs.length;i++)
+        {
+          if(trs.item(i).getAttribute( 'name' ) == 'tr_' +count )
+          {
+            checkboxOptions.push( trs.item(i) );
+          }
+        }       
+         img = document.getElementById('img_' + count)
+        for(i=0; i< checkboxOptions.length; i++)
+        {
+          
+          if(checkboxOptions[i].style.display == "none")
+          {
+            checkboxOptions[i].style.display = "";
+            img.src = "/images/minus.jpg"
+          }
+          else
+          {
+              checkboxOptions[i].style.display = "none";
+              img.src = "/images/plus.jpg"
+          }
+        }
+          
+      }
+    </script>
+</div>

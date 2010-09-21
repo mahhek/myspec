@@ -1,0 +1,21 @@
+<% title "User Subparagraphs" %>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>User Paragraph</th>
+    <th>Description</th>
+  </tr>
+  <% for user_subparagraph in @user_subparagraphs %>
+    <tr>
+      <td><%=h user_subparagraph.user_id %></td>
+      <td><%=h user_subparagraph.user_paragraph_id %></td>
+      <td><%=h user_subparagraph.description %></td>
+      <td><%= link_to "Show", user_subparagraph %></td>
+      <td><%= link_to "Edit", edit_user_subparagraph_path(user_subparagraph) %></td>
+      <td><%= link_to "Destroy", user_subparagraph, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New User Subparagraph", new_user_subparagraph_path %></p>

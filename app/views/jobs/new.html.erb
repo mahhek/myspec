@@ -1,0 +1,22 @@
+<% title "Add Job Information" %>
+<div class="left_page">
+	<div class="lt_nav_container">
+		<% if !@job.new_record? %>	
+			<%=render :partial => "clients/client_info"%>
+		<% else %>
+			<%=render :partial => "members/member_info"%>
+		<% end %>
+    </div>
+    <div class="lt_button_container">
+		<%  if !@job.new_record? %>
+			<div><%= link_to "Cancel", client_path(@client), :class => "button-left" %></div>
+		<% else %>
+			<div><%= link_to "Cancel", jobs_path, :class => "button-left" %></div>
+		<% end %>
+		<div><%#= link_to "View Job", job_path(@job), :class => "button-left" %></div>
+	    <div><%#= link_to "Active Jobs", jobs_path, :class => "button-left" %></div>
+		<div><%#= link_to "Page Format", change_job_page_format_path(:job_id => @job.id), :class => "button-left" %></div>
+	  </div>
+</div>
+<% @button_text = "Create Job" %>
+<%= render :partial => 'form' %>

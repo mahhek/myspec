@@ -1,0 +1,74 @@
+<% title "Add Division"%>
+  <div class="left_page">
+
+    <div class="lt_nav_container">
+		<%= render :partial => "/clients/client_info" %>
+      <%#= render :partial => "/jobs/job_info" %>
+    </div>
+    <div class="lt_button_container">
+		<div><%= link_to "Divisions Master",add_div_from_master_path(:job_id => @job.id), :class => 'button-left' %></div>
+		<div><%= link_to "Cancel", @job, :class => 'button-left' %></div>
+    </div>
+  </div>
+  <div class="right_page">
+		<div>
+        <h3 class="head"><%=yield(:title)%></h3>
+		<b>Divisions Already Included</b>
+        </div>
+		<div>
+			<table id="jobs_table">
+				<tr>
+                    <th class="sub-no">No</th>
+					<th class="div-no" style="width:110px">Div No</th>
+					<th class="div-name" style="width:260px;">Div Name</th>
+					<th class="div-info">Description</th>
+					<th class="sub-no"></th>
+				</tr>
+                <%index = 1%>
+				<% for specification in @have_specifications %>
+					<tr class="<%= cycle("othertdalter", "") %>">
+                      <td  class="sub-no">
+                        <%= index %>
+                        <%index += 1%>
+                      </td>
+						<td><b><%= specification.division.modif_number%></b></td>
+						<td><%= specification.division.name%></td>
+						<td></td>
+                        <td><%= link_to image_tag("/images/minus.png"), specification, :confirm => 'Are you sure want to remove this division?', :method => :delete%></td>
+					</tr>
+				<% end %>
+			</table>
+		</div>
+		<br/>
+		<% form_for @specification, :url => create_multiple_divisions_path, :html => {:class => "form"} do |f| %>
+		<div><%#= f.submit "Save Changes" %></div>
+      <div>
+		<b>Available Divisions from Job Template</b>
+		<%= f.hidden_field :job_id %>
+		<table id="jobs_table">
+			<tr>
+                <th class="sub-no"><%= check_box_tag('check_all', 'check_all', false,  :onClick => "toggleCheckBoxes('new_specification')")%> </th>
+				<th class="div-no">Div No</th>
+				<th class="div-name">Div Name</th>
+				<th class="div-info">Description</th>
+                <th class="sub-no"></th>
+			</tr>
+			<% for division in @divisions %>
+				<tr class="<%= cycle("othertdalter", "") %>">
+				<% fields_for "divisions[]", division do |div| %>
+                  <td><%= div.check_box :id, :checked => false %></td>
+					<td><b><%= division.modif_number%></b></td>
+					<td><%= division.name%></td>
+                    <td></td>
+					<td></td>
+				<% end %>
+				</tr>
+			<% end %>
+		</table>
+      </div>
+		<br/>
+		<div><%= f.submit "Add Divisions" %></div>
+    <% end %>
+  </div>
+	
+</div>

@@ -1,0 +1,24 @@
+<% title 'Team Member Editor'%>
+<div class="left_page">
+  <div class="lt_nav_container"></div>
+  <div class="lt_button_container">
+    <%= render :partial => 'admin_menu' %>
+  </div>
+</div>
+<div class="right_page">
+    <%if current_user.parent_id.nil?%>
+    <% user = current_user %>
+    <%else%>
+    <% user = current_user.parent %>
+    <%end%>
+  <% if user.member_stat != "over"%>
+  	<div >
+		<h3><%=yield(:title)%></h3>
+	    	<% semantic_form_for @staff, :url => create_new_staff_path do |f| %>
+				<%= render 'team_member_form', :f => f %>
+			<% end %>
+	  </div>
+	<% else %>
+		<%= render :partial => 'subscription' %>
+	<% end %>
+</div>

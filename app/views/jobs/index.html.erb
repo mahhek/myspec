@@ -1,0 +1,18 @@
+<% title "Active Jobs" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%=render :partial => "members/member_info"%>
+  </div>
+  <div class="lt_button_container">
+	<% show_to :admin, :support, :master do %>
+    	<div><%= link_to "Add Job", new_job_path, :class => "button-left" %></div>
+	<% end %>
+  <% show_to :admin, :manager, :support, :master do %>
+       <%= link_to "Archived Jobs", "/jobs/archived_job" , :class => 'button-left' %>
+      <%end%>
+  </div>
+</div>
+<div class="right_page">
+	<%= render :partial => 'jobs' %>
+	<%= render :partial => 'shared_jobs' %>
+</div>

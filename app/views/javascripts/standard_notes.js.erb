@@ -1,0 +1,33 @@
+document.observe('dom:loaded', function(){
+	$('art').hide();
+	$('para').hide();
+	$('subpara').hide();
+	$('part').observe('change', function(){
+		new Ajax.Updater('article','/part_change', {
+		  method: 'post',
+		  parameters: {part_id: $('part').getValue(), standard_section_id: $('standard_section_note_standard_section_id').getValue()},
+		  });
+		if($('part').getValue() != "") {
+			$('art').show();
+		}
+		$('para').hide();
+		$('subpara').hide();
+	});
+	$('article').observe('change', function(){
+		new Ajax.Updater('paragraph','/article_change', {
+		  method: 'post',
+		  parameters: {part_article_id: $('article').getValue()},
+		  });
+		$('para').show();
+		$('subpara').hide();
+		
+	});
+	
+	$('paragraph').observe('change', function(){
+		new Ajax.Updater('subparagraph','/paragraph_change', {
+		  method: 'post',
+		  parameters: {article_paragraph_id: $('paragraph').getValue()},
+		  });
+		$('subpara').show();
+	});
+});

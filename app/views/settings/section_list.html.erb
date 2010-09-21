@@ -1,0 +1,19 @@
+<% title "Application Settings > Section list "%>
+<table id="users_table">
+  <tr>
+	<th>ID</th>
+    <th>Section Number</th>
+	<th>Section Name</th>
+	<th></th>
+  </tr>
+  <% for section in @sections %>
+    <tr>
+      <td><%=h section.id %></td>
+		<td><%=h section.number %></td>
+      <td><%=h section.name %></td>
+      <td><%= link_to "x", section, :confirm => 'Are you sure?', :method => :delete, :class => 'button' %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Section", new_section_path, :class => 'button' %></p>

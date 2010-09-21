@@ -1,0 +1,39 @@
+<br/>
+<div class="white_bg">
+	    <div class="w100">
+			<div class="">
+					<div class="part_container">				
+						<% 
+						a = 1
+						for article in @specification_section.user_articles %>
+<div style="float:left">
+<div class="article"><b><%= link_to(article.name, new_user_paragraph_path( :user_article_id => article.id, :collaborator_id => params[:collaborator_id]), :class => "") %></b></div><div class="rem"><%= link_to image_tag("/images/minus.png"), article, :confirm => 'Are you sure want to remove this article?', :method => :delete %></div>
+</div>
+							<% 
+							b = 97
+							for paragraph in article.user_paragraphs %>
+                              <div style="float:left">
+								<div class="space2-x"><%=b.chr.upcase%>.&nbsp;</div><div class="paragraph-x"><%= link_to(paragraph.paragraph, new_user_subparagraph_path(:user_paragraph_id => paragraph, :collaborator_id => params[:collaborator_id]), :class => "") %>&nbsp;</div><div class="rem"><%= link_to image_tag("/images/minus.png"), paragraph, :confirm => 'Are you sure want to remove this paragraph?', :method => :delete %></div>
+                                </div>
+								<% 
+								c = 1
+								for subparagraph in paragraph.user_subparagraphs %>
+                                  <div style="float:left">
+									<div class="space3-x"><%= link_to "#{c}.", edit_user_subparagraph_path(subparagraph, :collaborator_id => params[:collaborator_id]) %></div><div class="subparagraph-x">&nbsp;<%=link_to subparagraph.description, edit_user_subparagraph_path(subparagraph, :collaborator_id => params[:collaborator_id])%></div><div class="rem">&nbsp;</div>
+                                    </div>
+								<% 
+								c +=1
+								end %>
+							<% 
+							b +=1
+							end %>
+						<% 
+						a +=1
+						end %>
+						</div>
+			</div>
+		</div>
+	</div>
+	<div id="end-sec">
+		[ End of Section ]
+	</div>

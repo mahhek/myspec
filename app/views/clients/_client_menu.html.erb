@@ -1,0 +1,5 @@
+<% show_to :admin, :support, :master do %>
+	<div><%= link_to "Add Client", new_client_path, :class => "button-left" %></div>
+<% end %>
+<div><%= link_to "Client List", clients_path, :class => 'button-left' %></div>
+<div><%= link_to "Archived Clients", "#", :class => 'button-left' %></div>

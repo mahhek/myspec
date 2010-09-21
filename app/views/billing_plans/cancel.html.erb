@@ -1,0 +1,31 @@
+<% title 'Cancel Subscription'%>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'members/subscription_info' %>
+  </div>
+  <div class="lt_button_container">
+	<%= render :partial => 'members/admin_menu' %>
+
+  </div>
+</div>
+<div class="right_page">
+	<h3><%=yield(:title)%></h3>
+	<p>
+		Thank you for using My SpecWriter.  We are sorry to see you leave. Your data will remain on our server for 14 days.  Should you decide to resubscribe, your data will be available.
+		<br/>
+		<br/>
+		We welcome your comments and input so that we can continue to improve our services.  Send your thoughts to support@myspecdata.com.
+		<br/>
+		<br/>
+		My SpecTeam
+	</p>
+    
+	<% form_for "", :url => "/billing_plans/cancel_subscription" do |f|%>
+      <% if current_user.has_role?(:support)%>
+        <%=f.submit "Cancel Subscription", :confirm => "Are you sure you want to cancel your current subscription from My SpecWriter? Choose OK to confirm cancellation. Thank you from My SpecWriter.", :disabled => true%>
+        <%else%>
+		<%=f.submit "Cancel Subscription", :confirm => "Are you sure you want to cancel your current subscription from My SpecWriter? Choose OK to confirm cancellation. Thank you from My SpecWriter."%>
+        <%end%>
+	<% end %>
+    
+</div>

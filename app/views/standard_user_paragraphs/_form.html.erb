@@ -1,0 +1,21 @@
+<% semantic_form_for @standard_user_paragraph do |f| %>
+<% if params[:standard_part_article_id] != nil %>
+	<%=f.hidden_field :standard_part_article_id%>
+<% else %>
+	<%=f.hidden_field :standard_user_article_id%>
+<% end %>
+<div class="label">
+	<%=f.label :name, "Paragraph Name" %>
+</div>
+<div class="value">
+	<%=f.text_field :name, :size => 70  %>
+</div>
+<div class="label">
+	<%=f.label :paragraph, "Paragraph" %>
+</div>
+<div class="value">
+	<%=f.text_area :paragraph, :rows => 10%><br/><br/>
+	<%=f.submit "Save Changes"%>
+	<br/>
+</div>
+<% end %>

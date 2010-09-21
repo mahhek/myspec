@@ -1,0 +1,252 @@
+<% title "Help and Support Center" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'help_tickets/apps_info' %>
+  </div>
+  <div class="lt_button_container">
+    <div><%= link_to "Evaluator", evaluators_path, :class => 'button-left' %></div>
+    <div><%= link_to "Notifications", notifications_path, :class => 'button-left' %></div>
+    <div><%= link_to "Subscribers", "/subscribers",:class => 'button-left' %></div>
+    <div>
+      <% show_to  :support do %>
+        <%= link_to "Time Zone", "/timezones", :class => 'button-left' %>
+      <% end %>
+</div>
+  </div>
+</div>
+<div class="right_page">
+  <div>
+
+    <h3>Subscriber Information 
+    <% unless @subscriber.billing_plan.blank? %>
+    (<%= link_to "Payment history", "/settings/subscriber_payment_history/#{params[:id]}" %>)
+    <%end%>
+
+    </h3>
+    <div>
+      <div>      
+      <div>
+        <div class="otherlabel" style="width:140px;margin-top:20px;">
+          Join date
+        </div>
+        <div class="othervaluehalf20">
+         <%= @subscriber.created_at.strftime("%m-%d-%Y") %>
+        </div>
+        <div class="otherlabelshort20">
+           Subscribe date:
+        </div>
+          <div class="othervaluehalf20">
+          <%if @subscriber.subscribe_date.blank?%>
+            not yet
+            <%else%>
+            <%= @subscriber.subscribe_date.strftime("%m-%d-%Y") %>
+            <%end%>
+        </div>
+      </div>
+      <div>
+        <div class="otherlabel" style="width:140px;margin-top:20px;">
+          CustomerProfileID
+        </div>
+        <div class="othervaluehalf20">
+         <%unless @subscriber.customer_cim_id.blank? %>
+          <%= @subscriber.customer_cim_id%>
+         <%else%>
+          not yet
+         <%end%>
+        </div>
+        <div class="otherlabelshort20">
+           PaymentProfileID
+           
+        </div>
+          <div class="othervaluehalf20">
+            <%paymentprofile = PaymentProfile.find_by_user_id(current_user.id)%>
+
+          <%if paymentprofile.blank?%>
+            not yet
+          <%else%>
+             <%= paymentprofile.payment_cim_id %>
+          <%end%>
+        </div>
+      </div>
+      <div>
+        <div class="otherlabel" style="width:140px;margin-top:20px;">
+          First Name:
+        </div>
+        <div class="othervaluehalf20">
+           <%if @subscriber.first_name.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @subscriber.first_name %>
+          <%end%>
+        </div>
+        <div class="otherlabelshort20">
+          Username:
+        </div>
+          <div class="othervaluehalf20">
+
+          
+          <%= @subscriber.username %>
+        </div>
+      </div>
+      <div>
+        <div class="otherlabel" style="width:140px;">
+          Last Name:
+        </div>
+        <div class="othervaluehalf">
+           <%if @subscriber.last_name.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @subscriber.last_name %>
+          <%end%>
+        </div>
+        <div class="otherlabelshort">
+          Email:
+        </div>
+          <div class="othervaluehalf">
+             <%if @subscriber.email.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @subscriber.email %>
+          <%end%>
+        </div>
+      </div>
+      <div>
+        <div class="otherlabel"  style="width:140px;">
+          Position:
+        </div>
+        <div class="othervaluehalf">
+           <%if @subscriber.position.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @subscriber.position %>
+          <%end%>
+        </div>
+        <div class="otherlabelshort">
+          &nbsp;
+        </div>
+          <div class="othervaluehalf">
+          &nbsp;
+          
+        </div>
+      </div>
+      <div>
+        <div class="otherlabel" style="width:140px;margin-top:20px;">
+          Company:
+        </div>
+        <div class="othervaluehalf20">
+         <%if @subscriber.company.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @subscriber.company %>
+          <%end%>
+        </div>
+        <div class="otherlabelshort20">
+           Master:
+
+        </div>
+          <div class="othervaluehalf20">
+            <% form_for :user, @user, :url => {:action => "change_master"}, :html => {:name => "myform"} do |f| %>
+              <%= f.hidden_field :id %>
+              <%=  check_box_tag "user[role_ids][]", 6,  @subscriber.has_role?(:master), :onclick => "javascript:submit_form();"%>
+            <%end%>
+        </div>
+        <script>
+          function submit_form(){
+            document.forms["myform"].submit();
+          }
+          </script>
+      </div>
+	
+      
+      <div>
+        <div class="otherlabelmargin10"  style="width:140px;">
+          Website:
+        </div>
+        <div class="othervaluefull10">
+           <%if @subscriber.website.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @subscriber.website %>
+          <%end%>
+        </div>
+      </div>
+      <div>
+        <div class="otherlabelmargin10"  style="width:140px;">
+          Telephone:
+        </div>
+        <div class="othervaluehalf10">
+           <%if @subscriber.telephone.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @subscriber.telephone %>
+          <%end%>
+        </div>
+        <div class="otherlabelshort10">
+          Fax:
+        </div>
+          <div class="othervaluehalf10">
+           <%if @subscriber.fax.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @subscriber.fax %>
+          <%end%>
+        </div>
+      </div>
+
+      <div>
+        <div class="otherlabelmargin20"  style="width:140px;">
+          Location:
+        </div>
+        <div class="othervaluebottom">
+           <%if @subscriber.address.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @subscriber.address %>
+          <%end%>
+        </div>
+        <div class="otherlabelbottom">
+          Post:
+        </div>
+          <div class="othervaluebottom">
+          <%if @subscriber.mailing_address.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @subscriber.mailing_address %>
+          <%end%>
+        </div>
+      </div>
+      </div>
+    </div>
+	
+
+  </div>
+  <div>
+	
+    <h3>Team Members</h3>
+    <table id="" cellpadding="0" cellspacing="0"> 
+      <tr>
+        <th class="sec-name-small">Name</th>
+		<th class="team-position">Position</th>
+        <th class="team-position">Permission</th>
+        <th class="team-email">Email</th>
+      </tr>
+      
+      <% for team_member in @team_members %>
+        <tr class="<%= cycle("othertdalter", "") %>">
+          <td><%=h team_member.full_name%></td>   
+       
+          <td><%=h team_member.position %></td>
+          <td>
+            <% role = team_member.roles %>
+            <%unless role.blank?%>
+              <%=h role.first.name
+            %>
+            <%end%>
+              </td>
+          <td><%=h team_member.email %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <br/>
+</div>

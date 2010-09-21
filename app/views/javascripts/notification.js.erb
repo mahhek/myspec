@@ -1,0 +1,6 @@
+<% if !@collaborator.blank? %>
+document.observe('dom:loaded', function(){
+	$('collab').hide();
+	Modalbox.show($('collab'), {title: '<%=@collaborator.user.username%> has added you to a job', height: 150});
+});
+<% end %>

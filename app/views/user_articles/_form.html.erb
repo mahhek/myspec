@@ -1,0 +1,77 @@
+<% title "Part Editor"%>
+<div class="left_page">
+	<div class="lt_nav_container">
+		<%= render :partial => "/jobs/job_info" %>
+		<%#= render :partial => "/clients/client_info" %>
+	</div>
+	<div class="lt_button_container">
+		<div>
+			<%= link_to "Cancel", new_spec_sec_part_path(:job_id => @job.id, :specification_section_id => @specification_section.id, :collaborator_id => params[:collaborator_id]), :class => "button-left" %>
+		</div>
+	</div>
+</div>
+<div class="right_page">
+  <div><h3>Section Editor</h3></div>
+	<div>
+	<h3 class="head"><%=@specification_section.specification.division.name%></h3>
+	</div>
+	<div class="label">Section:</div>
+  	<div class="value">
+	<%=@specification_section.section.modif_number%> - <%=@specification_section.section.name%>
+	</div>
+	<br/>
+	<% form_for @user_article do |f| %>
+      <div style="float:left;">
+  		<%= f.error_messages %>
+        </div>
+        <div style="float:left;">
+    	<%= f.hidden_field :part_id %>
+        
+		<%= f.hidden_field :specification_section_id%>
+		<%=hidden_field_tag "collaborator_id", params[:collaborator_id]%>
+		<div class="label">
+			<%=f.label :name, "Article Name"%>
+		</div>
+		<div class="value">
+			<%=f.text_field :name, :size => 80%>
+		</div>
+		<div class="label">&nbsp;</div>
+		<div class="value">
+			<% if @user_article.new_record? %>
+				<%=f.submit "Add Article"%>
+			<% else %>
+				<%=f.submit "Save Changes"%>
+			<% end %>
+		</div>
+        </div>
+	<% end %>
+	<div>
+      <div style="float:left">
+        <br/>
+		<b>Articles already included</b>
+		<table id="jobs_table">
+			<tr>
+				<th class="sub-no">No</th>
+				<th class="art-name">
+					Article
+				</th>
+				<th class="sub-author">Author</th>
+				<th class="sub-date">Date</th>
+				<th class="sub-rem"></th>
+			</tr>
+			<% a = 1 %>
+			<% for article in @specification_section.user_articles %>
+				<tr class="<%= cycle("othertdalter", "") %>">
+					<td><%="#{(a)}"%></td>
+					<td><%= link_to article.name, edit_user_article_path(article, :collaborator_id => params[:collaborator_id])%></td>
+					<td><%= article.user.username%></td>
+					<td><%= article.created_at.strftime("%m-%d-%Y")%></td>
+					<td><%= link_to image_tag("/images/minus.png"), "/user_articles/destroy_art/#{article.id}", :confirm => 'Are you sure want to remove this article?' %></td>
+				</tr>
+			<% 
+			a += 1
+			end %>
+		</table>
+	</div>
+    </div>
+</div>

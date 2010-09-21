@@ -1,0 +1,75 @@
+<% title "Help and Support Center" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+  		<%= render :partial => 'apps_info' %>
+  </div>
+  <div class="lt_button_container">
+	<%= render :partial => 'help_tickets/support_info' %>
+  </div>
+</div>
+<div class="right_page">
+	<div>
+		<h3>Tickets</h3>
+		<table id="jobs_table">
+		  <tr>
+			<th class="sec-no">No.</th>
+		    <th class="sec-name-help" >Title</th>
+		    <th class="sub-date-ticket" >Start Mood</th>
+            <th class="sub-date-ticket" >Current Mood</th>
+			<th class="sub-date-ticket" >Status</th>
+            <th class="sub-date-ticket" >New</th>
+            <th class="sub-date-ticket" >read</th>
+			<!-- <th class="sub-date"></th> -->
+		  </tr>
+		  <% for help_ticket in @help_tickets %>
+		    <tr class="<%= cycle("othertdalter", "") %>">
+              <td><%=h help_ticket.auto_number %></td>
+		      <td><%=h link_to help_ticket.title, "/help_tickets/message_dev/#{help_ticket.id}" %></td>
+		      <td class="sub-date-ticket" style="width:100px">
+                 <%unless help_ticket.mood.blank?%>
+                  <% if help_ticket.mood == "bad_emot.gif"%>
+                  Angry
+                  <%elsif help_ticket.mood == "confuse_emot.gif"%>
+                  Confused
+                  <%elsif help_ticket.mood == "smile_emot.gif"%>
+                  Good
+                  <%elsif help_ticket.mood == "struck_emot.gif"%>
+                  Happy
+                  <%end%>
+                <%end%>
+</td>
+	      <td class="sub-date-ticket"  style="width:110px">
+                 <%unless help_ticket.end_mood.blank?%>
+                  <% if help_ticket.end_mood == "bad_emot.gif"%>
+                  Angry
+                  <%elsif help_ticket.end_mood == "confuse_emot.gif"%>
+                  Confused
+                  <%elsif help_ticket.end_mood == "smile_emot.gif"%>
+                  Good
+                  <%elsif help_ticket.end_mood == "struck_emot.gif"%>
+                  Happy
+                  <%end%>
+                <%end%>
+</td>
+				<td><%=h help_ticket.status %></td>
+                <td>
+                  <% replies = HelpTicketMessage.all(:conditions => "help_ticket_id = #{help_ticket.id} and user_type = 1 and is_read = 0") %>
+                  <%unless replies.blank?%>
+                    <%= replies.size %>
+                    <%else%>
+                   0
+                  <%end%>
+                </td>
+                <td>
+<%if help_ticket.is_read %>
+  0
+<%else%>
+1
+<%end%>
+</td>
+		    </tr>
+		  <% end %>
+		</table>
+	</div>
+	<br/>
+</div>

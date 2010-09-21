@@ -1,0 +1,64 @@
+<% javascript 'scriptaculous/scriptaculous'%>
+<% title "Add Note" %>
+
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%#= render :partial => "/jobs/job_info" %>
+	<%= render :partial => "/clients/client_info" %>
+  </div>
+  <div class="lt_button_container">
+	<% if params[:collaborator_id] == nil || params[:collaborator_id] == ""%>
+		<div><%= link_to "Cancel", @job,:class => "button-left"  %></div>
+	    <div><%= link_to("Section Editor", new_spec_sec_part_path(:job_id => @job.id, :specification_section_id => @specification_section.id),:class => "button-left") if params[:specification_section_id] != nil  %></div>
+	<% else %>
+		<div><%= link_to "Cancel", shared_job_path(:job_id => @job.id, :collaborator_id => params[:collaborator_id]), :class => 'button-left' %></div>
+		<div><%= link_to("Section Editor", new_spec_sec_part_path(:job_id => @job.id, :specification_section_id => @specification_section.id, :collaborator_id => params[:collaborator_id]),:class => "button-left") if params[:specification_section_id] != nil  %></div>
+	<% end %>
+	  </div>
+</div>
+<div class="right_page">
+	<div>
+			<h3><%=yield(:title)%></h3>
+			<% 
+			semantic_form_for @section_note, :html => { :multipart => true } do |f| %>
+		  <%= f.error_messages %>
+			<%f.inputs do%>
+				<%=f.input :specification_section_id, :include_blank => false, :collection => SpecificationSection.specification_job_id_eq(params[:job_id]).collect {|p| ["#{p.section.number} - #{p.section.name}",p.id]}, :label => "Section"%>
+				<%=f.input :title, :input_html => {:size => 60}%>
+				<%=f.input :note, :input_html => {:rows => 6}%>
+			<% end %>
+			<%f.buttons do %>
+				<%=f.commit_button "Add Note"%>
+			<% end %>
+		    
+		
+		<% end %>
+	</div>
+      <div>
+			<h3>Notes</h3>
+            </div>
+	<table id="jobs_table">
+	  <tr>
+			<th class="att-no">No</th>
+	    	<th class="att-name">Title</th>
+			<th class="att-info">Description</th>
+			<th class="att-author">Author</th>
+			<th class="att-date">Date</th>
+		<th class="att-date"></th>
+	  </tr>
+	  <% 
+		i = 1
+		for section_note in @section_notes %>
+	    <tr class="<%= cycle("othertdalter", "") %>">
+			<td><%=h i %></td>
+	      <td><%=h link_to section_note.title, edit_section_note_path(section_note) %></td>
+	      <td><%=h section_note.note %><%#=in_place_editor_field :section_note, :note, {} , :rows => 4, :external_control => "activator"%><!-- <p id="activator">Edit</p> --></td>
+			<td><%=h section_note.user.username %></td>
+			<td><%=h section_note.created_at.strftime("%m-%d-%Y") %></td>
+	      <td><%= link_to image_tag("/images/minus.png"), section_note, :confirm => 'Are you sure?', :method => :delete if( section_note.user == current_user || section_note.user == as_user) %></td>
+	    </tr>
+	  <% 
+		i += 1
+		end %>
+	</table>
+</div>

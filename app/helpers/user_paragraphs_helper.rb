@@ -1,0 +1,2 @@
+module UserParagraphsHelper
+end

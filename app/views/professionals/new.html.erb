@@ -1,0 +1,97 @@
+<% title 'Register As Professional'%>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => '/members/subscription_info' %>
+  </div>
+  <div class="lt_button_container">
+    <%= render :partial => '/members/admin_menu' %>
+
+  </div>
+</div>
+<div class="right_page">
+
+  <h3><%=yield(:title)%></h3>
+
+
+
+  <p> Registration for professional services is free. Please complete the form below for your organization.
+  </p>
+  <p>
+You will receive a confirmation email to authorize the use of this information. Please allow 48 hours for confirmation and approval.
+  </p>
+  <p>You may contact support@myspecdata.com to cancel at any time.</p>
+  <br/>
+  <% semantic_form_for(@professional) do |f| %>
+    <%= f.error_messages %>
+    <% f.inputs do %>
+      <%=f.input :name%>
+      <%=f.input :email%>
+      <%= hidden_field_tag "professional[status]", "notverified"%>
+      <%#=f.input :certification, :label => "Certifications"%>
+
+
+      <li id="professional_name_input" class="string required">
+        <label>
+          Certification
+        </label>
+        <%for cert in @certificates%>
+          <%= check_box_tag "professional[certification_ids][]", "#{cert.id}",  false, :style=> "width:auto" -%>
+          <%= cert.name %>
+        <%end%>
+      </li>
+
+      <%=f.input :company_name, :label => "Company Name"%>
+      <%=f.input :physical_address, :input_html => { :rows => 7}, :label => "Physical Address" %>
+      <%=f.input :mailing_address, :input_html => { :rows => 7}, :label => "Mailing Address" %>
+      <%=f.input :website, :hint => "Format: http://www.myspecdata.com"%>
+      <%=f.input :telephone%>
+      <%=f.input :fax%>
+      <%=f.input :general_description, :input_html => { :rows => 7}, :label => "Services and Terms" %>
+      <%=f.input :time_zone, :label => "Time Zone" %>
+      
+      <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+          &nbsp;
+        </div>
+        <div class="othervaluefull10">
+          &nbsp;
+        </div>
+      </div>
+      <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+          Select Division(s):
+        </div>
+        <div class="othervaluefull10">
+          &nbsp;
+        </div>
+      </div>
+      <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+          &nbsp;
+        </div>
+        <div class="othervaluefull10">
+          &nbsp;
+        </div>
+      </div>
+      <div>
+        <%for div in @divisions%>
+          <div class="otherlabelmargin10"  style="width:375px;font-weight:normal;">
+            <%= check_box_tag "professional[division_ids][]", "#{div.id}",  false -%>
+            <%= h report_article_number(div.short_number) %> &nbsp; <%= div.name %>
+          </div>
+        <%end%>
+
+      <%end%>
+      <br/>
+      <br/>
+      <%=f.submit "Register"%>
+    </div>
+
+
+
+
+  <%end%>
+</div>
+
+
+

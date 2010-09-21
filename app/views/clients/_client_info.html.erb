@@ -1,0 +1,9 @@
+<h1><%=@client.name%></h1><br />
+<% if @job != nil %>
+<b>Job Number:</b>  <br /><%= @job.number %><br /> <br />
+<%end%>
+<b>Physical Address:</b>  <br /><%=@client.physical_address%><br /> <br />
+<b>Postal Address:</b>  <br /><%=@client.postal_address%><br /> <br />
+<b>Phone:</b>  <br /><%=@client.phone%><br /><br />
+<b>Fax:</b>  <br /><%=@client.fax%><br /><br />
+<b>Website:</b>  <br /><%=@client.website%><br /><br />

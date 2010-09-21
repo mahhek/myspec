@@ -1,0 +1,23 @@
+<% title "Billing Plans" %>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Plan Type</th>
+    <th>Number Of User</th>
+    <th>Number Of Space</th>
+  </tr>
+  <% for billing_plan in @billing_plans %>
+    <tr class="<%= cycle("othertdalter", "") %>">
+      <td><%=h billing_plan.user_id %></td>
+      <td><%=h billing_plan.plan_type %></td>
+      <td><%=h billing_plan.number_of_user %></td>
+      <td><%=h billing_plan.number_of_space %></td>
+      <td><%= link_to "Show", billing_plan %></td>
+      <td><%= link_to "Edit", edit_billing_plan_path(billing_plan) %></td>
+      <td><%= link_to "Destroy", billing_plan, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Billing Plan", new_billing_plan_path %></p>

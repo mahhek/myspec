@@ -1,0 +1,5 @@
+<% title "Add Contact Information" %>
+<%@title = "Add Contact Information"%>
+<% semantic_form_for @contact, :url => {:action => :create, :client_id => @client.id} do |f| %>
+<%= render 'form', :f => f %>
+<% end %>

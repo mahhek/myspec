@@ -1,0 +1,33 @@
+<b>Search Result (<%=@sections.count%>)</b>
+<div>
+<table id="users_table">
+		  <tr>
+		    <th style="width:100px">Number</th>
+		    <th>Name</th>
+		  </tr>
+          <% if !@sections.blank? && params[:q].to_s != "" %>
+      		<% for section in @sections %>
+    
+    
+        	<tr class="<%= cycle("othertdalter", "") %>">
+				<td>
+
+    
+                 <%=h section.modif_number%>
+                </td>
+				<td>
+
+                <%=h section.name %>
+                </td>
+			
+        	</tr>
+    
+      		<% end %>
+		<% else %>
+			<tr>
+		      	<td colspan="4">no results</td>
+		    </tr>
+		<% end %>
+    </table>
+</div>
+

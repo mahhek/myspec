@@ -1,0 +1,6 @@
+#page.alert(@billed)
+page.replace_html 'bill_today', number_to_currency(@billed, :unit => "")
+page.visual_effect :highlight, 'bill_today'
+page.replace_html 'pro_member', number_to_currency(@num_user_bill, :unit => "")
+page.replace_html 'pro_professional', number_to_currency(@num_pro_bill, :unit => "")
+page.replace_html 'pro_space', number_to_currency(@num_space_bill, :unit => "")

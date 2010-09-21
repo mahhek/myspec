@@ -1,0 +1,43 @@
+<% title 'Subscribers Information'%>
+<% javascript 'dynamic_charge'%>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'subscription_info' %>
+  </div>
+  <div class="lt_button_container">
+	<%= render :partial => 'admin_menu' %>
+
+  </div>
+</div>
+<div class="right_page">
+	<%= render :partial => 'subscription' %>
+  	<div id="team">
+		<span class="head"><%=yield(:title)%></span> (join date: <%=current_user.created_at.strftime("%m-%d-%Y")%>)<br/>
+		<br/>
+		<% semantic_form_for @user, :url => update_account_path(:id => @user.id) do |f| %>
+			<%=f.error_messages%>
+			<% f.inputs do %>
+				<%=f.input :first_name, :label => "Name*"%>
+				<%=f.input :email, :label => "Email*" %>
+				<%=f.input :username, :label => "Username*" %>
+				<%#=f.input :last_name %>
+				<%=f.input :company, :label => "Company*" %>
+				<%=f.input :address, :as => :string , :label => "Address*"%>
+				<%=f.input :city, :label => "City*"%>
+				<%=f.input :state, :label => "State*"%>
+				<%=f.input :zip, :label => "Zip*"%>
+				<%#=f.input :mailing_address, :input_html => { :rows => 7} , :label => "Mailing Address"%>
+				<%=f.input :country, :label => "Country*"%>
+				<%=f.input :telephone, :label => "Phone*" %>
+				
+				<%=f.input :fax %>
+				<%=f.input :website %>
+				<%#=f.input :other %>
+				<%=f.input :time_zone, :label => "Time Zone*" %>
+			<% end %>
+			<%f.buttons do %>
+				<%=f.commit_button "Save Changes"%>
+			<% end %>
+		<% end %>
+	</div>
+</div>

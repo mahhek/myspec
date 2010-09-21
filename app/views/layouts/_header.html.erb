@@ -1,0 +1,10 @@
+<a href="/" class="lg">
+  <div class="logo_holder">
+  </div>
+</a>
+<div class="menue_container">
+  <%= periodically_call_remote :url => { :controller => "help_tickets" , :action => "update_notification_div_user" }, :frequency => '15'  %>
+	<div id="top-nav">
+    <%= render :partial => "/layouts/help_tab" %>
+	</div>
+</div>

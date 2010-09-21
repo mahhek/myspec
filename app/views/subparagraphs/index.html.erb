@@ -1,0 +1,19 @@
+<% title "Subparagraphs" %>
+
+<table>
+  <tr>
+    <th>Article Paragraph</th>
+    <th>Description</th>
+  </tr>
+  <% for subparagraph in @subparagraphs %>
+    <tr class="<%= cycle("othertdalter", "") %>">
+      <td><%=h subparagraph.article_paragraph_id %></td>
+      <td><%=h subparagraph.description %></td>
+      <td><%= link_to "Show", subparagraph %></td>
+      <td><%= link_to "Edit", edit_subparagraph_path(subparagraph) %></td>
+      <td><%= link_to "Destroy", subparagraph, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Subparagraph", new_subparagraph_path %></p>

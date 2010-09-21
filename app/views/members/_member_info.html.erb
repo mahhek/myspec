@@ -1,0 +1,7 @@
+<b>Member Name</b><br/> <%=current_user.first_name%><br/><br/>
+<b>Position</b><br/> <%=current_user.position%><br/><br/>
+<b>Company</b>  <br /><%=current_user.company%> <br /> <br /> 
+<b>Role</b>  
+<% for role in current_user.roles%>
+<br /><%=role.name%>
+<%end%>

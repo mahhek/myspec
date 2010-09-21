@@ -1,0 +1,22 @@
+<div class="grid_11">
+	<div class="grid_10">
+		<h2>Upload a file to be imported to the database</h2>
+	</div>
+	<div class="grid_10">
+		<ul>
+		<% form_for @import, :html => {:multipart => true, :class => "form"} do |f| -%>
+		  	<li>
+		  		<%= f.label :csv, "File", :class => "grid_2" %>
+				<%= f.file_field :csv %>
+		  	</li>
+			<li>
+				<%= f.label :datatype, "Datatype", :class => "grid_2" %>
+				<%= f.select :datatype, ["release"]%>
+			</li>
+			<li>
+				<%= f.submit "Import", :disable_with => 'Importing...' %>
+			</li>
+		<% end -%>
+		</ul>
+	</div>
+</div>

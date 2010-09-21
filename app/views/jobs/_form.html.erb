@@ -1,0 +1,63 @@
+<% javascript ('dynamic_contacts')%>
+
+<div class="right_page">
+	<div>
+      <h3><%=yield(:title)%></h3>
+    </div>
+	<div>
+		<% semantic_form_for @job do |f|%>
+		<div>
+			<%=f.error_messages%>
+		</div>
+		<% f.inputs do %>
+			<%=f.input :name , :label => "Job Name"%>
+			<%=f.input :number , :label => "Job Number"%>
+			<%=f.input :description, :input_html => { :rows => 6 }, :label => "Job Description"%>
+			<%=f.input :address , :label => "Street Address" , :input_html => { :rows =>6 }%>
+			<%=f.input :city%>
+			<%=f.input :state%>		
+			<%=f.input :status, :collection => [ "Active", "Completed", "In Progress", "On Hold", "Planned", "Warrantee"], :include_blank => false , :label => "Job Status", :input_html => {:style => "width:400px;"}%>
+
+        <% if current_user.parent_id.nil?
+             user_id = current_user.id
+            else
+              user_id = current_user.parent.id
+            end
+            %>
+          
+			<%=f.input :client,:label => "Client*", :include_blank => false, :collection => Client.is_archive_eq(false).user_id_eq(user_id).collect {|p| [p.name,p.id]} , :input_html => {:style => "width:400px;"}%>
+			<%=f.input :contact, :label => "Client Contact*" , :input_html => {:style => "width:400px;"}%>
+			<%=f.input :po_number, :label => "Client PO" , :input_html => {:style => "width:400px;"}%>
+			
+              <%
+               if current_user.parent_id.nil?
+      @admins = User.id_or_parent_id_equals(current_user.id)
+    else
+      @admins = User.id_or_parent_id_equals(current_user.parent.id)
+    end
+
+    admin = Array.new
+    x = 0
+    admin[0] = 0
+    for c in @admins
+      admin[x] = c.id
+      x += 1
+    end
+  %>
+			<%=f.input :template_job, :label => "Job Template" , :include_blank => true, :collection => TemplateJob.user_id_equals(admin), :input_html => {:style => "width:400px;"}%>
+			<%=f.input :layout_id, :label => "Print Format*", :collection => Layout.all(:order => "name").collect {|p| [p.name, p.id]}, :include_blank => false , :input_html => {:style => "width:400px;"}%>
+		<% end %>
+		<%f.buttons do %>
+          <%unless @button_text.blank?%>
+            <%=f.commit_button @button_text%>
+            <%else%>
+			<%=f.commit_button "Save Changes"%>
+            <%end%>
+		<% end %>
+		<p id="contact_field" style="visibility: hidden;">
+	            <%= f.label :contact_id, "Contact:"  %><br/>
+	            <%= f.select :contact_id, Contact.client_id_equals(params[:client_id]).collect {|p| [p.name, p.id]}%>
+	          </p>
+		<%end%>
+      </div>
+  </div>

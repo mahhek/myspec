@@ -1,0 +1,22 @@
+<% semantic_form_for @section_request, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages %>
+	<% f.inputs do %>
+		<%=f.input :proposal_type, :as => :select, :collection => ["Modify Title","New Number", "Modify Number", "Modify Info"], :include_blank => false%>
+		<li>
+			<%=label_tag "Division"%>
+			<%=select_tag "division", options_for_select(Division.all.collect {|p| ["#{p.division_number} - #{p.name}",p.division_number]}), :class => "div_select"%>
+  		</li>
+		<%=f.input :number, :input_html => {:size => 16, :maxlength => 16}, :label => "Section Number"%>
+		<%=f.input :name, :label => "Section Name"%>
+		<%=f.input :description, :input_html => {:rows => 12}%>
+		<%=f.input :supporting_rationale, :input_html => {:rows => 12}%>
+		<li>
+			<%=f.label :req, "Attachment"%>
+			<%=f.file_field :req %><br/>
+			The maximum permitted file size is 2MB
+		</li>
+	<% end%>
+  	<%f.buttons do %>
+		<%=f.commit_button "Submit Request"%>
+	<% end %>
+<% end %>

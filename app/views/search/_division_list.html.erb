@@ -1,0 +1,37 @@
+<b>Search Result (<%=@divisions.count%>)</b>
+<div>
+	<table id="users_table">
+       <tr>
+		<th class="div-no">Job No</th>
+		<th class="sec-no">Div No</th>
+		<th class="search_div">Division</th>
+		<th  class="sub-date3">Date</th>
+      </tr>
+	<% if !@divisions.blank? && params[:q].to_s != "" %>
+	  <% for division in @divisions %>
+	    <tr class="<%= cycle("othertdalter", "") %>">
+          <% job = division.job %>
+            <%div = Division.find(division.division_id)%>
+	      	<td><%=link_to "#{job.number}", job_path(job) %></td>
+            <td>
+              <%= link_to div.modif_number, "add_multiple_sections?job_id=#{job.id}&specification_id=#{division.id}" %>
+            </td>
+            <%#*<td>%>
+              
+                <%#= link_to div.modif_number, "add_multiple_sections?job_id=#{division.job.id}&specification_id=#{division.id}" %>
+            <%#*</td>%>
+            <td>
+              <%= link_to div.name, "add_multiple_sections?job_id=#{job.id}&specification_id=#{division.id}" %>
+            </td>
+            <td>
+              <%= job.created_at.strftime("%m-%d-%Y") %>
+            </td>
+	    </tr>
+	  <% end %>
+	<% else %>
+		<tr>
+	      	<td clospan="4">no results</td>
+	    </tr>
+	<% end %>
+	</table>
+</div>

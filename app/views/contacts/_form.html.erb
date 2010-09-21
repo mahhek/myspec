@@ -1,0 +1,34 @@
+
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'clients/client_info' %>
+  </div>
+	<div class="lt_button_container">
+		
+		<div><%#= f.submit "Save Changes", :class => "button-left"%></div>
+		<div>
+		    <%= link_to "Cancel", client_path(params[:client_id]), :class => 'button-left' %>
+		  </div>
+	</div>
+</div>
+<div class="right_page">
+  <div >
+	<h3><%= @title%></h3>
+  </div>
+
+  <div>
+		 
+      	<% f.inputs do %>
+			<%=f.input :client_id, :as => :hidden %>
+			<%=f.input :name, :label => "Contact Name" %>
+			<%=f.input :position %>
+			<%=f.input :phone%>
+			<%=f.input :mobile%>
+			<%=f.input :email, :label => "Email" %>
+		<% end %>
+		<%f.buttons do %>
+			<%=f.commit_button "Save Changes"%>
+		<% end %>
+  </div>
+  
+</div>

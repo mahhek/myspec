@@ -1,0 +1,24 @@
+<% title "Standard Section Note" %>
+
+<p>
+  <strong>Standard Section:</strong>
+  <%=h @standard_section_note.standard_section_id %>
+</p>
+<p>
+  <strong>User:</strong>
+  <%=h @standard_section_note.user_id %>
+</p>
+<p>
+  <strong>Title:</strong>
+  <%=h @standard_section_note.title %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @standard_section_note.description %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_standard_section_note_path(@standard_section_note) %> |
+  <%= link_to "Destroy", @standard_section_note, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", standard_section_notes_path %>
+</p>

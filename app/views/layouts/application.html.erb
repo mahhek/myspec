@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+	<link rel="shortcut icon" href="/images/favicon.ico" />
+    <title><%= h("MySpecData - #{yield(:title)}" || "MySpecData") %></title>
+    <%= stylesheet_link_tag 'newStyle', 'otherStyle', 'formtastic', 'formtastic_changes', 'menu' %>
+    <%= javascript_include_tag :defaults, :cache => true %>
+	<%= yield(:head) %>
+    <%= include_tiny_mce_if_needed %>
+  </head>
+  <body>
+    <div class="main_container">
+		<div id="msg-app">
+			<%- flash.each do |flash_type, message| -%>
+			  <%= content_tag :div, message, :class => "flash flash#{flash_type}" %>
+			  <% content_tag :script, :type => "text/javascript" do %>
+			    setTimeout("$$('div.flash').each(function(flash){ flash.hide();})", 8000);
+			  <% end %>   
+			<%- end -%>
+		</div>
+      <div class="header_container">
+        <%= render :partial => "/layouts/header" %>
+      </div>
+      <div class="w100">
+        <%= render :partial => "/layouts/new_menu" %>
+      </div>
+     
+      <div class="page_container">
+        <%= yield %>
+      </div>
+
+    </div>
+    <div class="footer_container">
+      <div class="center">
+       	Copyright © 2010, My SpecWriter is a product of My Data. All rights reserved.   <br/>  <%=link_to "Terms and Conditions", "http://www.myspecwriter.com/terms", :target => "_blank" %>
+      </div>
+    </div>
+	
+  </body>
+</html>

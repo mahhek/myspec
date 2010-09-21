@@ -1,0 +1,33 @@
+<b>Search Result (<%=@jobs.count%>)</b>
+<div>
+	<table id="users_table">
+       <tr>
+        <th class="div-no">Job No</th>
+		<th class="sec-no">Job Name</th>
+		<th class="search_div_contact">Contact</th>
+		<th  class="sub-date3">Date</th>
+      
+      </tr>
+	<% if !@jobs.blank? && params[:q].to_s != "" %>
+	  <% for job in @jobs %>
+	    <tr class="<%= cycle("othertdalter", "") %>">
+	      	<td><%=link_to "#{job.number}", job_path(job) %></td>
+            <td><%=link_to "#{job.name}", job_path(job) %></td>
+            <td>
+              <%contact = job.contact%>
+              <%unless contact.blank?%>
+                  <%=h link_to contact.name, edit_contact_path(contact) %>
+                  <%end%>
+            </td>
+            <td>
+              <%= job.created_at.strftime("%m-%d-%Y") %>
+            </td>
+	    </tr>
+	  <% end %>
+	<% else %>
+		<tr>
+	      	<td clospan="4">no results</td>
+	    </tr>
+	<% end %>
+	</table>
+</div>

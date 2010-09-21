@@ -1,0 +1,12 @@
+<% title "Job Information Editor" %>
+<div class="left_page">
+	<div class="lt_nav_container">	
+			<%=render :partial => "clients/client_info"%>
+    </div>
+    <div class="lt_button_container">
+		<div><%= link_to "View Job", job_path(@job), :class => "button-left" %></div>
+	    <div><%= link_to "Archive Job", job_archive_path(@job.id), :class => "button-left", :confirm => "Are you sure you want to Archive this job?" %></div>
+        <div><%= link_to "Cancel", client_path(@client), :class => "button-left" %></div>	
+	 </div>
+</div>
+<%= render :partial => 'form' %>

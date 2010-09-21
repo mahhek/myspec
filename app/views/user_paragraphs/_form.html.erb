@@ -1,0 +1,19 @@
+<% form_for @user_paragraph do |f| %>
+<%=hidden_field_tag "collaborator_id", params[:collaborator_id]%>
+<%=f.hidden_field :part_article_id%>
+<div class="label">
+	<%=f.label :name, "Paragraph Name" %>
+</div>
+<div class="value">
+	<%=f.text_field :name, :size => 70  %>
+</div>
+<div class="label">
+	<%=f.label :paragraph, "Paragraph" %>
+</div>
+<div class="value">
+	<%=f.text_area :paragraph, :rows => 10%><br/><br/>
+	<%=f.submit "Save Changes"%>
+	<br/>
+</div>
+<% end %>
+<br/>

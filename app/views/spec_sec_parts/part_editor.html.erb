@@ -1,0 +1,28 @@
+<% title "Part Editor"%>
+<div class="left_page">
+	<div class="lt_nav_container">
+	    <%= render :partial => "/jobs/job_info" %>
+	  </div>
+</div>
+<div class="right_page">
+	<div><h3 class="head">Part <%=@part.id%> Editor</h3></div>
+<% form_for @specification_section, :url => create_part_path do |f| %>
+	<div><%=submit_tag "Save", :class => "button"%></div>
+	<%=f.hidden_field :id %>
+	<%=hidden_field_tag "part_id", params[:part_id] %>
+	<% for article in Article.part_category_eq(params[:part_id])%>
+		<div>
+			<%=check_box_tag "specification_section[article_ids][]", article.id, @specification_section.part_articles.exists?(:part_id => params[:part_id], :article_id => article.id)%>
+			<%=article.name %>
+		</div>
+		<% for paragraph in Paragraph.part_id_eq(params[:part_id]).article_id_eq(article.id)%>
+			<div>
+				&nbsp;&nbsp;
+				<%=check_box_tag "part_article[article_ids][#{article.id}][paragraph_ids][]",paragraph.id, ArticleParagraph.paragraph_id_eq(paragraph.id).exists?%>
+				<%=paragraph.name%>
+			</div>
+		<% end %>
+	<% end %>
+	<div><%=submit_tag "Save", :class => "button"%></div>
+<% end %>
+</div>

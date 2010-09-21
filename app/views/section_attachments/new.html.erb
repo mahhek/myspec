@@ -1,0 +1,32 @@
+<% title "New Section Attachment" %>
+<% form_for @section_attachment, :html => {:multipart => true} do |f| %>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => "/clients/client_info" %>
+  </div>
+  <div class="lt_button_container">
+	
+	<div><%= link_to "Attachments",section_attachments_path(:specification_section_id => @specification_section.id, :job_id => @job.id), :class => "button-left" %></div>
+  </div>
+</div>
+<div class="right_page">
+	<div>
+		
+		  <%= f.error_messages %>
+		  
+			    <%= f.hidden_field :specification_section_id%>
+		  <p>
+		    <label>Title*</label><br />
+		    <%= f.text_field :title, :style=> "width:530px;" %>
+		  </p>
+		  <p>
+		    <label>Description</label><br />
+		    <%= f.text_area :note, :style=> "width:530px;height:100px"%>
+		  </p>
+			<p>
+				<%=f.file_field :asset %>
+			</p>
+		  <p><%= f.submit "Save Changes"%></p>
+		<% end %>
+	</div>
+</div>

@@ -1,0 +1,2 @@
+module SpecSecPartsHelper
+end

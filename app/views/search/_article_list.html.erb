@@ -1,0 +1,36 @@
+<b>Search Result (<%=@articles.count%>)</b>
+<div>
+    <table id="users_table">
+      <tr>
+		<th class="div-no">Job No</th>
+		<th class="sec-no">Sec No</th>
+		<th class="search_div">Article</th>
+		<th class="sub-date3">Date</th>
+      </tr>
+		<% if !@articles.blank? && params[:q].to_s != "" %>
+      		<% for article in @articles %>
+        	<tr class="<%= cycle("othertdalter", "") %>">
+				<td>
+                  <% job = article.specification_section.specification.job %>
+                 <%=link_to job.number, job%>
+                </td>
+				<td>
+                 <%specification_section = article.specification_section%>
+                <%= link_to("#{specification_section.section.modif_number}" , new_spec_sec_part_path(:specification_section_id => specification_section.id, :job_id => job.id)) %>
+                </td>
+				<td>
+                  <%= link_to("#{article.article.name}" , "/article_paragraphs/new?article_id=#{article.article.id}&job_id=#{job.id}&part_article_id=#{article.id}&part_id=#{article.part_id}&specification_section_id=#{specification_section.id}") %>
+                </td>
+                <td>
+              <%= job.created_at.strftime("%m-%d-%Y") %>
+            </td>
+        	</tr>
+      		<% end %>
+		<% else %>
+			<tr>
+		      	<td colspan="4">no results</td>
+		    </tr>
+		<% end %>
+    </table>
+</div>
+

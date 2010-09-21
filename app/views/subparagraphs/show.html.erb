@@ -1,0 +1,16 @@
+<% title "Subparagraph" %>
+
+<p>
+  <strong>Article Paragraph:</strong>
+  <%=h @subparagraph.article_paragraph_id %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @subparagraph.description %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_subparagraph_path(@subparagraph) %> |
+  <%= link_to "Destroy", @subparagraph, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", subparagraphs_path %>
+</p>

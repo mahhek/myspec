@@ -1,0 +1,28 @@
+The following information has been submitted to My SpecWriter.
+
+Name: <%= @professional.name %>
+Email: <%= @professional.email %>
+Company: <%= @professional.company_name %>
+Location: <%= @professional.physical_address %>
+Mailing Address: <%= @professional.mailing_address %>
+Website: <%= @professional.website %>
+Telephone: <%= @professional.telephone %>
+Fax: <%= @professional.fax %>
+TimeZone: <%= @professional.time_zone %>
+Terms and Conditions: <%= @professional.general_description %>
+
+Certifications:<% certifications = @professional.certifications %><%unless certifications.blank?%><% certifications.each do |certification| %>
+  <%= certification.name %><%end%><%end%>
+
+Divisions:<% divisions = @professional.divisions %><%unless divisions.blank?%><% divisions.each do |division| %>
+  <%= division.name %><%end%><%end%>
+
+
+Click the following link to verify the information has been sent with your authorization.
+<%= @url %>
+
+You may contact support@myspecdata.com with any changes or additional information about becoming a premium provider.
+
+My SpecWriter is an easy to use online design collaboration tool and a great way to save time, save money and stay organized.
+
+The SpecTeam

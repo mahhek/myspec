@@ -1,0 +1,4 @@
+<% title "Edit Subparagraph" %>
+<% form_for @standard_subparagraph, :url => {:action => :update, :standard_section_id => @standard_section_id}, :html => {:class => "form"} do |f| %>
+<%= render 'form', :f => f %>
+<% end %>

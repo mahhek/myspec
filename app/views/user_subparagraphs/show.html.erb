@@ -1,0 +1,20 @@
+<% title "User Subparagraph" %>
+
+<p>
+  <strong>User:</strong>
+  <%=h @user_subparagraph.user_id %>
+</p>
+<p>
+  <strong>User Paragraph:</strong>
+  <%=h @user_subparagraph.user_paragraph_id %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @user_subparagraph.description %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_user_subparagraph_path(@user_subparagraph) %> |
+  <%= link_to "Destroy", @user_subparagraph, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", user_subparagraphs_path %>
+</p>

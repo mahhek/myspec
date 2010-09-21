@@ -1,0 +1,24 @@
+<% title "Paragraph" %>
+
+<p>
+  <strong>Part:</strong>
+  <%=h @paragraph.part_id %>
+</p>
+<p>
+  <strong>Article:</strong>
+  <%=h @paragraph.article_id %>
+</p>
+<p>
+  <strong>Name:</strong>
+  <%=h @paragraph.name %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @paragraph.description %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_paragraph_path(@paragraph) %> |
+  <%= link_to "Destroy", @paragraph, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", paragraphs_path %>
+</p>

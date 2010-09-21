@@ -1,0 +1,34 @@
+<b>Search Result (<%=@specification_sections.count%>)</b>
+<div>
+    <table id="users_table">
+      <tr>
+        <th class="div-no">Job No</th>
+		<th class="sec-no">Sec No</th>
+		<th class="search_div">Section Name</th>
+		<th class="sub-date3">Date</th>
+      </tr>
+		<% if !@specification_sections.blank? && params[:q].to_s != "" %>
+      		<% for specification_section in @specification_sections %>
+        	<tr class="<%= cycle("othertdalter", "") %>">
+				<td>
+                <% job = specification_section.specification.job %>
+                <%=link_to job.number, job%>
+                </td>
+				<td>
+                  <%section = specification_section.section%>
+                  <%= link_to("#{section.modif_number}" , new_spec_sec_part_path(:specification_section_id => specification_section.id, :job_id => job.id)) %>
+                </td>
+				<td><%= link_to("#{section.name}" , new_spec_sec_part_path(:specification_section_id => specification_section.id, :job_id => job.id)) %> </td>
+                <td>
+              <%= job.created_at.strftime("%m-%d-%Y") %>
+            </td>
+        	</tr>
+      		<% end %>
+		<% else %>
+			<tr>
+		      	<td colspan="4">no results</td>
+		    </tr>
+		<% end %>
+    </table>
+</div>
+

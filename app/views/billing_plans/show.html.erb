@@ -1,0 +1,24 @@
+<% title "Billing Plan" %>
+
+<p>
+  <strong>User:</strong>
+  <%=h @billing_plan.user_id %>
+</p>
+<p>
+  <strong>Plan Type:</strong>
+  <%=h @billing_plan.plan_type %>
+</p>
+<p>
+  <strong>Number Of User:</strong>
+  <%=h @billing_plan.number_of_user %>
+</p>
+<p>
+  <strong>Number Of Space:</strong>
+  <%=h @billing_plan.number_of_space %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_billing_plan_path(@billing_plan) %> |
+  <%= link_to "Destroy", @billing_plan, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", billing_plans_path %>
+</p>

@@ -1,0 +1,44 @@
+<% title "Subscription Histories" %>
+<div class="left_page">
+  <div class="lt_nav_container"></div>
+  <div class="lt_button_container">
+   	<%= render :partial => 'members/admin_menu' %>
+  </div>
+</div>
+<div class="right_page">
+	<h3>Pending Payment</h3>
+	<table id="jobs_table">
+	  <tr>
+	    <th class="due">Due On</th>
+	    <th>Description</th>
+	    <th class="money">Amount</th>
+		<th class="status">Status</th>
+	  </tr>
+	  <% for subscription_history in @subscription_histories %>
+	    <tr>
+	      <td><%=h subscription_history.due_on %></td>
+	      <td><%=h subscription_history.description %></td>
+	      <td class="money"><%=h number_to_currency(subscription_history.amount) %></td>
+		  <td class="status"><%=h subscription_history.status %></td>
+	    </tr>
+	  <% end %>
+	</table>
+	<br/>
+	<h3>Histories</h3>
+	<table id="jobs_table">
+	  <tr>
+	    <th class="due">Date</th>
+	    <th>Description</th>
+	    <th class="money">Amount</th>
+		<th class="status">Status</th>
+	  </tr>
+	  <% for subscription_history in @closed_subscription_histories %>
+	    <tr>
+	      <td><%=h subscription_history.due_on %></td>
+	      <td><%=h subscription_history.description %></td>
+	      <td class="money"><%=h number_to_currency(subscription_history.amount) %></td>
+		  <td class="status"><%=h subscription_history.status %></td>
+	    </tr>
+	  <% end %>
+	</table>
+</div>

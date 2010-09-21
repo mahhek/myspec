@@ -1,0 +1,24 @@
+<div>
+	<h3><%=yield(:title)%></h3>
+</div>
+<div>
+    	<table id="jobs_table">
+	      <tr>
+	        <th class="job-no"><%= order @search, :by => :number, :as => "Job No"%></th>
+			<th class="job-name"><%= order @search, :by => :name, :as => "Job Name"%></th>
+			<th class="job-contact"><%= order @search, :by => :contact_name, :as => "Contact Name"%></th>
+			<th class="job-status" style="width:13%"><%= order @search, :by => :status, :as => "Status"%></th>
+			<th class="sub-rem2"></th>
+	      </tr>
+	      <% for job in @jobs %>
+	        <tr class="<%= cycle("othertdalter", "") %>">
+	          	<td><%=h job.number %></td>
+				<td><%=  link_to job.name, job %></td>
+				<td><%=h link_to job.contact.name, edit_contact_path(job.contact) %></td>
+				<td><%=h job.status %></td>
+				<td><%= link_to(image_tag("/images/minus.png"), job, :confirm => 'Are you sure want to remove this job?', :method => :delete) if job.specifications.blank? %></td>
+	        </tr>
+	      	<% end %>
+	    </table>
+	    <%= will_paginate @jobs %>
+</div>

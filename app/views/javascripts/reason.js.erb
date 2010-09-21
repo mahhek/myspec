@@ -1,0 +1,19 @@
+document.observe('dom:loaded', function(){
+	if ($('section_request_status_deny').checked){
+		$('section_request_reason_input').show();
+	}else{
+		$('section_request_reason_input').hide();
+	}
+	$('section_request_status_deny').observe('click', function(){
+		$('section_request_reason_input').show();
+	});
+	$('section_request_status_received').observe('click', function(){
+		$('section_request_reason_input').hide();
+	});
+	$('section_request_status_pending').observe('click', function(){
+		$('section_request_reason_input').hide();
+	});
+	$('section_request_status_approved').observe('click', function(){
+		$('section_request_reason_input').hide();
+	});
+});

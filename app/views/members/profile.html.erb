@@ -1,0 +1,78 @@
+<% title "Recent Sections"%>
+<% javascript 'scriptaculous/scriptaculous'%>
+<% javascript 'modalbox/modalbox' %>
+<% javascript 'notification'%>
+<% stylesheet 'modalbox'%>
+<div class="left_page">
+
+  <div class="lt_nav_container">
+  	<%= render :partial => 'member_info' %>
+
+  </div>
+  <div class="lt_button_container">
+    <%#= render :partial => 'member_menu' %>
+	<div><%= link_to "Change Member Password", new_password_path, :class => 'button-left' %></div>
+  </div>
+</div>
+<div class="right_page">
+	<div id="collab">
+		<% if @collaborator != nil %>
+			<% form_for @collaborator, :url => collaborator_respond_path do |f| %>
+				<%=f.hidden_field :id%>
+				<%=submit_tag "Accept", :name => "accept_button"%> or <%=submit_tag "Deny", :name => "deny_button"%>
+			<% end %>
+		<% end %>
+	</div>
+	<%unless @notification.blank?%>
+	  		<div id="msg_app" style="width:96.5%">
+				<div class="notificationmain">
+	              <div class="notificationsubmain">
+	                <img src="/images/form-ic-info.png">
+	                <%= link_to_remote @notification.title, :url => {:action => "show_notification", :id => @notification.id} %>
+	              </div>
+	              <div class="notificationclose">
+	               <%= link_to "x", "members/hide_notification/#{@notification.id}", :class => "MB_close" %>
+	                </div>
+	            </div>
+			</div>
+	        <%end%>
+	<br/>
+  <h3><%=yield(:title)%></h3>
+  <div >
+    <table id="users_table">
+      <tr>
+		<th class="job-no">Job No</th>
+		<th class="sec-no">Section No</th>
+		<th class="sec-name">Section Name</th>
+		<th class="sec-date">Date</th>
+      </tr>
+      <% for specification_section in @specification_sections %>
+        <tr class='<%=( specification_section.user != nil) ?  "shared" : "" %> <%= cycle("othertdalter", "") %>'>
+			<td><%=link_to specification_section.specification.job.number, specification_section.specification.job%></td>
+			<td><%=specification_section.section.number%></td>
+			<td><%= (specification_section.user == nil) ? (link_to(specification_section.section.name, new_spec_sec_part_path(:specification_section_id => specification_section, :job_id => specification_section.specification.job), :class=> "specSectionName")) : link_to(specification_section.section.name, shared_section_editor_path(:specification_section_id => specification_section, :job_id => @job, :collaborator_id => @collaborator), :class=> "specSectionName") %><%#= link_to("#{specification_section.section.name}" , new_spec_sec_part_path(:specification_section_id => specification_section.id, :job_id => specification_section.specification.job.id)) %> </td>
+			<td><%=specification_section.updated_at.strftime("%m-%d-%Y")%></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+	<!-- <h3>Recent Shared Sections</h3>
+	  <div >
+	    <table id="users_table">
+	      <tr>
+			<th class="job-no">Job No</th>
+			<th class="sec-no">Section No</th>
+			<th class="sec-name">Section Name</th>
+			<th class="sec-date">Date</th>
+	      </tr>
+	      <% for specification_section in @shared_specification_sections %>
+	        <tr class="<%= cycle("othertdalter", "") %>">
+				<td><%=link_to specification_section.specification.job.number, shared_job_path(:collaborator_id => Collaborator.user_id_eq(specification_section.specification.job.client.user).email_eq(current_user.email),:job_id => specification_section.specification.job)%></td>
+				<td><%=specification_section.section.number%></td>
+				<td><%=h link_to(specification_section.section.name, new_spec_sec_part_path(:specification_section_id => specification_section, :collaborator_id => Collaborator.user_id_eq(specification_section.specification.job.client.user).email_eq(current_user.email))) %><%#= (specification_section.user == nil) ? (link_to(specification_section.section.name, new_spec_sec_part_path(:specification_section_id => specification_section, :job_id => @job), :class=> "specSectionName")) : link_to(specification_section.section.name, shared_section_editor_path(:specification_section_id => specification_section, :job_id => @job, :collaborator_id => @collaborator), :class=> "specSectionName") %><%#= link_to("#{specification_section.section.name}" , new_spec_sec_part_path(:specification_section_id => specification_section.id, :job_id => specification_section.specification.job.id)) %> </td>
+				<td><%=specification_section.updated_at.strftime("%m-%d-%Y")%></td>
+	        </tr>
+	      <% end %>
+	    </table>
+	  </div> -->
+</div>

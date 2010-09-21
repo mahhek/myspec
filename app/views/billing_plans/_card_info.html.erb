@@ -1,0 +1,122 @@
+<% javascript 'payment_info'%> 
+ <div id="cc-content" class="content-tab" style="">
+
+	<h3>Payment Info</h3>
+<p>The cardholder's address is provided from the subscribers information. Please enter the cardholders name as it appears on the credit card. MySpecwriter does not store credit card information. All transactions are processed with authorize.net.</p>
+<div id="card">
+
+<div>
+  <% form_tag  "/billing_plans/payment" do |f| %>
+	<%=hidden_field_tag :summary, params[:summary]%>
+   <div class="card-label" >Card Type*</div>
+    <div class="card-value">
+      <%@credit_card_information = CreditCardInformtaion.find_by_user_id(current_user.id)%>
+             <%unless @credit_card_information.blank?%>
+               <select id="creditcard_type" name="creditcard_type" >
+                <option value="Visa" <%= @credit_card_information.is_type("Visa")%>>Visa</option>
+                <option value="MasterCard" <%= @credit_card_information.is_type("MasterCard")%> >MasterCard</option>
+                <option value="Amex" <%= @credit_card_information.is_type("Amex")%>>Amex</option>
+                <option value="Discover" <%= @credit_card_information.is_type("Discover")%>>Discover</option>
+              </select>
+              <%else%>
+              <select id="creditcard_type" name="creditcard_type" >
+                <option value="Visa">Visa</option>
+                <option value="MasterCard">MasterCard</option>
+                <option value="Amex">Amex</option>
+                <option value="Discover">Discover</option>
+              </select>
+              <%end%>
+              </div>
+    <div class="card-label" >Card Number*</div>
+    <div class="card-value">
+      <%unless @credit_card_information.blank?%>
+  		<%= text_field_tag "card_number", @credit_card_information.credit_card, :size => 53 %>
+  <%else%>
+  	<%= text_field_tag "card_number", "", :size => 53 %>
+  <%end%>
+  </div>
+    <div class="card-label" >Cardholder's Name*</div>
+    <div class="card-value">
+       <%unless @credit_card_information.blank?%>
+  <%= text_field_tag "cardholder_name", @credit_card_information.cardholder, :size => 53 %>
+  <%else%>
+  <%= text_field_tag "cardholder_name", "", :size => 53 %>
+  <%end%>
+  </div>
+	<div class="card-label" >Expirating date*</div>
+    <div class="card-value">        
+		<select name="expmo" class="selinput" tabindex="3">
+                <option value="1">01</option>
+                <option value="2">02</option>
+                <option value="3">03</option>
+                <option value="4">04</option>
+                <option value="5">05</option>
+                <option value="6">06</option>
+                <option value="7" selected="selected">07</option>
+                <option value="8">08</option>
+                <option value="9">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+        </select>
+        <select name="expyr" class="selinput" tabindex="4">
+               <option value="2009">2009</option>
+               <option value="2010">2010</option>
+               <option value="2011" selected="selected">2011</option>
+               <option value="2012">2012</option>
+               <option value="2013">2013</option>
+               <option value="2014">2014</option>
+               <option value="2015">2015</option>
+               <option value="2016">2016</option>
+               <option value="2017">2017</option>
+               <option value="2018">2018</option>
+               <option value="2019">2019</option>
+               <option value="2020">2020</option>
+               <option value="2021">2021</option>
+               <option value="2022">2022</option>
+               <option value="2023">2023</option>
+               <option value="2024">2024</option>
+               <option value="2025">2025</option>
+               <option value="2026">2026</option>
+               <option value="2027">2027</option>
+       </select>
+	</div>
+	<div class="card-label" >Security Code*</div>
+	<div class="card-value"><%= text_field_tag "security_code", "", :size => 53 %></div>
+    
+      <div class="card-label" >    <br></div>
+    <div class="card-value"><br></div>
+	
+   
+
+   
+    </div>
+	
+
+
+</div>
+
+</div>
+<div id="seal">
+	
+	<!-- (c) 2005, 2010. Authorize.Net is a registered trademark of CyberSource Corporation --> <div class="AuthorizeNetSeal"> <script type="text/javascript" language="javascript">var ANS_customer_id="e8e7f356-3167-418c-adba-c2b9905b88b5";</script> <script type="text/javascript" language="javascript" src="//verify.authorize.net/anetseal/seal.js" ></script> <a href="http://www.authorize.net/" id="AuthorizeNetText" target="_blank">Merchant Services</a> </div>
+</div>
+<div style="float:left;width:560px;margin-top:20px">
+	<h3>Billing Info</h3>
+<% fields_for current_user do |user| %>
+	<%=user.hidden_field :address%><%=user.hidden_field :city%><%=user.hidden_field :state%><%=user.hidden_field :zip%><%=user.hidden_field :country%>
+		<div class="card-label" >&nbsp;</div><div class="card-value"><%=check_box_tag "use_user_info"%> Use subscriber information</div>
+		<div class="card-label" >Address*</div>
+		<div class="card-value"><%=user.text_field :billing_address, :size => 53%></div>
+		<div class="card-label" >City*</div>
+		<div class="card-value"><%=user.text_field :billing_city, :size => 53%></div>
+		<div class="card-label" >State*</div>
+		<div class="card-value"><%=user.text_field :billing_state, :size => 53%></div>
+		<div class="card-label" >Zip*</div>
+		<div class="card-value"><%=user.text_field :billing_zip, :size => 53%></div>
+		<div class="card-label" >Country*</div>
+		<div class="card-value"><%=user.text_field :billing_country, :size => 53%></div>
+	<% end %>
+	<div class="card-label" >&nbsp;</div><div class="card-value"><%=submit_tag%></div>
+<%end%>
+</div>

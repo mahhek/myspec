@@ -1,0 +1,9 @@
+<% form_for @spec_sec_part do |f| %>
+  <%= f.error_messages %>
+    <%= f.hidden_field :specification_section_id %>
+  <p>
+    <%= f.label :part_id %><br />
+    <%= f.text_field :part_id %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

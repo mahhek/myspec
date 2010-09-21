@@ -1,0 +1,13 @@
+<div id="selector">
+	<ul class="navigation">
+		<li><%= link_to "MySpec", profile_path, :class=> ( params[:controller] == "users"  && params[:action] == "profile" ?  "selected" : nil) %></li>
+		<li><%= link_to "Clients", clients_path , :class=> ( params[:controller] == "clients" || params[:controller] == "contacts"  ?  "selected" : nil)%></li>
+		<li><%= link_to "Jobs", jobs_path , :class=> ( params[:controller] == "jobs" || params[:controller] == "specification_sections"  || params[:controller] == "spec_sec_parts" || params[:controller] == "article_paragraphs" || params[:controller] == "subparagraphs" ?  "selected" : nil)%></li>
+		<li><%= link_to "Search", search_path, :class=> ( params[:controller] == "search"  ?  "selected" : nil) %></li>
+		<%- if current_user.has_role?(:owner) %>
+          	<li><%= link_to "Owner", admin_path, :class=> ( params[:controller] == "settings"  ?  "selected" : nil) %></li>
+        <%- elsif current_user.has_role?(:admin) %>
+			<li><%= link_to "Admin", admin_path, :class=> ( params[:controller] == "settings"  ?  "selected" : nil) %></li>
+		<%- end %>
+	</ul>
+</div>

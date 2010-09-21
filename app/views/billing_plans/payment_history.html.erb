@@ -1,0 +1,46 @@
+<% title "Payment History" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<strong>Team Member:</strong>
+    <br/>
+       Archive team members before reducing the number of allowed users. Contact support for subscription pricing over 50 users.
+       <br/>
+       <br/>
+
+    <strong>Premium Professional:</strong>
+    <br/>
+     Premium professional subscription provides additional information and displays a logo and weblinks.
+     <br/>
+      <br/>
+     	<strong>Storage:</strong>
+    <br/>
+    Your Basic subscription comes with 5 GB of storage for documents and attachments. There are no fees for storing specification language.  Subscribers may purchase additional storage.
+    
+  </div>
+  <div class="lt_button_container">
+	<%= render :partial => 'members/admin_menu' %>
+
+  </div>
+</div>
+<div class="right_page">	
+	<h3><%=yield(:title)%></h3>
+<div>
+	<table id="clients_table">
+      <tr>
+        <th class="client-name"><%= order @search, :by => :number, :as => "Invoice"%></th>
+        <th class="client-address"><%= order @search, :by => :created_at, :as => "Date"%></th>
+        <th class="client-phone"><%= order @search, :by => :amount, :as => "Amount"%></th>
+		<th class="client-name"><%= order @search, :by => :invoice_type, :as => "Type"%></th>
+      </tr>
+      <% for invoice in @invoices %>
+        <tr class="<%= cycle("othertdalter", "") %>">
+			<td><%=h invoice.number%></td>
+          	<td><%=h invoice.created_at.strftime("%m-%d-%Y")%></td>
+          	<td><%=h number_to_currency(invoice.amount)%></td>	
+			<td><%=h (invoice.invoice_type)%></td>	
+        </tr>
+      <% end %>
+    </table>
+    <%= will_paginate @invoices %>
+</div>
+</div>

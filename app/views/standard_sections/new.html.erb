@@ -1,0 +1,12 @@
+<% title "New Job Standard Section" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => "/jobs/job_info" %>
+  </div>
+  <div class="lt_button_container">
+    <div><%= link_to "Back to Spec Edit", new_spec_sec_part_path(:job_id => params[:job_id], :specification_section_id => params[:specification_section_id]),:class => "button-left"  %></div>
+  </div>
+</div>
+<div class="right_page">
+<%= render :partial => 'form' %>
+</div>

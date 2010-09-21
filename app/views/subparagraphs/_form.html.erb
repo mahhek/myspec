@@ -1,0 +1,108 @@
+<% title "Paragraph Editor" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => "/jobs/job_info" %>
+	<%#= render :partial => "/clients/client_info" %>
+  </div>
+  <div class="lt_button_container">
+	
+    <div><%= link_to "Cancel", new_spec_sec_part_path(:job_id => @job.id, :specification_section_id => @specification_section.id, :collaborator_id => params[:collaborator_id]), :class => "button-left" %></div>
+  	
+	</div>
+
+</div>
+<div class="right_page">
+	<div>
+		<h3><%=yield(:title)%></h3>
+	</div>
+	<div class="label">Section:</div><%=@specification_section.section.modif_number%> - <%=@specification_section.section.name%><br />
+	<div class="label">Part:</div><%=@article_paragraph.part_article.part.id%> - <%=@article_paragraph.part_article.part.name%><br />
+	<div class="label">Article:</div><%=@article_paragraph.part_article.article.number%> - <%=@article_paragraph.part_article.article.name%><br />
+	<div class="label">Paragraph:</div><div class="value"><%=@article_paragraph.paragraph.name%></div><br />
+	<div class="label">Description:</div><div class="value"><%=@article_paragraph.paragraph.description%></div><br />
+	
+    <div style="float:left"><%= f.error_messages %></div>
+    
+	<div style="float:left;">
+		<%=hidden_field_tag "collaborator_id", params[:collaborator_id]%>
+    	<%= f.hidden_field :article_paragraph_id %>
+  		<div class="label">
+    	<%= f.label :description, "Subparagraph" %>
+		</div>
+		<div class="value">
+    	<%= f.text_area :description, :rows => 6, :cols => 60 %>
+  		</div>
+	</div>
+	<div style="float:left;">
+		<div class="label">&nbsp;</div>
+		<div class="value">
+		<% if params[:action] == "edit" %>
+			<%= f.submit "Save Changes"%>
+		<% else %>
+			<%= f.submit "Add Subparagraph"%>
+		<% end %>
+		</div>
+	</div>
+	<br/>
+    <div style="float:left;">
+	<h3>Already Added Subparagraph</h3>
+		<table id="clients_table">
+			<tr>	
+				<th class="sub-no">No</th>
+				<th class="sub-info">Subparagraph</th>
+				<th class="sub-author">Author</th>
+			    <th class="sub-date2">Date</th>
+				<th class="sub-rem2"></th>
+			  </tr>
+			<% if !@has_subparagraphs.blank? %>
+				<% a = 1 
+				for subs in @has_subparagraphs %>
+					<tr class="<%= cycle("othertdalter", "") %>">
+						<td><%=a%></td>
+						<td><%= link_to subs.description, edit_subparagraph_path(subs, :job_id => params[:job_id], :specification_section_id => params[:specification_section_id], :article_paragraph_id => params[:article_paragraph_id]) %></td>
+						<td><%=subs.user.username%></td>
+						<td><%=subs.created_at.strftime("%m-%d-%Y")%></td>
+						<td><%= link_to image_tag("/images/minus.png"), subs, :confirm => 'Are you sure want to remove this subparagraph?', :method => :delete %></td>
+					</tr>
+				<% 
+				a += 1
+				end %>
+			<%	else %>
+			<tr>
+				<td colspan="5">No subparagraph found</td>
+			</tr>
+			<%	end %>
+		</table>
+        </div>
+    <div style="float:left">
+		<h3>
+          &nbsp;
+        </h3>
+	</div>
+  	
+	<div style="float:left">
+		<h3>Other Job with this Paragraph</h3>
+		<table id="clients_table">
+			<tr>
+				<th class="job-no">Job No.</th>
+				<th class="sub-info2">Subparagraph</th>
+				<th class="sub-author">Author</th>
+			    <th class="sub-date">Date</th>
+			  </tr>
+		<% if !@subparagraphs.blank? %>
+			<% for subs in @subparagraphs %>
+				<tr class="<%= cycle("othertdalter", "") %>">
+					<td><%= link_to subs.article_paragraph.part_article.specification_section.specification.job.number, subs.article_paragraph.part_article.specification_section.specification.job%></td>
+					<td><%=subs.description%></td>
+					<td><%=subs.user.username%></td>
+					<td><%=subs.created_at.strftime("%m-%d-%Y")%></td>
+				</tr>
+			<% end %>
+		<%	else %>
+			<tr>
+				<td colspan="5">No subparagraph found</td>
+			</tr>
+		<%	end %>
+		</table>
+	</div>
+</div>

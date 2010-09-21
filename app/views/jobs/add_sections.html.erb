@@ -1,0 +1,66 @@
+<% title "Division Editor"%>
+  <div class="left_page">
+    <div class="lt_nav_container">
+      <%#= render :partial => "/jobs/job_info" %>
+		<%= render :partial => "/clients/client_info" %>
+    </div>
+    <div class="lt_button_container">
+            <div><%= link_to "Section Master",add_master_path(:job_id => @job.id, :specification_id => @specification.id, :collaborator_id => params[:collaborator_id]), :class => 'button-left' %></div>
+			<div><%= link_to "Cancel", shared_job_path(:job_id => @job.id, :collaborator_id => params[:collaborator_id]), :class => 'button-left' %></div>
+    </div>
+  </div>
+  <div class="right_page">
+         <div>
+        	<h3 class="head">Add Sections</h3>
+      	</div>
+      	<div>
+        	<h3 class="head"><%=yield(:title)%></h3>
+      	</div>
+		<div>
+		<b><%=@specification.division.modif_number%> - <%=@specification.division.name%></b>
+		<div>
+			<table id="clients_table">
+				<tr>
+					<th class="sec-no">Sec No.</th>
+					<th class="sec-name">Sec Name</th>
+					<th class="sec-info">Description</th>
+				</tr>
+				<% for specification_section in @have_specification_sections %>
+					<tr class="<%= cycle("othertdalter", "") %>">
+						<td><b><%= specification_section.section.modif_number%></b></td>
+						<td><%= specification_section.section.name%></td>
+						<td></td>
+					</tr>
+		        <% end %>
+			</table>
+		</div>
+		<br/>
+		</div>
+		<% form_for @specification_section, :url => create_sections_path, :html => {:class => "form"} do |f| %>
+		<div><%#= f.submit "Save Changes" %></div>
+      <div>
+		<h3>Available Sections from Job Template</h3>
+        <!-- <div><%#= check_box_tag('check_all', 'check_all', false,  :onClick => "toggleCheckBoxes('new_specification_section')")%> All</div> -->
+        <%= f.hidden_field :specification_id %>
+		<%= hidden_field_tag "collaborator_id", params[:collaborator_id]%>
+		<table id="jobs_table">
+			<tr>
+				<th class="sec-no">Sec No.</th>
+				<th class="sec-name">Sec Name</th>
+				<th class="sec-info">Description</th>
+			</tr>
+			<% for section in @sections %>
+			<tr class="<%= cycle("othertdalter", "") %>">
+	          		<% fields_for "sections[]", section do |sec| %>
+						<td><%= sec.check_box :id, :checked => false %> <b><%= section.modif_number%></b></td>
+						<td><%= section.name%></td>
+						<td colspan="1"></td>
+					<% end %>
+				</tr>
+	        <% end %>
+		</table>
+      </div>
+	<br/>
+	<div><%= f.submit "Add Section" %></div>
+    <% end %>
+</div>

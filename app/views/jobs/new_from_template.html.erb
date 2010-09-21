@@ -1,0 +1,36 @@
+<% title "Create from job template"%>
+<div class="grid_11">
+  <div class="grid_12 clearfix">&nbsp;</div>
+  <% form_for @job, :url => {:action => "create_from_template"}, :html =>{:class => "form"} do |f| %>
+    <%= f.error_messages %>
+    <%= hidden_field_tag "template_id", params[:template_id]%>
+    <%= f.hidden_field :client_id %>
+    <ul>
+      <li class="clearfix">
+        <%= f.label :name, "Name",:class => "grid_2" %>
+        <%= f.text_field :name %>
+      </li>
+      <li class="clearfix">
+        <%= f.label :contact_id, "Contact", :class => "grid_2"  %>
+        <%= f.select :contact_id, Contact.client_id_equals(params[:client_id]).collect {|p| [p.name, p.id]}%>
+      </li>
+      <li class="clearfix">
+        <%= f.label :job_type, "Job Classification", :class => "grid_2"  %>
+        <%= f.select :job_type, ["Small Project","Comprehensive","Large Project"] %>
+      </li>
+      <li class="clearfix">
+        <%= f.label :state,"State", :class => "grid_2"  %>
+        <%= f.select :state, options_for_select([ "Active", "Completed", "In Progress", "On Hold", "Planned", "Warrantee" ]) %>
+      </li>
+      <li class="clearfix">
+        <%= f.label :po_number, "PO Number", :class => "grid_2"  %>
+        <%= f.text_field :po_number %>
+      </li>
+
+      <li class="clearfix"><%= f.submit "Save Changes", :class => "button" %></li>
+    </ul>
+  <% end %>
+</div>
+<div class="grid_12 clearfix">
+  <%= link_to "Back to Job", client_path(params[:client_id]), :class => 'button' %>
+</div>

@@ -1,0 +1,8 @@
+<option value="">--select subparagraph--</option>
+<% 
+i = 1
+for subparagraph in @standard_subparagraphs %>
+	<option value="<%=subparagraph.id%>"><%=i%></option>
+<% 
+i += 1
+end %>

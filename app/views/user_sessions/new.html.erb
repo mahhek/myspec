@@ -1,0 +1,90 @@
+<% title "Login"%>
+<div id="top-logo">
+	
+</div>
+<% form_for @user_session, :html => {:class => "form"} do |f| %>
+
+	<table>
+		
+		<tr>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form" colspan="2" id="msg">
+				<%- flash.each do |flash_type, message| -%>
+				  <%= content_tag :div, message, :class => "flash flash#{flash_type}" %>
+				<%- end -%>
+			</td>
+			
+		</tr>
+		
+		<tr>
+			<td class="form">
+			
+							<%= f.label :username %>
+			</td>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form">
+							<%= f.text_field :username %>
+			</td>
+		</tr>
+		<tr>
+			<td class="form">
+							<%= f.label :password %>
+			</td>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form">
+							<%= f.password_field :password %>
+			</td>
+		</tr>
+		<tr>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form">
+							<%= f.check_box :remember_me %> <%= f.label :remember_me, "Remember me on this computer?"%>
+			</td>
+		</tr>
+		<tr>
+			<td class="form" colspan="3">
+						&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form">
+							<%= f.submit "Login", :class => "button" %>
+			</td>
+		</tr>
+		<tr>
+			<td class="form" colspan="3">
+						&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td class="form" colspan="3">
+						&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td class="form" colspan="1">
+						&nbsp;
+			</td>
+			<td class="form" colspan="2">
+				Forgot <%= link_to "Password?", new_password_reset_path %> <%= link_to "Sign Up", signup_path %>
+			</td>
+		</tr>
+	</table>
+<% end %>

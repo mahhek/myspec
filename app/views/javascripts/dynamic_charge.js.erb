@@ -1,0 +1,226 @@
+document.observe('dom:loaded', function(){
+
+	var now = 0
+		<% if !current_user.has_role?(:evaluator) %>
+		$('up').observe('click', function(){
+			var cur = $('billing_plan_number_of_user').getValue();
+            var cur_charge = $('cur_charge').innerHTML;
+            
+            if (cur < 100){
+            cur_charge = parseInt(cur_charge) + 10;
+			now = parseInt(cur)+1
+			$('billing_plan_number_of_user').setValue(now);
+            }
+			total = (now) * 10;
+            $('cur_charge').update(cur_charge);
+			document.getElementById('down').innerHTML = '<%=link_to image_tag("minus_r.png"), "", :onclick => "javascript: return false;"%>';
+			$('current_charge').update(total);
+			
+				new Ajax.Updater('','/member_charge', {
+			  		method: 'get',
+			  		parameters: {num_of_user: $('billing_plan_number_of_user').getValue(), num_of_space: $('billing_plan_number_of_space').getValue(), premium_professionals: $('premium_professionals').getValue()},
+			  	});
+
+		});
+		$('down').observe('click', function(){
+			var cur = $('billing_plan_number_of_user').getValue();
+            var cur_charge = $('cur_charge').innerHTML;
+            now = cur
+			<% if current_user.billing_plan.plan_type_id == 1 %>
+				total = <%=current_user.total_member + 1 %>
+			<%else%>
+				total = <%=current_user.total_member %>
+			<%end%>
+			if (cur > total){
+				now = parseInt(cur)-1
+                cur_charge = parseInt(cur_charge) - 10;
+				$('billing_plan_number_of_user').setValue(now);
+			}else{
+				document.getElementById('down').innerHTML = '<%=link_to image_tag("block.png"), "", :onclick => "javascript: return false;"%>';
+				alert('You must archive a team member before reducing your subscription.');
+			}
+			total = (now) * 10;
+            $('cur_charge').update(cur_charge);
+			$('current_charge').update(total);
+			
+				new Ajax.Updater('','/member_charge', {
+			  		method: 'get',
+			  		parameters: {num_of_user: $('billing_plan_number_of_user').getValue(), num_of_space: $('billing_plan_number_of_space').getValue(), premium_professionals: $('premium_professionals').getValue()},
+			  	});
+		});
+        $('up1').observe('click', function(){
+			var cur = $('billing_plan_number_of_space').getValue();
+            var cur_charge = $('cur_charge').innerHTML;
+            document.getElementById('down1').innerHTML = '<%=link_to image_tag("minus_r.png"), "", :onclick => "javascript: return false;"%>';
+            now = parseInt(cur)
+            if(now > 5)
+            {
+              old_total = (now - 5) / 5 * 2;
+            }
+            else
+            {
+              old_total = 0
+            }
+			now = parseInt(cur)+5
+			$('billing_plan_number_of_space').setValue(now);
+
+            if(now > 5)
+            {
+              total = (now - 5) / 5 * 2;
+            }
+            else
+            {
+              total = 0
+            }
+            
+            difference = total - old_total
+            cur_charge = parseInt(cur_charge) + difference
+            
+            $('cur_charge').update(cur_charge);
+			$('current_charge_storage').update(total);
+				new Ajax.Updater('','/member_charge', {
+			  		method: 'get',
+			  		parameters: {num_of_user: $('billing_plan_number_of_user').getValue(), num_of_space: $('billing_plan_number_of_space').getValue(), premium_professionals: $('premium_professionals').getValue()},
+			  	});
+		});
+		$('down1').observe('click', function(){
+			var cur = $('billing_plan_number_of_space').getValue();
+			var cur_charge = $('cur_charge').innerHTML;
+			if ((cur-5) > (<%=current_user.storage_count%>/1048576)){
+             now = parseInt(cur)
+                if(now > 5)
+                {
+                  old_total = (now - 5) / 5 * 2;
+                }
+                else
+                {
+                  old_total = 0
+                }
+				now = parseInt(cur)-5
+                if(now > 5)
+                {
+                  total = (now - 5) / 5 * 2;
+                }
+                else
+                {
+                  total = 0
+                }
+                 difference = old_total - total
+                cur_charge = parseInt(cur_charge) - difference
+                $('cur_charge').update(cur_charge);
+				$('billing_plan_number_of_space').setValue(now);
+			}else{
+				document.getElementById('down1').innerHTML = '<%=link_to image_tag("block.png"), "", :onclick => "javascript: return false;"%>';
+				//$('down').html('test')
+				alert('You must remove document and attachment files before reducing your subscription.');
+			}
+
+            if(now > 5)
+            {
+              total = (now - 5) / 5 * 2;
+            }
+            else
+            {
+              total = 0
+            }
+			$('current_charge_storage').update(total);
+				new Ajax.Updater('','/member_charge', {
+			  		method: 'get',
+			  		parameters: {num_of_user: $('billing_plan_number_of_user').getValue(), num_of_space: $('billing_plan_number_of_space').getValue(), premium_professionals: $('premium_professionals').getValue()},
+			  	});
+		});
+        $('premium_professionals').observe('click', function(){
+			var cur = $('premium_professionals').getValue();
+            var cur_charge = $('cur_charge').innerHTML;
+            if(cur == 1)
+            {
+              total = 10
+              cur_charge = parseInt(cur_charge) + 10
+              $('cur_charge').update(cur_charge);
+            }
+            else
+            {
+              total = 0
+              cur_charge = parseInt(cur_charge) - 10
+              $('cur_charge').update(cur_charge);
+            }
+			$('current_charge_professional').update(total);
+				new Ajax.Updater('','/member_charge', {
+			  		method: 'get',
+			  		parameters: {num_of_user: $('billing_plan_number_of_user').getValue(), num_of_space: $('billing_plan_number_of_space').getValue(), premium_professionals: $('premium_professionals').getValue()},
+			  	});
+		});
+
+		if ($('billing_plan_plan_type_id_1').checked == true){
+			$('billing_plan_number_of_user_input').hide();
+			$('card_info').hide();
+		}else{
+			$('billing_plan_number_of_user_input').show();
+			$('card_info').show();
+		}
+		$('billing_plan_plan_type_id_1').observe('click', function(){
+			$('billing_plan_number_of_user_input').hide();
+			$('card_info').hide();
+			$('current_charge').update("0");
+			$('billing_plan_number_of_user').setValue(1);
+		});
+		$('billing_plan_plan_type_id_2').observe('click', function(){
+			$('billing_plan_number_of_user_input').show();
+			$('billing_plan_number_of_user').setValue(2);
+			$('card_info').show();
+			$('current_charge').update("20");
+		});
+		$('billing_plan_plan_type_id_3').observe('click', function(){
+			$('billing_plan_number_of_user_input').show();
+			$('billing_plan_number_of_user').setValue(3);
+			$('current_charge').update("0");
+			$('card_info').show();
+		});
+		$('billing_plan_number_of_user').observe('keyup', function(){
+			var cur = $('billing_plan_number_of_user').getValue();
+			if( cur != "" && parseInt(cur) >0){
+				total = cur * 10;
+				$('current_charge').update('$' + total);
+			}else if(cur == 0){
+				$('current_charge').update("0");
+			}else{
+				$('billing_plan_number_of_user').setValue(1);
+				$('current_charge').update("$10");
+			}
+		});
+		
+	<% else %>
+		$('billing_plan_number_of_user').observe('keyup', function(){
+			var cur = $('billing_plan_number_of_user').getValue();
+			if( cur != "" && parseInt(cur) >2){
+				total = (cur - 2) * 10;
+				$('current_charge').update(total);
+			}else if(cur == 0){
+				$('current_charge').update("2");
+			}else{
+				$('billing_plan_number_of_user').setValue(2);
+				$('current_charge').update("0");
+			}
+		});
+		$('up').observe('click', function(){
+			var cur = $('billing_plan_number_of_user').getValue();
+			now = parseInt(cur)+1
+			$('billing_plan_number_of_user').setValue(now);
+			total = (now - 2) * 10;
+			$('current_charge').update('$'+total);
+		});
+		$('down').observe('click', function(){
+			var cur = $('billing_plan_number_of_user').getValue();
+            alert(cur);
+			if (cur > 2){
+				now = parseInt(cur)-1
+                
+				$('billing_plan_number_of_user').setValue(now);
+			}
+			total = (now - 2) * 10;
+			$('current_charge').update('$'+total);
+		});
+	<% end %>
+	
+	
+});

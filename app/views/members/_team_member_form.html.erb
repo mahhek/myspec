@@ -1,0 +1,20 @@
+<%=error_messages_for :user %>
+<% f.inputs do %>
+	<%=f.input :first_name, :label => "Member name", :required => true %>
+	<%#=f.input :last_name %>	
+	<%=f.input :position %>
+	<%=f.input :company %>
+	<%=f.input :address, :input_html => {:rows => 7} %><br/>
+	<%=f.input :telephone %>
+	<%=f.input :fax %>
+	<%=f.input :other %><br/>
+	<%=f.input :email, :required => true %>
+	<%=f.input :username, :required => true %>
+    <%=f.input :roles, :as => :check_boxes, :collection => Role.name_eq("admin") if (!@staff.has_role?(:owner) && current_user.has_role?(:owner))%>
+	<%=f.input :roles, :as => :check_boxes, :collection => Role.name_eq("manager") if (!@staff.has_role?(:admin) && current_user.has_role?(:admin))%>
+    <%#=f.input :password %>
+	<%#=f.input :password_confirmation, :label => "Confirmation"%>
+<% end %>
+<%f.buttons do %>
+	<%= f.commit_button :label => "Save Changes"%>
+<% end %>

@@ -1,0 +1,48 @@
+<% title "New Job Template" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'members/subscription_info' %>
+  </div>
+	<div class="lt_button_container">
+		<%= render :partial => 'members/admin_menu' %>
+	  </div>
+</div>
+<div class="right_page">
+	<div>
+		<% semantic_form_for @template_job, :html => {:class => "form"} do |f| %>
+			<div>
+				<%= f.hidden_field :job_id %>
+			</div>
+			<div>
+					<h3><%=yield(:title)%></h3>
+					<% f.inputs do%>
+						<%=f.input :name, :label => "Job Template Name", :input_html => {:size => 60} %>
+						<%=f.input :description, :input_html => {:class => "mceEditor", :rows => 15, :cols => 80}%>
+					<% end %>
+					<%f.buttons do %>
+						<%=f.commit_button "Create Job Template"%>
+					<% end %>
+			</div>
+		<% end %>
+	</div>
+	<h3>Saved Job Templates</h3>
+	<div>
+	<table id="">
+	  <tr>
+	    <th class="template-name">Template Name</th>
+		<th class="sub-author">Author</th>
+		<th class="sub-date">Date</th>
+		<th class="sub-rem2"></th>
+	  </tr>
+	  <% for template_job in @template_jobs %>
+	    <tr class="<%= cycle("othertdalter", "") %>">
+	      <td><%=h link_to template_job.name, template_job %></td>
+			<td><%=h template_job.user.username%></td>
+			<td><%=h template_job.created_at.strftime("%m-%d-%Y") %></td>
+	     	<td><%= link_to image_tag("/images/minus.png"), template_job, :confirm => 'Are you sure?', :method => :delete%></td>
+	    </tr>
+	  <% end %>
+	</table>
+	</div>
+	
+</div>

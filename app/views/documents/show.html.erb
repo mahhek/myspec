@@ -1,0 +1,24 @@
+<% title "Document" %>
+
+<p>
+  <strong>Specification Section:</strong>
+  <%=h @document.specification_section_id %>
+</p>
+<p>
+  <strong>User:</strong>
+  <%=h @document.user_id %>
+</p>
+<p>
+  <strong>Title:</strong>
+  <%=h @document.title %>
+</p>
+<p>
+  <strong>Note:</strong>
+  <%=h @document.note %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_document_path(@document) %> |
+  <%= link_to "Destroy", @document, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", documents_path %>
+</p>

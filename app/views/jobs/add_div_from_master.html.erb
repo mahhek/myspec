@@ -1,0 +1,47 @@
+<% title "Available Divisions from Master List"%>
+
+  <div class="left_page">
+    <div class="lt_nav_container">
+      	<%#= render :partial => "/jobs/job_info" %>
+		<%= render :partial => "/clients/client_info" %>
+    </div>
+    <div class="lt_button_container">
+		<div><%= link_to "Divisions", add_multiple_divisions_path(:job_id => @job.id), :class => "button-left" %></div>
+		<div><%= link_to "Table of Contents", @job, :class => 'button-left' %></div>
+    </div>
+  </div>
+  <div class="right_page">
+		<h3>Add Divisions</h3>
+        <b class="head"><%=yield(:title)%></b>
+		<% form_for @specification, :url => create_div_from_master_path, :html => {:class => "form"} do |f| %>
+		<div><%#= f.submit "Save Changes" %></div>
+      <div>
+		
+		<%= f.hidden_field :job_id %>
+		<table id="jobs_table">
+			<tr>
+              <th class="sub-no"><%= check_box_tag('check_all', 'check_all', false,  :onClick => "toggleCheckBoxes('new_specification')")%> </th>
+				<th class="div-no">Div No.</th>
+				<th class="div-name">Div Name</th>
+				<th class="div-info">Description</th>
+				
+			</tr>
+			<% for division in @divisions %>
+			<tr class="<%= cycle("othertdalter", "") %>">
+				<% fields_for "divisions[]", division do |div| %>
+                    <td><%= div.check_box :id, :checked => false %></td>
+					<td><b><%= division.modif_number%></b></td>
+					<td><%= division.name%></td>
+					<td></td>
+			
+				<% end %>
+				</tr>
+			<% end %>
+		</table>
+      </div>
+		<br/>
+		<div><%= f.submit "Add Divisions" %></div>
+    <% end %>
+  </div>
+	
+</div>

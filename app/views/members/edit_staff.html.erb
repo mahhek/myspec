@@ -1,0 +1,18 @@
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'subscription_info' %>
+  </div>
+  <div class="lt_button_container">
+   	<%= render :partial => 'admin_menu' %>
+  </div>
+</div>
+<div class="right_page">
+  	<div class="clearfix">&nbsp;</div>
+  	<div >
+		<% semantic_form_for @staff, :url => update_staff_path(:id => @staff.id) do |f| %>
+			<% title 'Team Member Editor'%>
+			<h3><%=yield(:title)%></h3>
+			<%= render 'team_member_form', :f => f %>
+		<% end %>
+	</div>
+</div>

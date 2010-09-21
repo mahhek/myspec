@@ -1,0 +1,43 @@
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'members/member_info' %>
+  </div>
+	<div class="lt_button_container">
+		<div><%= link_to "Cancel", clients_path, :class => "button-left"%></div>
+
+	</div>
+</div>
+<div class="right_page">
+
+<div>
+	<h3><%=yield(:title)%></h3>
+	<% semantic_form_for @client  do |f| %>
+	<% f.inputs do %>
+		<%=f.input :name, :label => "Client Name" %>
+		<% if @client.new_record? %>
+		<li>
+			<%=label_tag "contact_name", "Contact Name*"%>
+			<%= text_field_tag "contact_name", "", :style=> "width:400px;" %>
+		</li>
+		<li>
+			<%=label_tag "contact_email", "Contact Email*"%>
+			<%= text_field_tag "contact_email", "", :style=> "width:400px;" %>
+		</li>
+		<% end %>
+		<%=f.input :physical_address, :input_html => {:rows => 3}, :label => "Location" %>
+		<%=f.input :postal_address, :input_html => {:rows => 3}%>
+		<%=f.input :phone%>
+		<%=f.input :fax %>
+		<%=f.input :website%>
+		<%=f.input :status, :as => :select, :collection => ["Active", "Inactive"], :include_blank => false %>
+	<% end %>
+	<%f.buttons do %>
+		<% if params[:action] == "edit"%>
+			<%=f.commit_button "Save Changes"%>
+		<% else %>
+			<%=f.commit_button "Add Client"%>
+		<% end %>
+	<% end %>
+<% end %>
+</div>
+</div>

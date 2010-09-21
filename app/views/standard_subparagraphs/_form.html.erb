@@ -1,0 +1,83 @@
+<% title "Paragraph Editor" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%#= render :partial => "/jobs/job_info" %>
+  </div>
+  <div class="lt_button_container">
+	
+    <div><%= link_to "Job Standard Editor", standard_spec_edit_path(:id => params[:standard_section_id]), :class => "button-left" %></div>
+  	
+	</div>
+
+</div>
+<div class="right_page">
+	<div>
+		<h3><%=yield(:title)%></h3>
+	</div>
+	<div class="label">Section:</div><%=@standard_section.section.modif_number%> - <%=@standard_section.section.name%><br />
+	<div class="label">Article:</div><%=@standard_article_paragraph.standard_part_article.article.name%><br />
+	<div class="label">Paragraph:</div><div class="value"><%=@standard_article_paragraph.paragraph.name%></div>
+	<div class="label">Description:</div><div class="value"><%=@standard_article_paragraph.paragraph.description%></div>
+	
+	<div>
+    <%= f.hidden_field :standard_article_paragraph_id %>
+  		<p>
+    	<%= f.label :description, "Subparagraph" %><br/>
+	
+    	<%= f.text_area :description, :rows => 6, :cols => 93 %><br/>
+  		</p>
+	</div>
+	<div><%= f.submit "Save Changes"%></div>
+    <h3>Already Added Subparagraph</h3>
+		<table id="clients_table">
+			<tr>
+				<th class="sub-rem">No</th>
+				<th class="sub-info">Subparagraph</th>
+				<th class="sub-author">Author</th>
+			    <th class="sub-date">Date</th>
+				<th class="sub-rem"></th>
+			  </tr>
+			<% if !@has_subparagraphs.blank? %>
+				<%
+				a = 1
+				for subs in @has_subparagraphs %>
+					<tr>
+						<td><%=a%></td>
+						<td><%= link_to subs.description, edit_standard_subparagraph_path(subs, :standard_section_id => params[:standard_section_id], :standard_article_paragraph_id => params[:standard_article_paragraph_id]) %></td>
+						<td><%=subs.user.username%></td>
+						<td><%=subs.created_at.strftime("%m-%d-%Y")%></td>
+						<td><%= link_to image_tag("/images/minus.png"), subs, :confirm => 'Are you sure want to remove this subparagraph?', :method => :delete %></td>
+					</tr>
+				<%
+				a +=1
+				end %>
+			<%	else %>
+			<tr>
+				<td colspan="5">No subparagraph found</td>
+			</tr>
+			<%	end %>
+		</table>
+	<div>
+		<h3>Other Subparagraph with this Paragraph</h3>
+		<table id="clients_table">
+			<tr>
+				<th class="div-info">Subparagraph</th>
+				<th class="sub-author">Author</th>
+			    <th class="sub-date">Date</th>
+			  </tr>
+		<% if !@standard_subparagraphs.blank? %>
+			<% for subs in @standard_subparagraphs %>
+				<tr>
+					<td><%=subs.description%></td>
+					<td><%=subs.user.username%></td>
+					<td><%=subs.created_at.strftime("%m-%d-%Y")%></td>
+				</tr>
+			<% end %>
+		<%	else %>
+			<tr>
+				<td colspan="5">No subparagraph found</td>
+			</tr>
+		<%	end %>
+		</table>
+	</div>
+</div>

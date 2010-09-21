@@ -1,0 +1,28 @@
+<h3>Submit request</h3>
+
+<% if @request.status == "deny" %>
+<p>Thank you for your master format request. Your proposal has been denied.</p>
+
+<p>Reason</p>
+<%=@request.reason%>
+
+<p>Please feel free to revise and resubmit your request at your convenience.</p>
+
+<p>We appreciate your effort to help improve My Spec Writer and Master Format. </p>
+
+<%elsif @request.status == "pending" %>
+<p>Thank you for your master format request. Your request is being forwarded to the CSI for further review. </p>
+
+<p>Updates for approved proposals to the Master Format tables will occur automatically upon approval by the CSI.  Requestors will receive an email confirmation of their request.</p>
+
+<p>We appreciate your effort to help improve My Spec Writer and Master Format. </p>
+
+<%elsif @request.status == "approved"%>
+<p>Thank you for your master format request. Your request has been approved and is available in the Master Format tables for your use.</p>
+
+<p>We appreciate your effort to help improve My Spec Writer and Master Format
+
+<% end%>
+<p>the Spec Writer Team</p>
+
+<p>PS - Follow us on Twitter and Facebook!</p>

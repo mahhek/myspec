@@ -1,0 +1,28 @@
+document.observe('dom:loaded', function(){
+
+	$('use_user_info').observe('click', function(){
+		if ($('use_user_info').checked){
+			$('user_billing_address').value = $('user_address').value;
+			$('user_billing_city').value = $('user_city').value;
+			$('user_billing_state').value = $('user_state').value;
+			$('user_billing_zip').value = $('user_zip').value;
+			$('user_billing_country').value = $('user_country').value;
+			$('user_billing_address').disabled = true;
+			$('user_billing_city').disabled = true;
+			$('user_billing_state').disabled = true;
+			$('user_billing_zip').disabled = true;
+			$('user_billing_country').disabled = true;
+		}else{
+			$('user_billing_address').disabled = false;
+			$('user_billing_city').disabled = false;
+			$('user_billing_state').disabled = false;
+			$('user_billing_zip').disabled = false;
+			$('user_billing_country').disabled = false;
+			$('user_billing_address').value = "";
+			$('user_billing_city').value = "";
+			$('user_billing_state').value = "";
+			$('user_billing_zip').value = "";
+			$('user_billing_country').value = "";
+		}
+	})
+});

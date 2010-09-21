@@ -1,0 +1,64 @@
+<% title "Change My Password" %>
+<div id="top-logo">
+	
+</div>
+<% form_for @user, :url => password_reset_path, :method => :put do |f| %>
+	<table>
+		<tr>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form" colspan="2" id="msg">
+						<%- flash.each do |name, msg| -%>
+								<%= content_tag :div, msg, :class => "flash#{name} grid_10"%>
+						<%- end -%>
+			</td>
+			
+		</tr>
+		<tr>
+			<td class="form">
+							<%= f.label :password, "New Password" %>
+			</td>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form">
+							<%= f.password_field :password %>
+							<%#= error_message_on :user, :password %>
+			</td>
+		</tr>
+		<tr>
+			<td class="form">
+							<%= f.label :password_confirmation, "Confirm" %>
+			</td>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form">
+							<%= f.password_field :password_confirmation %>
+							<%#= error_message_on :user, :password_confirmation %>
+			</td>
+		</tr>
+		<tr>
+			<td class="form" colspan="1">
+						&nbsp;
+			</td>
+			<td class="form" colspan="2"><%= submit_tag "Reset my password", :class => "button" %>
+			</td>
+		</tr>
+		<tr>
+
+			<td class="form">
+							&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td class="form" colspan="1">
+						&nbsp;
+			</td>
+			<td class="form" colspan="2">
+				Do you want to <%= link_to "Sign up?", signup_path %> or <%= link_to "Login?", login_path %>
+			</td>
+		</tr>
+	</table>
+<% end %>

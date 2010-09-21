@@ -1,0 +1,20 @@
+<% title "Subscription History" %>
+
+<p>
+  <strong>Due On:</strong>
+  <%=h @subscription_history.due_on %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @subscription_history.description %>
+</p>
+<p>
+  <strong>Amount:</strong>
+  <%=h @subscription_history.amount %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_subscription_history_path(@subscription_history) %> |
+  <%= link_to "Destroy", @subscription_history, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", subscription_histories_path %>
+</p>

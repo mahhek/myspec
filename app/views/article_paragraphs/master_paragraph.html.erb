@@ -1,0 +1,114 @@
+<% title "Part Editor"%>
+<% javascript 'scriptaculous/scriptaculous'%>
+<% javascript 'modalbox/modalbox' %>
+<% stylesheet 'modalbox'%>
+<div class="left_page">
+	<div class="lt_nav_container">
+		<%= render :partial => "/jobs/job_info" %>
+		<%#= render :partial => "/clients/client_info" %>
+	</div>
+	<div class="lt_button_container">
+		<div>
+			<%= link_to "Cancel", "/part_articles/new?job_id=#{params[:job_id]}&part_id=#{params[:part_id]}&specification_section_id=#{params[:specification_section_id]}", :class => "button-left" %>
+		</div>
+	</div>
+</div>
+<div class="right_page">
+
+  	<% form_for :article_paragraph, :url=> {:action => "add_master_paragraph", :specification_section_id => params[:specification_section_id], :part_id => params[:part_id], :job_id => params[:job_id]}, :html => {:class => "form", :id => "new_article_paragraph"} do |f| %>
+  		<%= f.error_messages %>
+   		<%= f.hidden_field :part_article_id %>
+        <h3>Part Master</h3>
+		<b>Available Paragraphs</b>
+		<table id="jobs_table">
+			<tr>
+ <th  class="part-check"></th>
+                <th class="part-name">
+					Article
+				</th>
+        
+                <th class="part-check"><%= check_box_tag('check_all', 'check_all', false,  :onClick => "toggleCheckBoxesPart('new_article_paragraph')")%></th>
+				<th class="sub-info2">
+					Paragraph
+				</th>
+               <th  class="part-check"></th>
+				
+			</tr>
+          
+            <% selected_paragraphs = Paragraph.find_by_sql("select * from paragraphs where id in(select paragraph_id from article_paragraphs where part_article_id in (select id from part_articles where specification_section_id = #{params[:specification_section_id]}))") %>
+           
+			<% for article in @articles %>
+               <%show_article = true%>
+				<% paragraphs =  Paragraph.all(:conditions => "article_id = #{article.number} and part_id = #{params[:part_id]}", :order => "article_id")%>
+                
+                <%puts article.id%>
+                <%puts paragraphs.inspect%>
+               <%if paragraphs.blank?%>
+                 <tr class="<%= cycle("othertdalter", "") %>">
+                   <td>
+                   </td>
+                   <td><%= link_to_remote article.name , :url => {:action => "show_article_description", :id => article.id} %></td>
+                   <td></td>
+                   <td><td>          
+                 </tr>
+               <%else%>
+               <script>
+                function toggleCheck<%=article.id%>()
+                {
+                  name_article = "check_" + <%= article.id %>
+                  item_art = document.getElementById(name_article);
+                  
+                  <%for paragraph in paragraphs%>
+                  name = "paragraph_" + <%= paragraph.id %>
+                  item= document.getElementById(name);
+                  if(item != null)
+                  {
+                    if (item_art.checked){
+                      item.checked=true;
+                    }
+                    else {
+                    item.checked=false;
+                    }
+                  }
+                  <%end%>
+                }
+                </script>
+                 <%for paragraph in paragraphs %>
+                    <tr class="<%= cycle("othertdalter", "") %>">
+                        <%if show_article%>
+                        <%show_article = false%>
+                        <td>
+                           <%= check_box_tag("check_#{article.id}", "check_#{article.id}", false,  :onClick => "toggleCheck#{article.id}()")%>
+                           
+                        </td>
+                        <td>
+                        <%= link_to_remote article.name , :url => {:action => "show_article_description", :id => article.id} %>
+                        </td>
+                        <%else%>
+                        <td></td>
+                        <td></td>
+                        <%end%>
+                         <td>
+                           <%unless selected_paragraphs.include?(paragraph) %>
+                            <%=check_box_tag "paragraph[#{paragraph.id}]"%>
+                          <%end%>
+                         </td>
+                         <td>
+
+                          <%= link_to_remote paragraph.name, :url => {:action => "show_paragraph_descritpion", :id => paragraph.id} %>
+                          </td>
+                         <td style="text-align:center">
+                            <%= link_to_remote(image_tag("/images/form-ic-info.png", :border => 0),:url => {:action => 'show_paragraph_descritpion', :id => paragraph.id }) %>
+                         </td>
+                    </tr>
+                  <%end%>
+                <%end%>
+			<% end %>
+		</table>
+		<br/>
+		<div><%= f.submit "Add Paragraph" %></div>
+	<% end %>
+	<br/>
+
+</div>  
+

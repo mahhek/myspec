@@ -1,0 +1,29 @@
+<% title "Job Template" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'template_info' %>
+
+  </div>
+	<div class="lt_button_container">
+		<div><%= link_to "Divisions", add_template_multiple_divisions_path(:template_job_id => @template_job), :class => "button-left" %></div>
+		<div>
+	      <%= link_to "Job Template Information", edit_template_job_path(@template_job), :class => 'button-left' %>
+	  </div>
+		<div>
+	      <%= link_to "Job Templates", template_jobs_path, :class => 'button-left' %>
+	  </div>
+	</div>
+</div>
+<div class="right_page">
+  <h3>Table of contents</h3>
+	<%  if @template_job.template_specifications.size == 0 %>
+	    <h4>There is no division on this template.</h4>
+	  <%  end %>
+	  <div class="white_bg">
+	    <div class="w100">
+	      <%  @template_job.template_specifications.each do |template_specification| %>
+	        <%= render :partial => 'job_specification', :locals => { :template_specification => template_specification } %>
+	      <%end%>
+	    </div>
+	  </div>
+</div>

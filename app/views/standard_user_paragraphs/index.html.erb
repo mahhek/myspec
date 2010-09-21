@@ -1,0 +1,23 @@
+<% title "Standard User Paragraphs" %>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Standard Part Article</th>
+    <th>Name</th>
+    <th>Paragraph</th>
+  </tr>
+  <% for standard_user_paragraph in @standard_user_paragraphs %>
+    <tr>
+      <td><%=h standard_user_paragraph.user_id %></td>
+      <td><%=h standard_user_paragraph.standard_part_article_id %></td>
+      <td><%=h standard_user_paragraph.name %></td>
+      <td><%=h standard_user_paragraph.paragraph %></td>
+      <td><%= link_to "Show", standard_user_paragraph %></td>
+      <td><%= link_to "Edit", edit_standard_user_paragraph_path(standard_user_paragraph) %></td>
+      <td><%= link_to "Destroy", standard_user_paragraph, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Standard User Paragraph", new_standard_user_paragraph_path %></p>

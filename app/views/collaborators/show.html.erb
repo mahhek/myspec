@@ -1,0 +1,20 @@
+<% title "Collaborator" %>
+
+<p>
+  <strong>User:</strong>
+  <%=h @collaborator.user_id %>
+</p>
+<p>
+  <strong>Email:</strong>
+  <%=h @collaborator.email %>
+</p>
+<p>
+  <strong>Status:</strong>
+  <%=h @collaborator.status %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_collaborator_path(@collaborator) %> |
+  <%= link_to "Destroy", @collaborator, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", collaborators_path %>
+</p>

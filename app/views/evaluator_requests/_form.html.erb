@@ -1,0 +1,42 @@
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'members/subscription_info' %>
+  </div>
+  <div class="lt_button_container">
+	<%= render :partial => 'help_tickets/support_info' %>
+  </div>
+</div>
+<div class="right_page">
+	<% if current_user.evaluator_request.blank? %>
+		<h3>Evaluator Request</h3>
+		<% semantic_form_for @evaluator_request do |f| %>
+		  <%= f.error_messages %>
+		  	<% f.inputs do %>
+				<%=f.input :prefix, :as => :select, :collection => ["Mr","Mrs","Ms"], :include_blank => false, :label => "Mr/Mrs/Ms"%>
+				<%=f.input :first_name, :input_html => {:value => current_user.first_name}%>
+				<%=f.input :middle_name%>
+				<%=f.input :last_name, :input_html => {:value => current_user.first_name}%>
+				<%=f.input :csi_member, :label => "CSI member#"%>
+				<%=f.input :title%>
+				<%=f.input :firm, :label => "Company"%>
+				<%=f.input :address, :input_html => {:rows => 6,:value => current_user.address}%>
+				<%=f.input :city, :input_html => {:size => 20}%>
+				<%=f.input :state, :input_html => {:size => 20}%>
+				<%=f.input :zip, :input_html => {:size => 10}%>
+				<%=f.input :phone, :input_html => {:size => 20, :value => current_user.telephone}%>
+				<%#=f.input :fax, :input_html => {:size => 20,:value => current_user.fax}%>
+				<%=f.input :email, :label => "Email", :input_html => {:value => current_user.email}%>
+				<%#=f.input :description, :input_html => {:rows => 6}%>
+			<% end %>
+			<% f.buttons do %>
+				<%=f.commit_button "Send Request"%>
+			<% end %>
+		<% end %>
+	<% elsif current_user.evaluator_request.status == "received" %>
+		<h3>Your request is being process</h3>
+	<% elsif current_user.evaluator_request.status == "approved" %>
+		<h3>Your request is approved</h3>
+	<% elsif current_user.evaluator_request.status == "denied" %>
+		<h3>Your request is approved</h3>
+	<% end %>
+</div>

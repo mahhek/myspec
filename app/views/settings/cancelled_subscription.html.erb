@@ -1,0 +1,50 @@
+<% title "Help and Support Center" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'help_tickets/apps_info' %>
+  </div>
+  <div class="lt_button_container">
+	<%= render :partial => 'help_tickets/support_info' %>
+  </div>
+</div>
+<div class="right_page">
+	<div>
+		<h3>Owner List</h3>
+        <table id="jobs_table" cellspacing="0" cellpadding="0">
+		  <tr>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Company</th>
+            <th>Delete On</th>
+            <th></th>
+		  </tr>
+		  <% for owner in @owners %>
+         	<tr class="<%= cycle("othertdalter", "") %>">
+              <td style="width:50px;padding-left:3px;"><%=h owner.username %></td>
+		      <td>
+                               <%=h owner.full_name %>
+				</td>
+                <td>
+                               <%=h owner.email %>
+				</td>
+                <td>
+                               <%=h owner.company %>
+				</td>
+<td>
+  <%= owner.cancel_date.strftime("%m-%d-%Y")  %>
+</td>
+
+                <td>
+                 
+
+                     <%=  link_to "Delete", "/settings/delete_data/#{owner.id}", :confirm => "Are you sure you want to delete the data for this user" %>
+                
+                     <%=  link_to "Reactivate", "/settings/activate_cancel/#{owner.id}", :confirm => "Are you sure you want to activate this user" %>
+                
+                </td>
+		    </tr>
+		  <% end %>
+		</table>
+    </div>
+</div>

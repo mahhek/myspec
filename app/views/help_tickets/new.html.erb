@@ -1,0 +1,86 @@
+<% title "Help and Support Center" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+  		<!-- <p>Welcome! We are excited to hear from you. Please use the form below to send us your comments and questions. Your ideas will help us focus development on the topics important to our users. Please visit www.myspecwriter.com for a complete list of Frequently Asked Questions and Help Topic.</p>
+  				 -->		<p>You may also contact our online support for immediate assistance or call us at (803) 488-7732.  For assistance with writing specification content, please contact a registered specification writing professional.</p>
+				<!-- <p>Enjoy!</p>
+								<p>The My Spec Writer team</p> -->
+  </div>
+  <div class="lt_button_container">
+	<div><%= link_to "Instruction Manual", "http://myspecwriter.squarespace.com/contents/", :class => 'button-left', :target => "_blank" %></div>
+	<div><%= link_to "Help Desk Forum", "http://help.myspecwriter.com/", :class => 'button-left', :target => "_blank" %></div>
+	<div><%= link_to "Help Ticket", new_help_ticket_path, :class => 'button-left' %></div>
+  <div><%= link_to "Registered Professionals", "/help_tickets/professionals", :class => 'button-left' %></div>
+
+  </div>
+</div>
+<div class="right_page">
+	<div>
+		<h3>Help and Support</h3>
+		<p>
+		Please submit your customer support and account related questions using our internal support ticket feature.  We are actively building a user forum and frequently asked database for our users along with many other support features. 
+		</p>
+		<p>
+		Please feel free to make recommendations or write us with your ideas to include in our knowledge base. We are also creating a knowledge base for best practices and techniques for preparing your project manual.  
+		</p>
+		<p>
+		Users will soon have the ability to vote on new features and request features in an open forum.  We look forward to your thoughts.
+		</p>
+		<!-- <p>Welcome! We are excited to hear from you. Please use the form below to send us your comments and questions. Your ideas will help us focus development on the topics important to our users. Please visit www.myspecwriter.com for a complete list of Frequently Asked Questions and Help Topic.</p>
+				<p>You may also contact our online support for immediate assistance or call us at (803) 488-7732.  For assistance with writing specification content, please contact a registered specification writing professional.</p>
+				<p>Enjoy!</p>
+				<p>The My Spec Writer team</p> -->
+	</div>
+	<br/>
+	<div>
+		<h3>Create Support Ticket</h3>
+		<%= render "form"%>
+	</div>
+	<br/>
+	<div>
+		<h3>Previous Tickets</h3>
+		<table id="jobs_table">
+		  <tr>
+			<th class="sec-no">Issue No.</th>
+		    <th class="sec-name-help">Title</th>
+		    <th class="sub-date-ticket" style="text-align:center;">Start Mood</th>
+            <th class="sub-date-ticket" style="text-align:center;">Current Mood</th>
+			<th class="sub-date-ticket">Status</th>
+            <th class="sub-date-ticket" style="text-align:center">New</th>
+			<th></th>
+		  </tr>
+		  <% for help_ticket in @help_tickets %>
+		    <tr class="<%= cycle("othertdalter", "") %>">
+              <td><%=h help_ticket.auto_number %></td>
+		      <td><%=h link_to help_ticket.title, "/help_tickets/message_user/#{help_ticket.id}"%></td>
+		      
+		      <td style="text-align:center;width:100px;">
+                <%unless help_ticket.mood.blank?%>
+                <%=h image_tag(help_ticket.mood) %>
+                <%end%>
+                </td>
+                <td style="text-align:center;width:115px;">
+                <%unless help_ticket.end_mood.blank?%>
+                <%=h image_tag(help_ticket.end_mood) %>
+                <%end%>
+                </td>
+              <td><%=h help_ticket.status %></td>
+               <td style="text-align:center">
+                  <% replies = HelpTicketMessage.all(:conditions => "help_ticket_id = #{help_ticket.id} and user_type = 2 and is_read = 0") %>
+                  <%unless replies.blank?%>
+                    <%= replies.size %>
+                    <%else%>
+                    0
+                  <%end%>
+                </td>
+                
+		      <td><%= link_to image_tag("/images/minus.png"), help_ticket, :confirm => 'Are you sure?', :method => :delete %></td>
+		    </tr>
+		  <% end %>
+		</table>
+	</div>
+	<br/>
+</div>
+<div>
+	<!-- Begin Olark Chat --><script type="text/javascript">(function(){document.write(unescape('%3Cscript src=%27' + (document.location.protocol == 'https:' ? "https:" : "http:") + '//static.olark.com/js/wc.js%27 type=%27text/javascript%27%3E%3C/script%3E'));})();</script><div id="olark-data"><a class="olark-key" id="olark-6872-521-10-9182" title="Powered by Olark" href="http://olark.com/about" rel="nofollow">Powered by Olark</a></div> <script type="text/javascript"> wc_init();</script><!-- /End Olark Chat -->
+</div>

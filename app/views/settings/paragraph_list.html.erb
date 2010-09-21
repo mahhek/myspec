@@ -1,0 +1,22 @@
+<% title "Application Settings > Paragraph list "%>
+<table id="users_table">
+  <tr>
+	<th>ID</th>
+	<th>Part</th>
+	<th>Article</th>
+    <th>Paragraph Name</th>
+	<th>Description</th>
+	<th></th>
+  </tr>
+  <% for paragraph in @paragraphs %>
+    <tr class="<%= cycle("othertdalter", "") %>">
+      <td><%=h paragraph.id %></td>
+		<td><%=h paragraph.part.name %></td>
+		<td><%=h paragraph.article.name %></td>
+      <td><%=h paragraph.name %></td>
+      <td><%= link_to "x", paragraph, :confirm => 'Are you sure?', :method => :delete, :class => 'button' %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Paragraph", new_paragraph_path, :class => 'button' %></p>

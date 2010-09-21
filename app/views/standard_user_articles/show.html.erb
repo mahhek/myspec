@@ -1,0 +1,24 @@
+<% title "Standard User Article" %>
+
+<p>
+  <strong>User:</strong>
+  <%=h @standard_user_article.user_id %>
+</p>
+<p>
+  <strong>Job Standard Section:</strong>
+  <%=h @standard_user_article.standard_section_id %>
+</p>
+<p>
+  <strong>Name:</strong>
+  <%=h @standard_user_article.name %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @standard_user_article.description %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_standard_user_article_path(@standard_user_article) %> |
+  <%= link_to "Destroy", @standard_user_article, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", standard_user_articles_path %>
+</p>

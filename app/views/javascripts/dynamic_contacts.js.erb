@@ -1,0 +1,25 @@
+var contacts = new Array();
+<% for contact in @contacts -%>
+	contacts.push(new Array(<%=contact.client_id %>, "<%= h contact.name %>", <%=contact.id %>));
+<% end -%>
+
+function clientSelected(){
+	client_id = $('job_client_id').getValue();
+	options = $('job_contact_id').options;
+	options.length = 0;
+	contacts.each(function(contact){
+		if(contact[0] == client_id){
+			options[options.length] = new Option(contact[1], contact[2]);
+		}
+	});
+	if(options.length == 0){
+		$('contact_field').hide();
+	}else{
+		$('contact_field').show();
+	}
+}
+
+document.observe('dom:loaded', function(){
+	clientSelected();
+	$('job_client_id').observe('change', clientSelected);
+});

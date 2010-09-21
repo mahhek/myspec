@@ -1,0 +1,16 @@
+<% form_for @subscription_history do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :due_on %><br />
+    <%= f.date_select :due_on %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </p>
+  <p>
+    <%= f.label :amount %><br />
+    <%= f.text_field :amount %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

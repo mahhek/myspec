@@ -1,0 +1,39 @@
+<% title "Table Of Content" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => "/jobs/job_info" %>
+  </div>
+  <div class="lt_button_container">
+    <div><%= link_to "Divisions", add_multiple_divisions_path(:job_id => @job), :class => "button-left" %></div>
+	<div><%= link_to "Attachments", section_attachments_path(:job_id => @job), :class => "button-left" %></div>
+	<div><%= link_to "Notes", section_notes_path(:job_id => @job), :class => "button-left" %></div>
+	<div><%= link_to "Documents", section_documents_path(:job_id => @job), :class => "button-left" %></div>
+	<div><%= link_to "Page Format", change_job_page_format_path(:job_id => @job.id), :class => "button-left" %></div>
+    <div><%= link_to "Print Job", show_all_path(:job_id => @job.id, :format => "pdf"), :class => "button-left" %></div>
+	<div><%= link_to "Print Notes", show_notes_path(:job_id => @job.id, :format => "pdf"), :class => "button-left", :target => "blank" %></div>
+	<div><%= link_to "Job Information", edit_job_path(@job), :class => "button-left" %></div>
+	<% show_to :admin, :manager, :support, :master do %>
+    	<div><%= link_to "Save Job Template", new_template_job_path(:job_id => @job), :class => "button-left" %></div>
+	<% end %>
+	</div>
+</div>
+<div class="right_page">
+  <h3>Table of Contents</h3>
+  <%  if @job.specifications.size == 0 %>
+    <h4>There is no division on this job.</h4>
+  <%  end %>
+  <div class="white_bg">
+    <div class="w100">
+      <%  @job.specifications.each do |specification| %>
+        <%= render :partial => 'job_specification', :locals => { :specification => specification } %>
+      <%end%>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+

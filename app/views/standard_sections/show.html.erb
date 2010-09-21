@@ -1,0 +1,15 @@
+<% title "Job Standard Section" %>
+<p>
+  <strong>Section:</strong>
+  <%=h @standard_section.specification_section.section.name %>
+</p>
+<p>
+  <strong>Standard Name:</strong>
+  <%=h @standard_section.standard_name %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_standard_section_path(@standard_section) %> |
+  <%= link_to "Destroy", @standard_section, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", standard_sections_path %>
+</p>

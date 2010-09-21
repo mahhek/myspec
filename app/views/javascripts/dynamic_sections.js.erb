@@ -1,0 +1,8 @@
+document.observe('dom:loaded', function(){
+	$('division').observe('change', function(){
+		new Ajax.Updater('standard_section_section_id','/search_sections', {
+		  method: 'get',
+		  parameters: {division_number: $('division').getValue()},
+		  });
+	});
+});

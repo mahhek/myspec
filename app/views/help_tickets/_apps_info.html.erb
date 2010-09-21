@@ -1,0 +1,6 @@
+<b>Active Users</b>
+		<div><%=User.count%></div>
+		<b>Active Tickets</b>
+		<div><%=HelpTicket.status_eq("active").count%></div>
+		<b>Pending Requests</b>
+		<div><%=SectionRequest.status_eq(["received", "pending"]).count%></div>

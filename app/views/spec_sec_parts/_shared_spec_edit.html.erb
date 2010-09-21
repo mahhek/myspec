@@ -1,0 +1,123 @@
+<div class="white_bg shared">
+    <div class="w100">
+		<div class="">
+			<% for part in @parts%>
+				<% if part.id == 1 %>
+				<div class="part_container">
+				<div class="part">Part <%=part.id %> - <%= link_to part.name , "#" , :class => ""%></div>
+					<% 
+					a = 1
+					for article in @list_general_articles %>
+						<div class="article"><%="#{part.id}.#{report_article_number(a)}"%> &nbsp; <%= link_to(article.article.name, "#", :class => "") %></div><div class="rem">&nbsp;</div>
+						<% 
+						b = 97
+						for paragraph in article.article_paragraphs%>
+							<div class="space2"><%=b.chr.upcase%>. </div><div class="paragraph">&nbsp;<%= link_to(paragraph.paragraph.name, "#", :class => "") %></div><div class="rem">&nbsp;</div>
+							<% 
+							c = 1
+							for subparagraph in paragraph.subparagraphs %>
+								<div class="space3"><%= link_to "#{c}.&nbsp;", "#" %></div><div class="subparagraph"><%=subparagraph.description%>&nbsp;</div><div class="rem">&nbsp;</div>
+							<% 
+							c +=1
+							end %>
+						<% 
+						b +=1
+						end %>
+						<% for paragraph in article.user_paragraphs %>
+							<div class="space2"><%=b.chr.upcase%>. </div><div class="paragraph">&nbsp;<%= link_to(paragraph.name, "#", :class => "") %></div><div class="rem">&nbsp;</div>
+							<% 
+							c = 1
+							for subparagraph in paragraph.user_subparagraphs %>
+								<div class="space3"><%= link_to "#{c}.&nbsp;", "#" %></div><div class="subparagraph"><%=subparagraph.description%>&nbsp;</div><div class="rem">&nbsp;</div>
+							<% 
+							c +=1
+							end %>
+						<% 
+						b +=1
+						end %>
+					<% 
+					a +=1
+					end %>
+					</div>
+				<% elsif part.id == 2  %>
+					<div class="part_container">
+					<div class="part">Part <%=part.id %> - <%= link_to part.name, "#" , :class => ""%></div>
+						<% 
+						a = 1
+						for article in @list_product_articles %>
+							<div class="article"><%="#{part.id}.#{report_article_number(a)}"%> &nbsp; <%= link_to(article.article.name, "#", :class => "") %></div><div class="rem">&nbsp;</div>
+							<% 
+							b = 97
+							for paragraph in article.article_paragraphs%>
+								<div class="space2"><%=b.chr.upcase%>. </div><div class="paragraph">&nbsp;<%= link_to(paragraph.paragraph.name, "#", :class => "") %></div><div class="rem">&nbsp;</div>
+								<% 
+								c = 1
+								for subparagraph in paragraph.subparagraphs %>
+									<div class="space3"><%= link_to "#{c}.&nbsp;", "#" %></div><div class="subparagraph"><%=subparagraph.description%>&nbsp;</div><div class="rem">&nbsp;</div>
+								<% 
+								c +=1
+								end %>
+							<% 
+							b +=1
+							end %>
+							<% for paragraph in article.user_paragraphs %>
+								<div class="space2"><%=b.chr.upcase%>. </div><div class="paragraph">&nbsp;<%= link_to(paragraph.name, "#", :class => "") %></div><div class="rem">&nbsp;</div>
+								<% 
+								c = 1
+								for subparagraph in paragraph.user_subparagraphs %>
+									<div class="space3"><%= link_to "#{c}.&nbsp;", "#" %></div><div class="subparagraph"><%=subparagraph.description%>&nbsp;</div><div class="rem">&nbsp;</div>
+								<% 
+								c +=1
+								end %>
+							<% 
+							b +=1
+							end %>
+						<% 
+						a +=1
+						end %>
+					</div>
+				<% elsif part.id == 3  %>
+					<div class="part_container">
+					<div class="part">Part <%=part.id %> - <%= link_to part.name, "#" , :class => ""%></div>
+						<% 
+						a = 1
+						for article in @list_execution_articles %>
+							<div class="article"><%="#{part.id}.#{report_article_number(a)}"%> &nbsp; <%= link_to(article.article.name, "#", :class => "") %></div><div class="rem">&nbsp;</div>
+							<% 
+							b = 97
+							for paragraph in article.article_paragraphs%>
+								<div class="space2"><%=b.chr.upcase%>. </div><div class="paragraph">&nbsp;<%= link_to(paragraph.paragraph.name, "#", :class => "") %></div><div class="rem">&nbsp;</div>
+								<% 
+								c = 1
+								for subparagraph in paragraph.subparagraphs %>
+									<div class="space3"><%= link_to "#{c}.&nbsp;", "#" %></div><div class="subparagraph"><%=subparagraph.description%>&nbsp;</div><div class="rem">&nbsp;</div>
+								<% 
+								c +=1
+								end %>
+							<% 
+							b +=1
+							end %>
+							<% for paragraph in article.user_paragraphs %>
+								<div class="space2"><%=b.chr.upcase%>. </div><div class="paragraph">&nbsp;<%= link_to(paragraph.name, "#", :class => "") %></div><div class="rem">&nbsp;</div>
+								<% 
+								c = 1
+								for subparagraph in paragraph.user_subparagraphs %>
+									<div class="space3"><%= link_to "#{c}.&nbsp;", "#" %></div><div class="subparagraph"><%=subparagraph.description%>&nbsp;</div><div class="rem">&nbsp;</div>
+								<% 
+								c +=1
+								end %>
+							<% 
+							b +=1
+							end %>
+						<% 
+						a +=1
+						end %>
+						</div>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+</div>
+<div id="end-sec">
+	[ End of Section ]
+</div>

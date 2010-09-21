@@ -1,0 +1,42 @@
+<% title "Division Editor"%>
+  <div class="left_page">
+    <div class="lt_nav_container">
+		<%= render :partial => 'template_info' %>
+    </div>
+    <div class="lt_button_container">
+		<div><%= link_to "Job Template Editor", @template_job, :class => 'button-left' %></div>
+    </div>
+  </div>
+  <div class="right_page">
+		<h3><%=yield(:title)%></h3>
+      	<div>
+        	<b><%=@template_specification.division.division_number%> - <%=@template_specification.division.name%></b>
+      	</div>
+		
+      <div>
+        <!-- <div><%#= check_box_tag('check_all', 'check_all', false,  :onClick => "toggleCheckBoxes('new_template_specification_section')")%> All</div> -->
+        <% form_for @template_specification_section, :url => create_template_multiple_sections_path, :html => {:class => "form"} do |f| %>
+		<%= f.hidden_field :template_specification_id %>
+		<table id="jobs_table">
+			<tr>
+				<th class="sub-no"></th>
+				<th class="sec-no">Sec No.</th>
+				<th class="sec-name">Sec Name</th>
+				<th class="sec-info">Description</th>
+				<th></th>
+			</tr>
+			<% for section in @sections %>
+				<tr class="<%= cycle("othertdalter", "") %>">
+	          		<% fields_for "sections[]", section do |sec| %>
+						<td><%= sec.check_box :id, :checked => false %></td>
+						<td><b><%= section.modif_number%></b></td>
+						<td><%= section.name%></td>
+						<td colspan="2"></td>
+					<% end %>
+				</tr>
+	        <% end %>
+		</table>
+      </div>
+	<div class="save-top"><%= f.submit "Add Sections"%></div>
+    <% end %>
+</div>

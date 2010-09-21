@@ -1,0 +1,57 @@
+
+<% title "Team Members"%>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'members/subscription_info' %>
+  </div>
+  <div class="lt_button_container">
+	<%= render :partial => 'members/admin_menu' %>
+  </div>
+</div>
+<div class="right_page">
+	<h3>Enter The Email</h3>
+	<div>
+		<p>Enter an email address and select an active job for the individual you would like to collaborate. Once users have accepted the invitation, they will see the content of your job.</p>
+		<% semantic_form_for @collaborator do |f| %>
+          <div>
+		  <%= f.error_messages %>
+          </div>
+          <div>
+			<% f.inputs do %>
+				<%=f.input :email%>
+				<%=f.input :jobs, :as => :check_boxes, :collection => Job.client_user_id_eq(as_user), :label => "Assign to Jobs*"%>
+			<% end %>
+          </div>
+          <div>
+		  	<% f.buttons do%>
+				<%=f.commit_button "Invite User"%>
+			<% end %>
+          </div>
+		<% end %>
+	</div>
+  <div id="team">
+	<h3>Collaborators</h3>
+	<table id="users_table">
+      <tr>
+		<th class="member-name">Name</th>
+		<th class="member-position">Position</th>
+		<th class="member-email">Email</th>
+		<th class="member-permission">Status</th>
+		<th class="sub-rem2"></th>
+      </tr>
+      <% for collaborator in @collaborators %>
+		<% user = User.find_by_email(collaborator.email)%>
+        <tr class="<%= cycle("othertdalter", "") %>">
+			<td><%= link_to "#{user.first_name}", edit_collaborator_path(collaborator) if user != nil%></td>
+			<td><%=user.position if user != nil%></td>
+			<td><%= link_to "#{collaborator.email}", edit_collaborator_path(collaborator)%></td>
+			<td><%=collaborator.status%></td>
+			<td>
+            <%= link_to image_tag("/images/minus.png"), collaborator, :confirm => 'Are you sure want to remove this member?', :method => :delete %>
+        </td>
+        </tr>
+      <% end %>
+    </table>
+	<br/>
+  </div>
+</div>

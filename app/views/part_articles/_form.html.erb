@@ -1,0 +1,73 @@
+<% title "Part Editor"%>
+<div class="left_page">
+	<div class="lt_nav_container">
+		<%= render :partial => "/jobs/job_info" %>
+		<%#= render :partial => "/clients/client_info" %>
+	</div>
+	<div class="lt_button_container">
+        <div>
+			<%= link_to "Part Master", "/article_paragraphs/master_paragraph?specification_section_id=#{params[:specification_section_id]}&part_id=#{params[:part_id]}&job_id=#{params[:job_id]}&collaborator_id=#{params[:collaborator_id]}", :class => "button-left" %>
+        </div>
+		<div>
+			<%= link_to "Section Editor", new_spec_sec_part_path(:job_id => params[:job_id], :specification_section_id => params[:specification_section_id], :collaborator_id => params[:collaborator_id]), :class => "button-left" %>
+		</div>
+	</div>
+</div>
+<div class="right_page">
+	<% form_for @part_article, :html => {:class => "form"} do |f| %>
+	<%=hidden_field_tag "collaborator_id", params[:collaborator_id]%>
+  <%= f.error_messages %>
+    <%= f.hidden_field :part_id %>
+	<%= f.hidden_field :specification_section_id %>
+	<h3><%=yield(:title)%></h3>
+	<div class="label">Section:</div><%=@part_article.specification_section.section.modif_number%> - <%=@part_article.specification_section.section.name%><br />
+	<div class="label">Part:</div><%=@part.id%> - <%=@part.name%><br />
+	<div class="label">Description:</div><div class="value"><%=@part.description%></div>
+	<b>Articles already included</b>
+	<table id="jobs_table">
+		<tr>
+			<th class="part-check">No</th>
+			<th class="part-name">
+				Article
+			</th>
+			<th class="part-desc">Description</th>
+		</tr>
+		<% a = 1 %>
+		<% for part_article in @have_articles %>
+			<tr class="<%= cycle("othertdalter", "") %>">
+				<td><%="#{@part.id}.#{report_article_number(a)}"%></td>
+				<td><%= part_article.article.name%></td>
+				<td><%= part_article.article.description%></td>
+				
+			</tr>
+		<% 
+		a += 1
+		end %>
+	</table>
+	<br/>
+	<b>Available Articles</b>
+	</table>
+		<table id="jobs_table">
+			<tr>
+				<th class="part-check"><%= check_box_tag('check_all', 'check_all', false,  :onClick => "toggleCheckBoxes('new_part_article')")%></th>
+				<th class="part-name">
+					Article
+				</th>
+				<th class="part-desc">Description</th>
+			</tr>
+			<% for article in @articles %>
+				<% fields_for "articles[]", article do |art| %>
+				<tr class="<%= cycle("othertdalter", "") %>">
+					<td><%= art.check_box :id, :checked => false %></td>
+					<td><%= article.name%></td>
+					<td><%= article.description%></td>
+				</tr>
+				<% end %>
+			<% end %>
+		</table>
+	<br/>
+	<div><%= f.submit "Import Article" %></div>
+<% end %>
+</div>
+
+</div>

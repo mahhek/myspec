@@ -1,0 +1,42 @@
+<% title "Edit Section" %>
+<div class="left_page">
+  <div class="lt_nav_container"></div>
+  <div class="lt_button_container">
+    <div><%= link_to "Back To Section", "/sections/#{params[:id]}/edit/?div_id=#{params[:div_id]}", :class => 'button-left' %></div>
+    
+  </div>
+
+</div>
+<div class="right_page">
+  <h3>See List</h3>
+<h3><%= @section.name %></h3>
+<% form_tag "/sections/add_see_section/#{params[:id]}&div_id=#{params[:div_id]}" do%>
+      <label>Enter Section Number:</label> &nbsp;&nbsp;&nbsp;
+    <%= text_field_tag :see %>
+  <%= submit_tag 'Add' %>
+<%end%>
+<h3>Existing Section</h3>
+<table id="jobs_table">
+		  <tr>
+		    <th style="width:100px">Number</th>
+		    <th>Name</th>
+			<th></th>
+		  </tr>
+<%unless @see_sections.blank?%>
+      <%@see_sections.each do |see|%>
+       <tr class="<%= cycle("othertdalter", "") %>">
+          <%section = Section.find(see.see_section_id)%>
+          <td>
+        <%= section.number %>
+          </td>
+          <td>
+            <%= section.name %>
+          </td>
+        
+        <td><%= link_to image_tag('/images/minus.png'), "/sections/delete_see_section?id=#{see.id}&sid=#{params[:id]}&div_id=#{params[:div_id]}", :confirm => "Are you sure?"%></td>
+        
+        </tr>
+      <%end%>
+    <%end%>
+    <table>
+</div>

@@ -1,0 +1,3 @@
+<div><%= link_to "Help Tickets", new_help_ticket_path, :class => 'button-left' %></div>
+	<div><%= link_to "Section Request", new_section_request_path, :class => 'button-left' %></div>
+	<div><%= link_to "Evaluator Request", new_evaluator_request_path, :class => 'button-left' if !current_user.has_role?(:support) %></div>

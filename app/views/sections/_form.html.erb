@@ -1,0 +1,100 @@
+<div class="left_page">
+  <div class="lt_nav_container"></div>
+  <div class="lt_button_container">
+    <div><%= link_to "Back to List", "/sections?id=#{params[:div_id]}", :class => 'button-left' %></div>
+      <%unless @section.id.blank?%>
+      
+      <%end%>
+  </div>
+
+</div>
+<div class="right_page">
+  <div  style="float:left">
+  <h3>Section Master Information</h3>
+<% semantic_form_for @section do |f| %>
+  <%= f.error_messages %>
+  <%= hidden_field_tag :div_id, params[:div_id]%>
+    <%f.inputs do%>
+      <%=f.input :number, :label => "Number"%>
+      <%=f.input :name, :label => "Name"%>
+      <%=f.input :description, :input_html => {:rows => 6}, :label => "Description"%>
+      <%=f.input :notes, :input_html => {:rows => 6}, :label => "Notes"%>
+      <%=f.input :include, :input_html => {:rows => 6}, :label => "Include"%>
+      <%=f.input :may_include, :input_html => {:rows => 6}, :label => "May Include"%>
+      <%=f.input :usually_include, :input_html => {:rows => 6}, :label => "Usually Include"%>
+      <%=f.input :does_not_include, :input_html => {:rows => 6}, :label => "Does not Include"%>
+      <%=f.input :alternate_terms_abbreviations, :input_html => {:rows => 6}, :label => "Alternate Terms/Abbreviations"%>
+    <%end%>
+	<%=f.buttons%>
+<% end %>
+</div>
+<%unless @section.id.blank?%>
+<div style="float:left;width:100%;">
+ <h3>See List</h3>
+ <% form_tag "/sections/add_see_section?id=#{params[:id]}&div_id=#{params[:div_id]}" do%>
+   
+      <label>Enter Section Number:</label> &nbsp;&nbsp;&nbsp;
+    <%= text_field_tag :see %>
+  <%= submit_tag 'Add' %>
+<%end%>
+<table id="jobs_table">
+  
+		  <tr>
+		    <th style="width:100px">Number</th>
+		    <th style="width:640px;">Name</th>
+			<th></th>
+		  </tr>
+<%unless @see_sections.blank?%>
+      <%@see_sections.each do |see|%>
+       <tr class="<%= cycle("othertdalter", "") %>">
+          <%section = Section.find(see.see_section_id)%>
+          <td>
+        <%= section.number %>
+          </td>
+          <td>
+            <%= section.name %>
+          </td>
+
+        <td><%= link_to image_tag('/images/minus.png'), "/sections/delete_see_section?id=#{see.id}&sid=#{params[:id]}&div_id=#{params[:div_id]}", :confirm => "Are you sure?"%></td>
+
+        </tr>
+      <%end%>
+    <%end%>
+    <table>
+</div>
+<%end%>
+<%unless @section.id.blank?%>
+<div  style="float:left;width:100%;">
+<h3>See Also List</h3>
+  <% form_tag "/sections/add_see_also_section?id=#{params[:id]}&div_id=#{params[:div_id]}" do%>
+     <label>Enter Section Number:</label> &nbsp;&nbsp;&nbsp;
+      <%= hidden_field_tag :div_id, params[:div_id]%>
+    <%= text_field_tag :see %>
+  <%= submit_tag 'Add' %>
+<%end%>
+<table id="jobs_table">
+		  <tr>
+		    <th style="width:100px">Number</th>
+		    <th style="width:640px;">Name</th>
+			<th></th>
+		  </tr>
+<%unless @see_also_sections.blank?%>
+      <%@see_also_sections.each do |see|%>
+       <tr class="<%= cycle("othertdalter", "") %>">
+          <%section = Section.find(see.see_also_section_id)%>
+          <td>
+        <%= section.number %>
+          </td>
+          <td>
+            <%= section.name %>
+          </td>
+
+        <td><%= link_to image_tag('/images/minus.png'), "/sections/delete_see_also_section?id=#{see.id}&sid=#{params[:id]}&div_id=#{params[:div_id]}", :confirm => "Are you sure?"%></td>
+
+        </tr>
+      <%end%>
+    <%end%>
+    <table>
+</div>
+<%end%>
+</div>

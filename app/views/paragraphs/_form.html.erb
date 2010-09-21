@@ -1,0 +1,24 @@
+<div class="left_page">
+  <div class="lt_nav_container"></div>
+  <div class="lt_button_container">
+    <div><%= link_to "Cancel", "/paragraphs?art_id=#{params[:art_id]}&part_id=#{params[:part_id]}", :class => "button-left" %></div>
+  </div>
+
+</div>
+<div class="right_page">
+  <h3>Paragraph Master Information</h3>
+	<% semantic_form_for @paragraph, :html => {:class => "form"} do |f| %>
+		<%= f.error_messages %>
+        <%= hidden_field_tag :art_id, params[:art_id] %>
+        <%= hidden_field_tag :part_id, params[:part_id] %>
+		<% f.inputs do %>
+			<%=f.input :part, :include_blank => false%>
+			<%=f.input :article, :include_blank => false%>
+			<%#=f.label :number%>
+			<%#=f.text_field :number%>
+			<%=f.input :name%>
+			<%=f.input :description%>
+		<% end %>
+		<%=f.buttons%>
+	<% end %>
+</div>

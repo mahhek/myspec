@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<link rel="shortcut icon" href="/images/favicon.ico" />
+    	<title><%= h(yield(:title) || "Untitled") %></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="Content-Language" content="en-us">
+    	<%= stylesheet_link_tag 'reset','new_home', :cache => "base" %>
+    	<%= yield(:head) %>
+  	</head>
+  	<body>
+		<div id="mainnav">
+		    <div class="main-nav-wrapper">
+		      <div class="top-nav-wrapper">
+		        <ul id="top-nav" class="nav">
+		      		<li>&nbsp;&nbsp;&nbsp;</li>
+		      		<li class="nav-home"><%= link_to "Home", home_path , :class=> ( params[:controller] == "home" && params[:action] == "index"  ?  "selected" : nil)%></li>
+		      		<li class="nav-blog"><%= link_to "Blog", blog_path , :class=> ( params[:controller] == "home" && params[:action] == "blog"  ?  "selected" : nil)%></li>
+		      		<li class="nav-download"><%= link_to "Account", profile_path %></li>
+		      		<li class="nav-support"><%= link_to "Contact", contact_us_path , :class=> ( params[:controller] == "home" && params[:action] == "contact"  ?  "selected" : nil)%></li>
+		        </ul>
+		      </div>
+
+		    <br clear="all">
+		    </div>
+		  </div>
+		  <%=yield%>
+    	<!-- <div id="wrapper" class="container_12 clearfix">
+    	      		<div id="selector" class="container_12">
+    	        		<div class="grid_8">
+    	          		<%= render :partial => "layouts/home_menu" %>
+    	        		</div>
+    	        		<div class="grid_4">
+    	          			<ul id="login">
+    	            		<% if current_user %>
+    	              			<li><%= link_to "Account", profile_path %></li>
+    	              			<li><%= link_to "Logout", logout_path %></li>
+    	            		<% else %>
+    	              			<li><%= link_to "Login", login_path,:class=> ( params[:controller] == "user_sessions" ?  "selected" : nil) %></li>
+    	            		<% end %>
+    	          			</ul>
+    	        		</div>
+    	      		</div>
+    	      		<div class="clearfix grid_11">&nbsp;</div>
+    	      		<div class="container_11">
+    	        		<%- flash.each do |name, msg| -%>
+    	          			<%- if(params[:controller] != "password_resets") %>
+    	            			<%= content_tag :div, msg, :class => "flash#{name} grid_12"%>
+    	          			<%- end %>
+    	        		<%- end -%>
+    	      		</div>
+    	      		<%= yield %>
+    	    	</div> -->
+  	</body>
+</html>

@@ -1,0 +1,15 @@
+<% title "Job Template Information" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	  	<%= render :partial => 'template_info' %>
+  </div>
+	<div class="lt_button_container">
+		
+		<div>
+	    <div><%= link_to "Cancel", @template_job, :class => 'button-left' %></div>
+	  </div>
+	</div>
+</div>
+<div class="right_page">
+	<%= render :partial => 'form' %>
+</div>

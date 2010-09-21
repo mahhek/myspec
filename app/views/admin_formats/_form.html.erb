@@ -1,0 +1,80 @@
+<% javascript 'dynamic_select'%>
+<% semantic_form_for @admin_format do |f| %>
+  <%= f.error_messages %>
+  	<%f.inputs do%>
+    <% @layouts = Layout.all(:order => "name") %>
+      <div class="label">Print Format</div>
+      <%= select_tag  "admin_format[layout_id]", options_from_collection_for_select(@layouts, :id, :name, @admin_format.layout_id)%>
+		<%#=f.input :layout, :label => "Print Format"%>
+        <div class="value"><br/></div>
+		<div class="label">Header</div>
+		<div class="value">
+			<div class="box-left">
+				<b>Top Left</b>
+				<li>
+					<%=check_box_tag "chk_1"%>  <span id="ck_1"><%=text_field_tag "tp_left_1", @admin_format.top_left_1,:size => 50%></span> <span id="sl_1"><%=f.select :top_left_1, ["job no","date", "job name", "job location", "section author", "section name", "section no", "section no - page no", "page no"],{:include_blank => true}%></span>
+				</li>
+				<li>
+					<%=check_box_tag "chk_2"%>  <span id="ck_2"><%=text_field_tag "tp_left_2", @admin_format.top_left_2,:size => 50%></span> <span id="sl_2"><%=f.select :top_left_2, ["date", "job no", "job name", "job location", "section author", "section name", "section no", "section no - page no", "page no"],{:include_blank => true}%></span>
+				</li>
+				<li>
+					<%=check_box_tag "chk_3"%>  <span id="ck_3"><%=text_field_tag "tp_left_3", @admin_format.top_left_3,:size => 50%></span> <span id="sl_3"><%=f.select :top_left_3, ["date", "job no", "job name", "job location", "section author", "section name", "section no", "section no - page no", "page no"],{:include_blank => true}%></span>
+				</li>
+			</div>
+			<div class="box-right">
+				<b>Top Right</b>
+				<li>
+					<%=check_box_tag "chk_4"%>  <span id="ck_4"><%=text_field_tag "tp_right_1", @admin_format.top_right_1,:size => 50%></span> <span id="sl_4"><%=f.select :top_right_1, ["job name","date", "job no", "job location", "section author", "section name", "section no", "section no - page no", "page no"],{:include_blank => true}%></span>
+				</li>
+				<li>
+					<%=check_box_tag "chk_5"%>  <span id="ck_5"><%=text_field_tag "tp_right_2", @admin_format.top_right_2,:size => 50%></span> <span id="sl_5"><%=f.select :top_right_2, ["job location", "date", "job no", "job name",  "section author", "section name", "section no", "section no - page no", "page no"],{:include_blank => true}%></span>
+				</li>
+				<li>
+					<%=check_box_tag "chk_6"%>  <span id="ck_6"><%=text_field_tag "tp_right_3", @admin_format.top_right_3,:size => 50%></span> <span id="sl_6"><%=f.select :top_right_3, ["date", "job no", "job name", "job location", "section author", "section name", "section no", "section no - page no", "page no"],{:include_blank => true}%></span>
+				</li>
+			</div>
+		</div>
+		<div class="label">Footer</div>
+		<div class="value">
+			<div class="box-left">
+				<b>Bottom Left</b>
+				<li>
+					<%=check_box_tag "chk_7"%>  <span id="ck_7"><%=text_field_tag "bt_left_1", @admin_format.bottom_left_1,:size => 50%></span> <span id="sl_7"><%=f.select :bottom_left_1, ["section author", "date", "job no", "job name", "job location",  "section name", "section no", "section no - page no", "page no"],{:include_blank => true}%></span>
+				</li>
+				<li>
+					<%=check_box_tag "chk_8"%>  <span id="ck_8"><%=text_field_tag "bt_left_2", @admin_format.bottom_left_2,:size => 50%></span> <span id="sl_8"><%=f.select :bottom_left_2, ["date", "job no", "job name", "job location", "section author", "section name", "section no", "section no - page no", "page no"],{:include_blank => true}%></span>
+				</li>
+				<li>
+					<%=check_box_tag "chk_9"%>  <span id="ck_9"><%=text_field_tag "bt_left_3", @admin_format.bottom_left_3,:size => 50%></span> <span id="sl_9"><%=f.select :bottom_left_3, ["date", "job no", "job name", "job location", "section author", "section name", "section no", "section no - page no", "page no"],{:include_blank => true}%></span>
+				</li>
+				<li>
+					<%=check_box_tag "restore"%> <span id="aa"><%=label_tag "Restore Default"%></span>
+				</li>
+			</div>
+			<div class="box-right">
+				<b>Bottom Right</b>
+				<li>
+					<%=check_box_tag "chk_10"%>  <span id="ck_10"><%=text_field_tag "bt_right_1", @admin_format.bottom_right_1,:size => 50%></span> <span id="sl_10"><%=f.select :bottom_right_1, ["section name", "date", "job no", "job name", "job location", "section author",  "section no", "section no - page no", "page no"],{:include_blank => true}%></span>
+				</li>
+				<li>
+					<%=check_box_tag "chk_11"%>  <span id="ck_11"><%=text_field_tag "bt_right_2", @admin_format.bottom_right_2,:size => 50%></span> <span id="sl_11"><%=f.select :bottom_right_2, ["section no", "date", "job no", "job name", "job location", "section author", "section name", "section no - page no", "page no"],{:include_blank => true}%></span>
+				</li>
+				<li>
+					<%=check_box_tag "chk_12"%>  <span id="ck_12"><%=text_field_tag "bt_right_3", @admin_format.bottom_right_3,:size => 50%></span> <span id="sl_12"><%=f.select :bottom_right_3, ["date", "job no", "job name", "job location", "section author", "section name", "section no", "section no - page no", "page no"],{:include_blank => true}%></span>
+				</li>
+			</div>
+		</div>
+	<% end %>
+	
+    <div>
+    <%=f.check_box :show_notes%> <b>Print Notes in standards</b>
+    </div>
+    <div class="label">&nbsp;</div>
+	<div class="value">
+		&nbsp;
+	</div>
+    <div class="label">&nbsp;</div>
+	<div class="value">
+		<%=f.submit "Save Changes"%>
+	</div>
+<% end %>

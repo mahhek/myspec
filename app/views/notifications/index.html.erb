@@ -1,0 +1,63 @@
+<% title "Notifications" %>
+<% javascript 'scriptaculous/scriptaculous'%>
+<% javascript 'modalbox/modalbox' %>
+<%# javascript 'notification'%>
+<% stylesheet 'modalbox'%>
+
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => 'help_tickets/apps_info' %>
+  </div>
+  <div class="lt_button_container">
+    <%= render :partial => 'help_tickets/support_info' %>
+
+  </div>
+</div>
+<div class="right_page">
+  <br/>
+  <h3>Create Notifcation</h3>
+  <div>
+    <%=render :partial => "form"%>
+  </div>
+  <br/>
+  <h3>Sent Notifcations</h3>
+  <table id="jobs_table">
+    <tr>
+      <th class="job-no">No.</th>
+      <th class="job-name">Title</th>
+      <th class="job-no">Sent Date</th>
+      <th class="job-no">Expire Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% for notification in @notifications %>
+      <tr class="<%= cycle("othertdalter", "") %>">
+        <td><%=h notification.auto_number %></td>
+        <td> <%= notification.title%></td>
+        <td>
+          <%unless notification.sent_date.blank?%>
+            <%=h notification.sent_date.strftime("%m-%d-%Y") %>
+          <%else%>
+            Pending
+          <%end%>
+        </td>
+        <td>
+          <%unless notification.due_on.blank?%>
+            <%=h notification.due_on.strftime("%m-%d-%Y") %>
+          <%end%>
+        </td>
+        <td>
+          <%if notification.status == "Pending"%>
+          <%= link_to "Edit", :controller => "notifications", :action => "index", :id => notification.id %>
+          <%end%>
+        </td>
+        <td><%= link_to_remote "Preview", :url => {:controller => "members", :action => "show_notification", :id => notification.id} %></td>
+        <td><%= link_to image_tag("/images/minus.png"), notification, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+
+    <% end %>
+  </table>
+
+</div>

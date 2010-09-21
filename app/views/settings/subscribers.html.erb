@@ -1,0 +1,33 @@
+<% title "Help and Support Center" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'help_tickets/apps_info' %>
+  </div>
+  <div class="lt_button_container">
+	<%= render :partial => 'help_tickets/support_info' %>
+  </div>
+</div>
+<div class="right_page">
+	<div>
+		<h3>Subscribers</h3>
+		<table id="jobs_table" cellspacing="0" cellpadding="0">
+		  <tr>
+			<th class="sec-name">Name</th>
+		    <th class="sec-name">Company</th>
+		    <th class="sec-name">Email</th>
+		    <th class="sub-date">Signup</th>
+		  </tr>
+          
+		  <% for subscriber in @subscribers %>
+        <tr class="<%= cycle("othertdalter", "") %>">
+		   
+              <td><%= link_to subscriber.full_name, "/subscriber_team/#{subscriber.id}"%></td>
+		      <td> <%=h subscriber.company %></td>
+		      <td> <%= link_to subscriber.email, "/subscriber_team/#{subscriber.id}"%></td>
+		      <td><%=h subscriber.created_at.strftime("%m-%d-%Y") %></td>
+		    </tr>
+		  <% end %>
+		</table>
+	</div>
+	<br/>
+</div>

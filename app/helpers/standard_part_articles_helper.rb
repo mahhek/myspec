@@ -1,0 +1,2 @@
+module StandardPartArticlesHelper
+end

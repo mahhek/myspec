@@ -1,0 +1,64 @@
+	<div>
+	<h3>Save as Job Standard Section</h3>
+	</div>
+	<br/>
+	<div>
+	<% semantic_form_for @standard_section do |f| %>
+	<%=hidden_field_tag :job_id,  params[:job_id]%>
+	  	<%f.inputs do %>
+			<% if @specification_section != nil %>
+				<li>
+					<%=label_tag "Division"%>
+					<%=@specification_section.specification.division.modif_number%> - <%=@specification_section.specification.division.name%>
+		  		</li>
+				<li>
+					<%=label_tag "Section"%>
+					<%=@specification_section.section.modif_number%> - <%=@specification_section.section.name%>
+                     
+		  		</li>
+			<% else %>
+				<% javascript ('dynamic_sections')%>
+				<li>
+
+                    <% if @standard_section.section.division_number == "00" %>
+                    <%=f.input :section, :collection => Section.number_begins_with("00").number_not_begin_with("000000").collect {|p| ["#{p.number} - #{p.name}", p.id]} ,  :include_blank => false, :input_html => {:class=>"sec_select"}%>
+                    <%else%>
+                    	<li>
+				<%=label_tag "Division"%>
+
+				<%=select_tag "division", options_for_select(Division.all(:conditions => "division_number <> '000000'").collect {|p| ["#{p.division_number} - #{p.name}",p.division_number]}, Division.find_by_division_number(@standard_section.section.division_number + "0000").division_number), :class => "div_select"%>
+	  		</li>
+			<%=f.input :section, :collection => Section.number_begins_with(@standard_section.section.division_number).number_not_begin_with(@standard_section.section.division_number + "0000").collect {|p| ["#{p.number} - #{p.name}", p.id]}, :include_blank => false, :input_html => {:class=>"sec_select"}%>
+                    <%end%>
+
+		  		</li>			<% end %>
+
+			<%=f.input :specification_section_id, :as => :hidden%>
+			<%=f.input :standard_name, :input_html => {:size => 60}%>
+			<%=f.input :comments, :label => "Description", :input_html => {:rows => 6}%>
+		<% end %>
+		<%f.buttons do %>
+			<%=f.commit_button "Save Changes"%>
+		<% end %>
+	<% end %>
+	</div>
+	<h3>Job Standards</h3>
+	<table id="jobs_table">
+  		<tr>
+			<th class="sec-no">Sec No</th>
+			<th class="standard-name">Standard Name</th>
+		    <th class="sub-author">Author</th>
+			<th class="sub-date">Date</th>
+			<th class="sub-rem2"></th>
+		  </tr>
+		  <% for standard_section in @standard_sections %>
+		    <tr class="<%= cycle("othertdalter", "") %>">
+				<td><%=h standard_section.section.modif_number %></td>
+				<td><%= link_to standard_section.standard_name, standard_spec_edit_path(:id => standard_section.id) %></td>
+
+		      	<td><%=h standard_section.user.username %></td>
+				<td><%=h standard_section.created_at.strftime("%m-%d-%Y") %></td>
+				<td><%= link_to image_tag("/images/minus.png"), standard_section, :confirm => 'Are you sure want to remove this job standard?', :method => :delete %></td>
+		    </tr>
+		  <% end %>
+</table>

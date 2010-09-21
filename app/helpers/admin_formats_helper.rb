@@ -1,0 +1,2 @@
+module AdminFormatsHelper
+end

@@ -1,0 +1,4 @@
+<option value="">--select paragraph--</option>
+<% for article_paragraph in @standard_article_paragraphs %>
+	<option value="<%=article_paragraph.id%>"><%=article_paragraph.paragraph.name%></option>
+<% end %>

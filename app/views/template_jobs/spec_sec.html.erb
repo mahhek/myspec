@@ -1,0 +1,97 @@
+<% title "Job Template" %>
+<div>
+<h3><%=@template_job.name%></h3>
+</div>
+<div>
+	
+		<%= link_to "Back", template_job_path(@template_job), :class => 'button' %>
+
+</div>
+<div class="grid_12 clearfix">&nbsp;</div>
+<div class="hr grid_12 clearfix">&nbsp;</div>
+<div class="grid_12">
+	<div class="grid_3"><h3><%=@specification_section.section.modif_number%></h3></div><div class="grid_8"><h3><%=@specification_section.section.name%></h3></div>
+</div>	
+<div class="grid_12" id="parts">
+	<% for part in @parts%>
+		<% if part.id == 1 %>
+			<div class="grid_12 part">Part <%=part.id %> - <%=part.name%></div>
+			<% 
+			a = 1
+			for article in @list_general_articles %>
+				<div class="grid_1 article">&nbsp;</div><div class="grid_10 article"><%=a%>. <%=article.article.name%></div>
+				<% 
+				b = 97
+				for paragraph in article.article_paragraphs%>
+					<div class="grid_2 article">&nbsp;</div><div class="grid_9 article"><%=b.chr.upcase%>. <%=paragraph.paragraph.name%></div>
+					<% 
+					c = 1
+					for subparagraph in paragraph.subparagraphs %>
+						<div class="grid_3 article">&nbsp;</div><div class="grid_6 article"><%=c%>. <%=  subparagraph.description%></div>
+					<% 
+					c = c + 1
+					end %>
+					
+				<% 
+				b = b + 1
+				end %>
+				
+			<% 
+			a = a + 1
+			end %>
+			<div class="clearfix">&nbsp;</div>
+		<% elsif part.id == 2  %>
+			<div class="grid_12 part">Part <%=part.id %> - <%=part.name%></div>
+			<% 
+			a = 1
+			for article in @list_product_articles %>
+				<div class="grid_1 article">&nbsp;</div><div class="grid_10 article"><%=a%>. <%=article.article.name%></div>
+				<% 
+				b = 97
+				for paragraph in article.article_paragraphs%>
+					<div class="grid_2 article">&nbsp;</div><div class="grid_9 article"><%=b.chr.upcase%>. <%=paragraph.paragraph.name%></div>
+					<% 
+					c = 1
+					for subparagraph in paragraph.subparagraphs %>
+						<div class="grid_3 article">&nbsp;</div><div class="grid_6 article"><%=c%>. <%=  subparagraph.description%></div>
+					<% 
+					c = c + 1
+					end %>
+					
+				<% 
+				b = b + 1
+				end %>
+				
+			<% 
+			a = a + 1
+			end %>
+			<div class="clearfix">&nbsp;</div>
+		<% elsif part.id == 3 %>
+			<div class="grid_12 part">Part <%=part.id %> - <%=part.name%></div>
+			<% 
+			a = 1
+			for article in @list_execution_articles %>
+				<div class="grid_1 article">&nbsp;</div><div class="grid_10 article"><%=a%>. <%=article.article.name%></div>
+				<% 
+				b = 97
+				for paragraph in article.article_paragraphs%>
+					<div class="grid_2 article">&nbsp;</div><div class="grid_9 article"><%=b.chr.upcase%>. <%=paragraph.paragraph.name%></div>
+					<% 
+					c = 1
+					for subparagraph in paragraph.subparagraphs %>
+						<div class="grid_3 article">&nbsp;</div><div class="grid_6 article"><%=c%>. <%=  subparagraph.description%></div>
+					<% 
+					c = c + 1
+					end %>
+					
+				<% 
+				b = b + 1
+				end %>
+				
+			<% 
+			a = a + 1
+			end %>
+			<div class="clearfix">&nbsp;</div>
+		<% end %>
+	<% end %>
+</div>

@@ -1,0 +1,35 @@
+<% title "Archived Clients" %>
+<div class="left_page">
+	<div class="lt_nav_container">
+	  	<%= render :partial => 'members/member_info' %>
+	</div>
+  <div class="lt_button_container">
+	<%#= render :partial => 'client_menu' %>
+	<div><%= link_to "Cancel", clients_path, :class => "button-left"%></div>
+  </div>
+
+</div>
+<div class="right_page">
+	<div>
+		<h3><%=yield(:title)%></h3>
+	</div>
+  <div>
+    <table id="clients_table">
+      <tr>
+        <th class="client-name">Client Name</th>
+        <th class="client-address">Address</th>
+        <th class="client-phone">Phone</th>
+		<th class="sub-rem2"></th>
+      </tr>
+      <% for client in @clients %>
+        <tr class="<%= cycle("othertdalter", "") %>">
+          <td><%=h client.name %></td>
+          <td><%=h client.physical_address%></td>
+          <td><%=h client.phone%></td>
+			<td><%= link_to image_tag("/images/minus.png"),"/clients/destroy_archive_clients/#{client.id}", :confirm => 'Are you sure want to remove this client?'%></td>
+        </tr>
+      <% end %>
+    </table>
+    <%= will_paginate @clients %>
+  </div>
+</div>

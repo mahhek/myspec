@@ -1,0 +1,8 @@
+<div class="grid_11">
+	<div class="grid_10"><b>Import</b></div>
+	<% if @import.processed > 0 %>
+		Succcess!
+	<% else %>
+		<%= link_to "process", import_proc_path(@import.id) %>
+	<% end %>
+</div>

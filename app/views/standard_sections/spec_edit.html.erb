@@ -1,0 +1,83 @@
+<% title "Job Standard Editor" %>
+<% javascript 'scriptaculous/scriptaculous'%>
+<% javascript 'modalbox/modalbox' %>
+<% stylesheet 'modalbox'%>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => 'standard_information' %>
+  </div>
+  <div class="lt_button_container">
+	<% if report_article_number(@standard_section.section.number[0,2]) == "00" %>
+		<div><%= link_to "New Article", new_standard_user_article_path(:standard_section_id => @standard_section.id) , :class => "button-left"  %></div>
+	<% end %>
+    <% if report_article_number(@standard_section.section.number[0,2]) != "00" %>
+	<div><%= link_to "Notes", standard_section_notes_path(:standard_section_id => @standard_section.id), :class => "button-left"  %></div>
+    <%end%>
+    <div><%= link_to "Print Section", show_section_path(:id => @standard_section.id, :format => "pdf"), :class => "button-left", :target => "blank" %></div>
+    <div><%= link_to "Job Standards", standard_sections_path, :class => "button-left"  %></div>
+	<div><%= link_to "Job Standard Information", edit_standard_section_path(@standard_section), :class => "button-left"  %></div>
+  </div>
+</div>
+<div class="right_page">
+	<div>
+	<h3 class="head"><%=yield(:title)%></h3>
+	</div>
+	<div>
+	<b><%=@standard_section.section.modif_number%> - <%=  @standard_section.section.name%></b>
+    <%= link_to_remote(image_tag("/images/form-ic-info.png", :border => 0),:url => {:controller => "spec_sec_parts", :action => 'show_related_sections', :id => @standard_section.section.id}) %>
+	</div>
+	<% if report_article_number(@standard_section.section.number[0,2]) != "00" %>
+		<%= render :partial => 'spec' %>
+	<% else %>
+		<%= render :partial => 'div_00' %>
+	<% end %>
+	<div id="end-sec">
+		[ End of Section ]
+	</div>
+	
+	<!-- <div>
+				<h3>New Note</h3>
+				<% form_for @standard_section_note, :html => { :multipart => true } do |f| %>
+			  		<%= f.error_messages %>
+					<%=f.hidden_field :standard_section_id%>
+					<p>
+						<%=f.label :title %><br/>
+						<%=f.text_field :title, :size => 50%>
+					</p>
+					<p>
+						<%=f.label :description%><br/>
+						<%=f.text_area :description, :rows => 6, :cols => 104%>
+					</p>
+					<p>
+						<%=f.submit "Add Note"%>
+					</p>
+			<% end %>
+		</div>
+	      <div>
+				<h3>Notes</h3>
+	            </div>
+		<table id="jobs_table">
+		  <tr>
+				<th class="sub-no">No</th>
+		    	<th class="div-name">Title</th>
+				<th class="div-info">Description</th>
+				<th class="sub-author">Author</th>
+				<th class="sub-date">Date</th>
+			<th></th>
+		  </tr>
+		  <% 
+			i = 1
+			for section_note in @standard_section.standard_section_notes %>
+		    <tr class="<%= cycle("othertdalter", "") %>">
+				<td><%=h i %></td>
+		      <td><%=h link_to section_note.title, edit_section_note_path(section_note) %></td>
+		      <td><%=h section_note.description %></td>
+				<td><%=h section_note.user.username %></td>
+				<td><%=h section_note.created_at.strftime("%m-%d-%Y") %></td>
+		      <td><%= link_to image_tag("/images/minus.png"), section_note, :confirm => 'Are you sure?', :method => :delete %></td>
+		    </tr>
+		  <% 
+			i += 1
+			end %>
+		</table> -->
+</div>

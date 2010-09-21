@@ -1,0 +1,51 @@
+<% title "Available Sections from Master Format list"%>
+
+  <div class="left_page">
+    <div class="lt_nav_container">
+      <% @job =  @specification.job  %>
+      <%= render :partial => "/jobs/job_info" %>
+    </div>
+    <div class="lt_button_container">
+		<div><%= link_to "Division Editor", add_multiple_sections_path(:job_id => @job.id, :specification_id => @specification.id, :collaborator_id => params[:collaborator_id]), :class => "button-left" %></div>
+		<% if params[:collaborator_id] == nil%>
+			<div><%= link_to "Cancel", @job, :class => 'button-left' %></div>
+		<% else %>
+			<div><%= link_to "Cancel", shared_job_path(:job_id => @job.id, :collaborator_id => params[:collaborator_id]), :class => 'button-left' %></div>
+		<% end %>
+    </div>
+  </div>
+  <div class="right_page">
+      	<div>
+      		<h3 class="head"><%=yield(:title)%></h1>
+    	</div>
+		<div>
+		<b><%=@specification.division.modif_number%> - <%=@specification.division.name%></b>
+		</div>
+		<br/>
+		<% form_for @specification_section, :url => create_master_path, :html => {:class => "form"} do |f| %>
+		<div><%= f.submit "Save Changes" %></div>
+      <div>
+		
+		<%= f.hidden_field :specification_id %>
+		<%= hidden_field_tag "collaborator_id", params[:collaborator_id] %>
+		<table id="jobs_table">
+			<tr>
+				<th class="sec-no">Sec No.</th>
+				<th class="sec-name">Sec Name</th>
+				<th class="sec-info">Info</th>
+			</tr>
+			<% for section in @sections %>
+				<tr class="<%= cycle("othertdalter", "") %>">
+	          		<% fields_for "sections[]", section do |sec| %>
+						<td><b><%= section.modif_number%></b></td>
+						<td><%= section.name%></td>
+						<td><%= sec.check_box :id, :checked => false %> </td>
+					<% end %>
+				</tr>
+	        <% end %>
+		</table>
+      </div>
+		<br/>
+		<div><%= f.submit "Save Changes" %></div>
+    <% end %>
+</div>

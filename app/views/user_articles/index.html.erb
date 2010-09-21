@@ -1,0 +1,23 @@
+<% title "User Articles" %>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Part</th>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <% for user_article in @user_articles %>
+    <tr>
+      <td><%=h user_article.user_id %></td>
+      <td><%=h user_article.part_id %></td>
+      <td><%=h user_article.name %></td>
+      <td><%=h user_article.description %></td>
+      <td><%= link_to "Show", user_article %></td>
+      <td><%= link_to "Edit", edit_user_article_path(user_article) %></td>
+      <td><%= link_to "Destroy", user_article, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New User Article", new_user_article_path %></p>

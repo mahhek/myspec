@@ -1,0 +1,224 @@
+<% javascript ('dynamic_charge')%>
+<% form_for @billing_plan do |f| %>		
+<div id="billing-plan" style="width:100%">
+		<h3>Subscription Settings</h3>
+			<% if !current_user.has_role?(:evaluator)%>
+			<table id="jobs_table">
+				<tr>
+					<th class="plan-type">Plan Type</th>
+					<th style="width: 60px;">Users</th>
+					<th style="width: 60px;">Jobs</th>
+					<th style="width: 60px;">Standards</th>
+					<th style="width: 165px;">Templates</th>
+					<th>Monthly Cost</th>
+				</tr>
+				<% for plan_type in PlanType.all %>
+					<% if plan_type.id != 3 %>
+						<tr>
+							<td>
+								<% if current_user.billing_plan.plan_type_id != 1 && plan_type.id == 1 %>
+									<%=f.radio_button :plan_type_id, plan_type.id, :disabled => true%>
+                                <% elsif current_user.billing_plan.plan_type_id == 2 && plan_type.id == 2%>
+                                	<%=f.radio_button :plan_type_id, plan_type.id, :disabled => true%>
+								<% else %>
+									<%=f.radio_button :plan_type_id, plan_type.id, :onclick => "javascript:show_div(#{plan_type.id})"%>
+								<% end %>
+								<b><%=plan_type.name%></b>
+							</td>
+							<td><%=plan_type.max_member%></td>
+							<td><%=plan_type.max_job%></td>
+							<td>Unl</td>
+							<td>Unl</td>
+							<td>$ <%=(plan_type.price)%> USD/user</td>
+						</tr>
+					<% else %>
+						<tr>
+							<td><%=f.radio_button :plan_type_id, plan_type.id, :disabled => true%> <b><%=plan_type.name%></b></td>
+							<td><%=plan_type.max_member%></td>
+							<td><%=plan_type.max_job%></td>
+							<td>Unl</td>
+							<td>Unl</td>
+							<td>2 Free User, $ <%=(plan_type.price)%> USD/user</td>
+						</tr>
+					<% end %>
+				<% end %>
+			</table>
+			<% else %>
+			<table >
+				<tr>
+					<th></th>
+					<th>Users</th>
+					<th>Jobs</th>
+					<th>Standards</th>
+					<th>Templates</th>
+					<th>Monthly Cost</th>
+				</tr>
+				<% for plan_type in PlanType.id_eq(3) %>
+						<tr>
+							<td><%=f.radio_button :plan_type_id, plan_type.id, :disabled => true%> <b><%=plan_type.name%></b></td>
+							<td><%=plan_type.max_member%></td>
+							<td><%=plan_type.max_job%></td>
+							<td>Unlimited</td>
+							<td>Unlimited</td>
+							<td>2 Free User, $ <%=(plan_type.price)%> USD/user</td>
+						</tr>
+				<% end %>
+			</table>
+			<% end %>
+	 <br/>
+<script>
+  function show_div(type)
+  {
+    if(type == 1)
+      {
+        $('setting_plan').hide();
+      }
+      else
+      {
+        $('setting_plan').show();
+		$('billing_plan_number_of_user').setValue(2);
+		$('billing_plan_number_of_space').setValue(5);
+		$('current_charge').update('20');
+		$('cur_charge').update('20.00');
+		$('pro_member').update('20.00');
+		$('bill_today').update('20.00');
+      }
+  }
+</script>
+<%if @billing_plan.plan_type_id == 1%>
+<div id="setting_plan"  style="width:100%;display:none">
+  <%else%>
+  <div id="setting_plan">
+  <%end%>
+  <h3>Update Subscription</h3>
+
+<div style="margin-bottom:20px; ">
+  <label>
+    Team Members
+  </label>
+  <br/>
+  <br/>
+  <table style="width:100%">
+    <tr>
+    <td class="plan-type">Current</td>
+    <td style="width:200px;">
+      <%= @billing_plan.number_of_user %> team members
+    </td>
+    <td style="width:200px;">Rate
+    </td>
+    <td>Monthly Cost</td>
+	<td>Today</td>
+    </tr>
+    <tr>
+      <td>New</td>
+      <td>
+        <%=f.text_field :number_of_user, :size=>5%>&nbsp;
+			<%#=link_to_remote image_tag("plus_icon.png"), :url => { :action => 'calculate'}%><span id="up"><%=link_to image_tag("plus_icon.png"), "", :onclick => "javascript: return false;"%></span>&nbsp;<span id="down"><%=link_to image_tag("minus_r.png"), "", :onclick => "javascript: return false;"%></span>
+      </td>
+      <td>$10 per team member</td>
+      <td>
+      $ <span id="current_charge"><%=(current_user.current_billing)%></span> /month
+    </td>
+	<td class="prorate">$ <span id='pro_member'><%=number_to_currency(0, :unit => '')%></span></td>
+      </tr>
+    
+  </table>
+  Please contact us to order more then 100 team members
+</div>
+
+
+<div style="margin-bottom:20px;">
+  <label>
+   Extra Storage
+  </label>
+  <br/>
+  <br/>
+  <table style="width:100%">
+    <tr>
+    <td class="plan-type">Current</td>
+    <td style="width:200px;">
+      <%= @billing_plan.number_of_space %> GB
+    </td>
+    <td style="width:200px;">Rate
+    </td>
+    <td>Monthly Cost</td>
+	<td>Today</td>
+    </tr>
+    <tr>
+      <td>New</td>
+      <td>
+      <%=f.text_field :number_of_space, :size=>5%>&nbsp;
+			<span id="up1"><%=link_to image_tag("plus_icon.png"), "", :onclick => "javascript: return false;"%></span>&nbsp;<span id="down1"><%=link_to image_tag("minus_r.png"), "", :onclick => "javascript: return false;"%></span> GB
+      </td>
+      <td> $2 per 5GB (5GB Free)</td>
+      <td>
+      $ <span id="current_charge_storage"><%=(current_user.current_storage_billing)%></span> /month
+    </td>
+	<td class="prorate">$ <span id='pro_space'><%=number_to_currency(0, :unit => '')%></span></td>
+      </tr>
+
+  </table>
+  
+</div>
+<div  style="margin-bottom:20px;">
+  <label>
+    Premium Professionals
+  </label>
+  <br/>
+  <br/>
+  <table style="width:100%">
+    <tr>
+    <td class="plan-type">Current</td>
+    <td style="width:200px;">
+      <%unless @billing_plan.number_of_professional.blank?%>
+      <%= @billing_plan.number_of_professional %> permium professional
+      <%else%>
+      0 premium professional
+      <%end%>
+    </td>
+    <td style="width:200px;">Rate
+    </td>
+    <td>Monthly Cost</td>
+	<td>Today</td>
+    </tr>
+    <tr>
+      <td>New</td>
+      <td>
+        <%if current_user.current_billing_professional > 0 %>
+          	<%= check_box_tag 'premium_professionals', "1", true  %>
+        <%else%>
+       		<%= check_box_tag 'premium_professionals', "1"  %>
+       <%end%>
+      </td>
+      <td> $10 for permium professional</td>
+      <td>
+      $ <span id="current_charge_professional"></span> /month
+    </td>
+	<td class="prorate">$ <span id='pro_professional'><%=number_to_currency(0, :unit => '')%></span></td>
+    </tr>
+  </table>
+</div>
+<div style="margin-bottom:20px;">
+</div>
+<div id="total_charge">
+	<h3>Monthly subscription charges</h3>
+	<div class="sub-label">New monthly charges:
+		(Billed on: 
+		<%sub = Subscription.find_by_user_id(current_user.id) %>
+		<%if sub.blank?%>
+		<%=Time.now.strftime("%m/%d/%Y")%>)
+		<%else%>
+		  <%= sub.payment_on.strftime("%m/%d/%Y") %>)
+		<%end%>
+		</div><div>$ 
+    <span id="cur_charge"><%=(current_user.current_billing + current_user.current_storage_billing + current_user.current_billing_professional)%></span>
+</div>
+
+	<div class="sub-label">Prorated charges for current month:</div><div>$ <span id="bill_today"><%=number_to_currency(0, :unit => '')%></span></div>
+	<hr/>
+</div>
+<br/>
+<div style="text-align: right;">
+  <%= submit_tag "Proceed to checkout" %>
+</div>
+<% end %>

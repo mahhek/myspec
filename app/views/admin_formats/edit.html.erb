@@ -1,0 +1,13 @@
+<% title "Format Editor" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'members/subscription_info' %>
+  </div>
+  <div class="lt_button_container">
+   	<%= render :partial => 'members/admin_menu' %>
+  </div>
+</div>
+<div class="right_page">
+	<h3><%=yield(:title)%></h3>
+	<%= render :partial => 'form' %>
+</div>

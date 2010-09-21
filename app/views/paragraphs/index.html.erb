@@ -1,0 +1,34 @@
+<% title "Application Settings > Paragraph list "%>
+<div class="left_page">
+  <div class="lt_nav_container"></div>
+  <div class="lt_button_container">
+    <div><%= link_to "Back", "/articles", :class => "button-left" %></div>
+    <div><%= link_to "New Paragraph", "/paragraphs/new?art_id=#{params[:art_id]}&part_id=#{params[:part_id]}", :class => "button-left" %></div>
+  </div>
+
+</div>
+<div class="right_page">
+  <h3>Paragraph Master List</h3>
+	<table id="users_table">
+	  <tr>
+		<th>Part</th>
+        <th style="width:200px;">Article</th>
+	    <th style="width:410px">Paragraph Name</th>
+         <th></th>
+		<th></th>
+	  </tr>
+	  <% for paragraph in @paragraphs %>
+	    <tr class="<%= cycle("othertdalter", "") %>">
+
+          <td><%=h paragraph.part.name %></td>
+	      <td><%=h Article.find_by_number_and_part_category(params[:art_id], params[:part_id]).name %></td>
+          <td><%=h paragraph.name %></td>
+          
+          <td><%= link_to (image_tag "/images/g-icon-editor.png", :size => "15x15"), "/paragraphs/edit/#{paragraph.id}?art_id=#{params[:art_id]}&part_id=#{params[:part_id]}"  %></td>
+	      <td><%= link_to image_tag('/images/minus.png'), "paragraphs/destroy/#{paragraph.id}?art_id=#{params[:art_id]}&part_id=#{params[:part_id]}", :confirm => 'Are you sure?' %></td>
+	    </tr>
+	  <% end %>
+      
+	</table>
+	
+</div>

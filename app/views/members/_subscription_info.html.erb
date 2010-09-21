@@ -1,0 +1,24 @@
+<%if current_user.parent_id.nil?%>
+		<b>Members</b>
+		<% if current_user.billing_plan.plan_type_id == 1 %>
+			<div>1 / 1</div>
+			<b>Storage</b>
+			<div><%=number_to_human_size(current_user.storage_count)%> / 5 GB</div>
+			<b>Subscription</b>
+			<div>$ <%=current_user.current_billing%> / month</div>
+		<% else %>
+			<div><%=current_user.total_member%> / <%=current_user.max_member%></div>
+			<b>Storage</b>
+			<div><%=number_to_human_size(current_user.storage_count)%> / 5 GB</div>
+			<b>Subscription</b>
+			<div>$ <%=current_user.current_billing%> / month</div>
+		<% end %>
+<%else%>
+        <b>Members</b>
+
+		<div><%=current_user.parent.total_member%> / <%=current_user.parent.max_member%></div>
+		<b>Storage</b>
+		<div><%=number_to_human_size(current_user.parent.storage_count)%> / 5 GB</div>
+		<b>Subscription</b>
+		<div>$ <%=current_user.parent.current_billing%> / month</div>
+<%end%>

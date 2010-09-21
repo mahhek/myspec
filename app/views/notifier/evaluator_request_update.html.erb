@@ -1,0 +1,30 @@
+<h3>Evaluator request</h3>
+
+<% if @request.status == "deny" %>
+<p>Thank you for your evaluator account request. Your proposal has been denied.</p>
+
+<p>Reason</p>
+<%=@request.reason%>
+
+<p>Please feel free to revise and resubmit your request at your convenience.</p>
+
+<p>We appreciate your effort to help improve My Spec Writer. </p>
+
+<%elsif @request.status == "pending" %>
+<p>Thank you for your evaluator account request. Your request is being forwarded to the CSI for further review. </p>
+
+<p>Updates for approved proposals for the Evaluator account will occur automatically upon approval by the CSI.  Requestors will receive an email confirmation of their request.</p>
+
+<p>We appreciate your effort to help improve My Spec Writer. </p>
+
+<%elsif @request.status == "approved"%>
+<p>Thank you for your master format request. Your request has been approved and now your account will be confirmed as Evaluator.</p>
+
+
+<br/>
+<p>We appreciate your effort to help improve My Spec Writer.
+
+<% end%>
+<p>the Spec Writer Team</p>
+
+<p>PS - Follow us on Twitter and Facebook!</p>

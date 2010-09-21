@@ -1,0 +1,29 @@
+<div class="left_page">
+  <div class="lt_nav_container"></div>
+  <div class="lt_button_container">
+    <div><%= link_to "Cancel", "/articles", :class => 'button-left' %></div>
+  </div>
+
+</div>
+<div class="right_page">
+  <h3>Article Master Information</h3>
+  <% semantic_form_for @article do |f| %>
+  <%= f.error_messages %>
+  
+    <%f.inputs do%>
+
+<span style="margin-bottom:20px;float:left">
+    <label style="float:left;
+width:150px;">Part Number</label> <%= select_tag "article[part_category]", "<option>1</option><option>2</option><option>3</option>" %>
+
+</span>
+
+    <%=f.input :number%>
+    <%=f.input :name%>
+    <%=f.input :description%>
+    <%end%>
+	<%=f.buttons%>
+  
+    
+<% end %>
+</div>

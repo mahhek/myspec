@@ -1,0 +1,29 @@
+<% title "Divisions" %>
+<div class="left_page">
+  <div class="lt_nav_container"></div>
+  <div class="lt_button_container">
+    <div><%= link_to "New Division", new_division_path, :class => "button-left" %></div>
+    <div><%= link_to "Back", "/section_requests", :class => "button-left" %></div>
+  </div>
+
+</div>
+<div class="right_page">
+  <h3>Division Master List</h3>
+<table id="jobs_table">
+  <tr>
+	<th>No</th>
+    <th style="width:680px;">Name</th>
+	<th style="width:15px"></th>
+	<th style="width:10px"></th>
+  </tr>
+  <% for division in @divisions %>
+    <tr class="<%= cycle("othertdalter", "") %>">
+		<td><%= h report_article_number(division.short_number) %> </td>
+        <td><%=h link_to division.name, :controller => "sections", :action => "index", :id => division.id%></td>
+        <td><%= link_to (image_tag "/images/g-icon-editor.png", :size => "15x15"), edit_division_path(division)  %></td>
+		<td><%= link_to image_tag('/images/minus.png'), division, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+</div>

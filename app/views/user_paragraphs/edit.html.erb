@@ -1,0 +1,53 @@
+<% title "User Paragraph" %>
+<div class="left_page">
+	<div class="lt_nav_container">
+	    <%= render :partial => "/jobs/job_info" %>
+		<%#= render :partial => "/clients/client_info" %>
+	  </div>
+	<div class="lt_button_container">
+		
+	    <div>
+			<%= link_to "Cancel", new_spec_sec_part_path(:job_id => @job.id, :specification_section_id => @specification_section.id), :class => "button-left" %>
+		</div>
+	</div>
+</div>
+<div class="right_page">
+	<div><h3 class="head"><%=yield(:title)%></h3></div>
+	<div class="label">Section:</div><%=@user_article.specification_section.section.modif_number%> - <%=@user_article.specification_section.section.name%><br />
+	<div class="label">Article:</div><%=@user_article.name%><br /><br />
+	<div>
+			<% form_for @user_paragraph do |f| %>
+			<%=hidden_field_tag "collaborator_id", params[:collaborator_id]%>
+			<%=f.hidden_field :user_article_id%>
+			<div class="label">
+				<%=f.label :paragraph %>
+			</div>
+			<div class="value">
+				<%=f.text_area :paragraph, :rows => 10, :cols => 93%><br/><br/><%=f.submit "Save Changes"%>
+			</div>
+			<% end %>
+	</div>
+	<b>Paragraphs Already Added</b>
+	<table id="">
+		<tr>
+			<th class="sub-no">No</th>
+			<th class="art-name">Paragraph</th>
+			<th class="sub-author">Author</th>
+			<th class="sub-date3">Date</th>
+			<th class="sub-rem2"></th>
+		</tr>
+		<% b = 97%>
+		<% for paragraph in @user_article.user_paragraphs %>
+			<tr class="<%= cycle("othertdalter", "") %>">
+				<td><%=b.chr.upcase%></td>
+				<td><%=h link_to paragraph.paragraph, edit_user_paragraph_path(paragraph)%></td>
+				<td><%=h paragraph.user.username%></td>
+				<td><%=h paragraph.created_at.strftime("%m-%d-%Y")%></td>
+				<td></td>
+			</tr>
+		<% 
+		b += 1
+		end %>
+	</table>
+	<br/>
+</div>

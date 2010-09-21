@@ -1,0 +1,29 @@
+<div class="white_bg">
+		    <div class="w100">
+				<div class="">
+						<div class="part_container">
+							<% 
+							a = 1
+							for article in @standard_section.standard_user_articles %>
+								<div class="article myarticle"><b><%= link_to(article.name, new_standard_user_paragraph_path(:standard_user_article_id => article.id, :standard_section_id => @standard_section), :class => "") %></b></div><div class="rem"><%= link_to image_tag("/images/minus.png"), article, :confirm => 'Are you sure want to remove this article?', :method => :delete %></div>
+								<% 
+								b = 97 %>
+								<% for paragraph in article.standard_user_paragraphs %>
+									<div class="space2-x"><%=b.chr.upcase%>.&nbsp;</div><div class="paragraph-x mypara"><%= link_to(paragraph.paragraph, new_standard_user_subparagraph_path(:standard_user_paragraph_id => paragraph), :class => "") %>&nbsp;</div><div class="rem"><%= link_to image_tag("/images/minus.png"), paragraph, :confirm => 'Are you sure want to remove this paragraph?', :method => :delete %></div>
+									<% 
+									c = 1
+									for subparagraph in paragraph.standard_user_subparagraphs %>
+										<div class="space3-x"><%= link_to "#{c}.&nbsp;", edit_standard_user_subparagraph_path(subparagraph) %></div><div class="subparagraph-x"><%=h link_to subparagraph.description,  edit_standard_user_subparagraph_path(subparagraph)%>&nbsp;</div><div class="rem">&nbsp;</div>
+									<% 
+									c +=1
+									end %>
+								<% 
+								b +=1
+								end %>
+							<% 
+							a +=1
+							end %>
+							</div>
+				</div>
+			</div>
+		</div>

@@ -1,0 +1,82 @@
+<% title "Article Editor" %>
+
+<div class="left_page">
+	<div class="lt_nav_container">
+	    <%#= render :partial => "/jobs/job_info" %>
+	  </div>
+	<div class="lt_button_container">
+		
+	    <div>
+			<%= link_to "Section Editor", standard_spec_edit_path(:id => params[:standard_section_id]), :class => "button-left" %>
+		</div>
+	</div>
+</div>
+<div class="right_page">
+	<div><h3 class="head"><%=yield(:title)%></h3></div>
+	<div class="label">Section:</div><%=@standard_part_article.standard_section.section.modif_number%> - <%=@standard_part_article.standard_section.section.name%><br />
+	<div class="label">Article:</div><%=@standard_part_article.article.name%><br />
+	<div class="label">Description:</div><div class="value"><%=@standard_part_article.article.description%></div><br /><br />
+	<div>
+		<table id="jobs_table">
+		<%= render :partial => "standard_user_paragraphs/form"%>
+		</table>
+	</div>
+	<b>Already Added</b>
+	<table id="jobs_table">
+		<tr>
+			<th class="part-check">No</th>
+			<th class="part-name">
+				Paragraph
+			</th>
+			<th class="part-desc">Description</th>
+		</tr>
+		<% b = 97%>
+		<% for standard_article_paragraph in @have_paragraphs %>
+			<tr>
+				<td><%=b.chr.upcase%></td>
+				<td><%=h standard_article_paragraph.paragraph.name%></td>
+				<td class="desc"><%=h standard_article_paragraph.paragraph.description%></td>
+			</tr>
+		<% 
+		b += 1
+		end %>
+		<% for standard_article_paragraph in @standard_part_article.standard_user_paragraphs %>
+			<tr>
+				<td><%=b.chr.upcase%></td>
+				<td><%=h standard_article_paragraph.name%></td>
+				<td class="desc"><%=h standard_article_paragraph.paragraph%></td>
+			</tr>
+		<% 
+		b += 1
+		end %>
+	</table>
+	<br/>
+		<% form_for @standard_article_paragraph, :html => {:class => "form"} do |f| %>
+  		<%= f.error_messages %>
+   		<%= f.hidden_field :standard_part_article_id %>	
+		<b>Available Paragraph</b>
+		<table id="jobs_table">
+			<tr>
+				<th class="part-check"><%= check_box_tag('check_all', 'check_all', false,  :onClick => "toggleCheckBoxes('new_standard_article_paragraph')")%></th>
+				<th class="part-name">
+					Paragraph
+				</th>
+				<th class="part-desc">Description</th>
+			</tr>
+			<% for paragraph in @paragraphs %>
+				<% fields_for "paragraphs[]", paragraph do |par| %>
+				<tr>
+					<td><%=par.check_box :id, :checked => false %></td>
+					<td><%=h paragraph.name%></td>
+					<td class="desc"><%=h paragraph.description%></td>
+				</tr>
+				<% end %>
+			<% end %>
+		</table>
+		<br/>
+		<div><%= f.submit "Add Paragraphs" %></div>
+	<% end %>
+	<br/>
+	
+</div>
+

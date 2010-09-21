@@ -1,0 +1,48 @@
+<% title "Help and Support Center" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'help_tickets/apps_info' %>
+  </div>
+  <div class="lt_button_container">
+	<%= render :partial => 'help_tickets/support_info' %>
+  </div>
+</div>
+<div class="right_page">
+	<div>
+		<h3>Owner List</h3>
+        <table id="jobs_table" cellspacing="0" cellpadding="0">
+		  <tr>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Company Name</th>
+		
+            <th></th>
+		  </tr>
+		  <% for owner in @owners %>
+         	<tr class="<%= cycle("othertdalter", "") %>">
+              <td style="width:50px;padding-left:3px;"><%=h owner.username %></td>
+		      <td>
+                               <%=h owner.full_name %>
+				</td>
+                <td>
+                               <%=h owner.email %>
+				</td>
+                <td>
+                               <%=h owner.company %>
+				</td>
+              
+        
+                <td>
+
+                    <%if owner.is_suspended%>
+                     <%=  link_to "activate", "/settings/activate/#{owner.id}", :confirm => "Are you sure you want to activate the acocunt for the current user" %>
+                      <%else%>
+                     <%=  link_to "suspend", "/settings/suspend/#{owner.id}", :confirm => "Are you sure you want to suspend the acocunt for the current user" %>
+                      <%end%>
+                </td>
+		    </tr>
+		  <% end %>
+		</table>
+    </div>
+</div>

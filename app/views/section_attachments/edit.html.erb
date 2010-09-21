@@ -1,0 +1,61 @@
+<% title "Edit Section Attachment" %>
+<% form_for @section_attachment, :html => {:multipart => true} do |f| %>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => "/clients/client_info" %>
+  </div>
+  <div class="lt_button_container">
+	
+	<div><%= link_to "Delete Attachment", @section_attachment, :confirm => 'Are you sure?', :method => :delete, :class => "button-left"  %></div>
+	<div><%= link_to "Attachments",section_attachments_path(:specification_section_id => params[:specification_section_id], :job_id => params[:job_id]), :class => "button-left" %></div>
+  </div>
+</div>
+<div class="right_page">
+	<div>
+		<h3><%=@specification_section.section.modif_number%> - <%=@specification_section.section.name%></h3>
+		  <%= f.error_messages %>
+		  <p>
+		    <%= f.hidden_field :specification_section_id %>
+		  </p>
+		  <p>
+		    <%= f.label :title %><br />
+		    <%= f.text_field :title %>
+		  </p>
+		  <p>
+		    <%= f.label :note, "Description" %><br />
+		    <%= f.text_area :note, :rows => 3 %>
+		  </p>
+			<p>
+				<%=f.file_field :asset %><br/>
+				PDF only and the maximum permitted file size is 1 MB
+			</p>
+			<div><%= f.submit "Save Changes"%></div>
+		<% end %>
+	</div>
+	<br/>
+	<div>
+		<b>All Attachments</b>
+		<table id="clients_table">
+		  <tr>
+		    <th>Date</th>
+			<th>Title</th>
+			<th>Filename</th>
+			<th>Added By</th>
+			<th></th>
+		  </tr>
+		  <% for section_attachment in @section_attachments %>
+		    <tr>
+		      <td><%=h section_attachment.created_at.strftime("%m-%d-%Y") %></td>
+				<td><%=h section_attachment.title%></td>
+				<td><%=h section_attachment.asset_file_name %><%#=h link_to(section_attachment.asset_file_name, download_attachment_path(:id => section_attachment.id)) %></td>
+				<td><%=h section_attachment.user.username %></td>
+		      <td>
+					<%= link_to "View", download_attachment_path(:id => section_attachment.id), :class => "button", :target => "_blank" %> 
+		      		<%= link_to "Edit", edit_section_attachment_path(section_attachment,:specification_section_id => params[:specification_section_id], :job_id => params[:job_id]), :class => "button"  %> 
+		      		
+				</td>
+		    </tr>
+		  <% end %>
+		</table>
+	</div>
+</div>

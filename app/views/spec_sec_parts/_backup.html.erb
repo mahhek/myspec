@@ -1,0 +1,123 @@
+<% for part in @parts%>
+		<% if part.id == 1 %>
+			<div class="grid_11 part">Part <%=part.id %> - <%=part.name%></div>
+			<% 
+			a = 1
+			for article in @list_general_articles %>
+				<div class="grid_1 article">&nbsp;</div><div class="grid_10 article"><%=a%>. <%=article.article.name%></div>
+				<% 
+				b = 97
+				for paragraph in article.article_paragraphs%>
+					<div class="grid_2 article">&nbsp;</div><div class="grid_9 article"><%=b.chr.upcase%>. <%=paragraph.paragraph.name%></div>
+					<% 
+					c = 1
+					for subparagraph in paragraph.subparagraphs %>
+						<div class="grid_3 article">&nbsp;</div><div class="grid_5 article"><%=c%>. <%=  subparagraph.description%></div><div class="grid_1 article"><%= link_to "Edit", edit_subparagraph_path(subparagraph, :job_id => @job, :specification_section_id => @specification_section),:class => "button" %></div><div class="grid_2 article"><%= link_to "Destroy", subparagraph, :confirm => 'Are you sure?', :method => :delete, :class => "button" %></div>
+					<% 
+					c = c + 1
+					end %>
+					<div class="grid_3 article">&nbsp;</div><div class="grid_8 article"><%= link_to ("Add Subparagraph", new_subparagraph_path(:article_paragraph_id => paragraph, :job_id => @job, :specification_section_id => @specification_section), :class => "button") %></div>
+				<% 
+				b = b + 1
+				end %>
+				<div class="grid_2 article">&nbsp;</div><div class="grid_9 article"><%= link_to ("Add Paragraph", new_article_paragraph_path(:part_id => part, :part_article_id => article.id, :job_id => @job, :specification_section_id => @specification_section, :article_id => article.article.id), :class => "button") %></div>
+			<% 
+			a = a + 1
+			end %>
+			
+			<div class="grid_1 article">&nbsp;</div><div class="grid_10 clearfix">
+				<% form_for @part_article do |f| %>
+				  <%= f.error_messages %>
+				    <%= f.hidden_field :part_id, :value => part.id %>
+					<%= f.hidden_field :specification_section_id %>
+					<ul class="sections">
+						<li>
+							<%= f.select :article_id, Article.part_category_eq(part).id_does_not_equal(@already_have_1).collect {|p| [p.name, p.id]} %><br/>
+							<%= f.submit "Add Article", :class => "button" %>
+						</li>
+					 </ul>
+				<% end %>
+			</div>
+			<div class="clearfix">&nbsp;</div>
+		<% elsif part.id == 2  %>
+			<div class="grid_12 part">Part <%=part.id %> - <%=part.name%></div>
+			<% 
+			a = 1
+			for article in @list_product_articles %>
+				<div class="grid_1 article">&nbsp;</div><div class="grid_10 article"><%=a%>. <%=article.article.name%></div>
+				<% 
+				b = 97
+				for paragraph in article.article_paragraphs%>
+					<div class="grid_2 article">&nbsp;</div><div class="grid_9 article"><%=b.chr.upcase%>. <%=paragraph.paragraph.name%></div>
+					<% 
+					c = 1
+					for subparagraph in paragraph.subparagraphs %>
+						<div class="grid_3 article">&nbsp;</div><div class="grid_5 article"><%=c%>. <%=  subparagraph.description%></div><div class="grid_1 article"><%= link_to "Edit", edit_subparagraph_path(subparagraph, :job_id => @job, :specification_section_id => @specification_section),:class => "button" %></div><div class="grid_1 article"><%= link_to "Destroy", subparagraph, :confirm => 'Are you sure?', :method => :delete, :class => "button" %></div>
+					<% 
+					c = c + 1
+					end %>
+					<div class="grid_3 article">&nbsp;</div><div class="grid_8 article"><%= link_to ("Add Subparagraph", new_subparagraph_path(:article_paragraph_id => paragraph, :job_id => @job, :specification_section_id => @specification_section), :class => "button") %></div>
+				<% 
+				b = b + 1
+				end %>
+				<div class="grid_2 article">&nbsp;</div><div class="grid_9 article"><%= link_to ("Add Paragraph", new_article_paragraph_path(:part_id => part, :part_article_id => article.id, :job_id => @job, :specification_section_id => @specification_section, :article_id => article.article_id), :class => "button") %></div>
+			<% 
+			a = a + 1
+			end %>
+			<div class="grid_1 article">&nbsp;</div>
+			<div class="grid_10 clearfix">
+				<% form_for @part_article do |f| %>
+				  <%= f.error_messages %>
+				    <%= f.hidden_field :part_id, :value => part.id %>
+					<%= f.hidden_field :specification_section_id %>
+					<ul class="sections">
+						<li>
+							<%= f.select :article_id, Article.part_category_eq(part).id_does_not_equal(@already_have_2).collect {|p| [p.name, p.id]} %><br/>
+							<%= f.submit "Add Article", :class => "button" %>
+						</li>
+					 </ul>
+				<% end %>
+			</div>
+			<div class="clearfix">&nbsp;</div>
+		<% elsif part.id == 3 %>
+			<div class="grid_12 part">Part <%=part.id %> - <%=part.name%></div>
+			<% 
+			a = 1
+			for article in @list_execution_articles %>
+				<div class="grid_1 article">&nbsp;</div><div class="grid_10 article"><%=a%>. <%=article.article.name%></div>
+				<% 
+				b = 97
+				for paragraph in article.article_paragraphs%>
+					<div class="grid_2 article">&nbsp;</div><div class="grid_9 article"><%=b.chr.upcase%>. <%=paragraph.paragraph.name%></div>
+					<% 
+					c = 1
+					for subparagraph in paragraph.subparagraphs %>
+						<div class="grid_3 article">&nbsp;</div><div class="grid_5 article"><%=c%>. <%=  subparagraph.description%></div><div class="grid_1 article"><%= link_to "Edit", edit_subparagraph_path(subparagraph, :job_id => @job, :specification_section_id => @specification_section),:class => "button" %></div><div class="grid_1 article"><%= link_to "Destroy", subparagraph, :confirm => 'Are you sure?', :method => :delete, :class => "button" %></div>
+					<% 
+					c = c + 1
+					end %>
+					<div class="grid_3 article">&nbsp;</div><div class="grid_8 article"><%= link_to ("Add Subparagraph", new_subparagraph_path(:article_paragraph_id => paragraph, :job_id => @job, :specification_section_id => @specification_section), :class => "button") %></div>
+				<% 
+				b = b + 1
+				end %>
+				<div class="grid_2 article">&nbsp;</div><div class="grid_9 article"><%= link_to ("Add Paragraph", new_article_paragraph_path(:part_id => part, :part_article_id => article.id, :job_id => @job, :specification_section_id => @specification_section, :article_id => article.article_id), :class => "button") %></div>
+			<% 
+			a = a + 1
+			end %>
+			<div class="grid_1 article">&nbsp;</div>
+			<div class="grid_10 clearfix">
+				<% form_for @part_article do |f| %>
+				  <%= f.error_messages %>
+				    <%= f.hidden_field :part_id, :value => part.id %>
+					<%= f.hidden_field :specification_section_id %>
+					<ul class="sections">
+						<li class="clearfix">
+							<%= f.select :article_id, Article.part_category_eq(part).id_does_not_equal(@already_have_3).collect {|p| [p.name, p.id]} %><br/>
+							<%= f.submit "Add Article", :class => "button" %>
+						</li>
+					 </ul>
+				<% end %>
+			</div>
+			<div class="clearfix">&nbsp;</div>
+		<% end %>
+	<% end %>

@@ -1,0 +1,41 @@
+
+<% form_for @notification do |f| %>
+	<div>
+		<%= f.error_messages %>
+	</div>
+	<div class="label"><%= f.label :title %></div>
+	<div class="value"><%= f.text_field :title%></div>
+	<div class="label"><%= f.label :description %></div>
+	<div class="value"><%= f.text_area :description ,:class => "mceEditor", :style => "width:530px"%></div>
+	<div class="label"><%= f.label :status %></div>
+	<div class="value"><%= check_box("notification", "status", {:onclick => "checkboxclicked();"}, "Active", "Pending")  %> <label id="status_label">Pending</label></div>
+	<div class="label"><%= f.label :due_on, "Expires" %></div>
+	<div class="value"><%= f.date_select :due_on, :default => 1.month.from_now %><br/><br/>
+		<div id="create_notification">
+	      <%= f.submit "Save Notification" %>
+	      </div>
+
+	      <div id="send_notification"  style="display:none">
+	      <%= f.submit "Send Notification" %>
+	      </div>
+		</div>
+<% end %>
+<script>
+function checkboxclicked()
+{
+  if(document.getElementById('notification_status').checked)
+  {
+    document.getElementById('status_label').innerHTML = "Active"
+    document.getElementById('expiry_div').style.display = ""
+    document.getElementById('create_notification').style.display = "none"
+    document.getElementById('send_notification').style.display = ""
+  }
+  else
+  {
+      document.getElementById('status_label').innerHTML = "Pending"
+      document.getElementById('expiry_div').style.display = "none"
+      document.getElementById('create_notification').style.display = ""
+      document.getElementById('send_notification').style.display = "none"
+  }
+}
+</script>

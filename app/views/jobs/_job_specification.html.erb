@@ -1,0 +1,35 @@
+<div class="list_holder">
+  <div class="w100">
+<% show_to :admin, :support, :master, :manager do %>
+<%= link_to "remove", specification, :confirm => 'Warning!
+
+Removing a Division will delete all attached sections, attachments, documents and notes from this Job.
+
+Are you sure want to remove this division?', :method => :delete , :class => "remove"%>
+<%end%>
+  </div>
+  <div class="list_number"><%= h report_article_number(specification.division.short_number) %></div>
+  <div class="list_name"><%= link_to specification.division.name, add_multiple_sections_path(:job_id => @job.id, :specification_id => specification.id)%></div>
+  <div class="list_hold">
+    <%  specification.specification_sections.each do |spec_sec| %>
+      <div class='<%=( spec_sec.user != nil) ?  "list_container shared" : "list_container" %>'>
+        <div class="serial"><%=  spec_sec.section.modif_number %></div>
+        <div class="name" style="width:375px"><%= (spec_sec.user == nil) ? (link_to(spec_sec.section.name, new_spec_sec_part_path(:specification_section_id => spec_sec, :job_id => @job), :class=> "specSectionName")) : link_to(spec_sec.section.name, shared_section_editor_path(:specification_section_id => spec_sec, :job_id => @job, :collaborator_id => @collaborator), :class=> "specSectionName") %></div>
+        <div class="date">
+               <%unless spec_sec.owner_id.blank?%>
+                <%= User.find(spec_sec.owner_id).first_name %>
+                <%else%>
+                &nbsp;
+                <%end%>
+        </div>
+        <div class="date"><%=  spec_sec.date_update %></div>
+        <div class="icon">
+          <% show_to :admin, :support, :master, :manager do %>
+<%= link_to image_tag("/images/minus.png"), spec_sec, :confirm => 'Are you sure want to remove this section?', :method => :delete if spec_sec.user == nil %>
+<%end%>
+
+</div>
+      </div>
+    <%end%>
+  </div>
+</div>

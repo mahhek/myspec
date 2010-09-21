@@ -1,0 +1,121 @@
+
+        <div class="white_bg">
+            <div class="w100">
+                <div class="">
+                    <% for part in @parts%>
+                        <% if part.id == 1 %>
+                        <div class="part_container">
+                        <div class="part">Part <%=part.id %> - <%= link_to part.name , new_standard_part_article_path(:part_id => part, :standard_section_id => @standard_section) , :class => ""%></div>
+                            <%
+                            a = 1
+                            for article in @list_general_articles %>
+                                <div class="article"><%="#{part.id}.#{report_article_number(a)}"%> &nbsp; <%= link_to(article.article.name, new_standard_article_paragraph_path(:part_id => part, :standard_part_article_id => article.id, :standard_section_id => @standard_section, :article_id => article.article.number), :class => "") %></div><div class="rem"><%= link_to image_tag("/images/minus.png"), article, :confirm => 'Are you sure want to remove this article?', :method => :delete %></div>
+                                <%
+                                b = 97
+                                for paragraph in article.standard_article_paragraphs%>
+                                    <div class="space2"><%=b.chr.upcase%>. </div><div class="paragraph">&nbsp;<%= link_to(paragraph.paragraph.name, new_standard_subparagraph_path(:standard_article_paragraph_id => paragraph, :standard_section_id => @standard_section), :class => "") %></div><div class="rem"><%= link_to image_tag("/images/minus.png"), paragraph, :confirm => 'Are you sure want to remove this paragraph?', :method => :delete %></div>
+                                    <%
+                                    c = 1
+                                    for subparagraph in paragraph.standard_subparagraphs %>
+                                        <div class="space3"><%= link_to "#{c}.&nbsp;", edit_standard_subparagraph_path(subparagraph.id, :standard_section_id => @standard_section.id, :standard_article_paragraph_id => paragraph.id) %></div><div class="subparagraph"><%=subparagraph.description%>&nbsp;</div><div class="rem">&nbsp;</div>
+                                    <%
+                                    c +=1
+                                    end %>
+                                <%
+                                b +=1
+                                end %>
+                                <% for paragraph in article.standard_user_paragraphs %>
+                                    <div class="space2"><%=b.chr.upcase%>. </div><div class="paragraph">&nbsp;<%= link_to(paragraph.name, new_standard_user_subparagraph_path(:standard_user_paragraph_id => paragraph), :class => "") %></div><div class="rem"><%= link_to image_tag("/images/minus.png"), paragraph, :confirm => 'Are you sure want to remove this paragraph?', :method => :delete %></div>
+                                    <%
+                                    c = 1
+                                    for subparagraph in paragraph.standard_user_subparagraphs %>
+                                        <div class="space3"><%= link_to "#{c}.&nbsp;", edit_standard_user_subparagraph_path(subparagraph) %></div><div class="subparagraph"><%=subparagraph.description%>&nbsp;</div><div class="rem">&nbsp;</div>
+                                    <%
+                                    c +=1
+                                    end %>
+                                <%
+                                b +=1
+                                end %>
+                            <%
+                            a +=1
+                            end %>
+                            </div>
+                        <% elsif part.id == 2  %>
+                            <div class="part_container">
+                            <div class="part">Part <%=part.id %> - <%= link_to part.name, new_standard_part_article_path(:part_id => part, :standard_section_id => @standard_section) , :class => ""%></div>
+                                <%
+                                a = 1
+                                for article in @list_product_articles %>
+                                    <div class="article"><%="#{part.id}.#{report_article_number(a)}"%> &nbsp; <%= link_to(article.article.name, new_standard_article_paragraph_path(:part_id => part, :standard_part_article_id => article.id, :standard_section_id => @standard_section, :article_id => article.article.number), :class => "") %></div><div class="rem"><%= link_to image_tag("/images/minus.png"), article, :confirm => 'Are you sure want to remove this article?', :method => :delete %></div>
+                                    <%
+                                    b = 97
+                                    for paragraph in article.standard_article_paragraphs%>
+                                        <div class="space2"><%=b.chr.upcase%>. </div><div class="paragraph">&nbsp;<%= link_to(paragraph.paragraph.name, new_standard_subparagraph_path(:standard_article_paragraph_id => paragraph, :standard_section_id => @standard_section), :class => "") %></div><div class="rem"><%= link_to image_tag("/images/minus.png"), paragraph, :confirm => 'Are you sure want to remove this paragraph?', :method => :delete %></div>
+                                        <%
+                                        c = 1
+                                        for subparagraph in paragraph.standard_subparagraphs %>
+                                            <div class="space3"><%= link_to "#{c}.&nbsp;", edit_standard_subparagraph_path(subparagraph.id, :standard_section_id => @standard_section.id, :standard_article_paragraph_id => paragraph.id) %></div><div class="subparagraph"><%=subparagraph.description%>&nbsp;</div><div class="rem">&nbsp;</div>
+                                        <%
+                                        c +=1
+                                        end %>
+                                    <%
+                                    b +=1
+                                    end %>
+                                    <% for paragraph in article.standard_user_paragraphs %>
+                                        <div class="space2"><%=b.chr.upcase%>. </div><div class="paragraph">&nbsp;<%= link_to(paragraph.name, new_standard_user_subparagraph_path(:standard_user_paragraph_id => paragraph), :class => "") %></div><div class="rem"><%= link_to image_tag("/images/minus.png"), paragraph, :confirm => 'Are you sure want to remove this paragraph?', :method => :delete %></div>
+                                        <%
+                                        c = 1
+                                        for subparagraph in paragraph.standard_user_subparagraphs %>
+                                            <div class="space3"><%= link_to "#{c}.&nbsp;", edit_standard_user_subparagraph_path(subparagraph) %></div><div class="subparagraph"><%=subparagraph.description%>&nbsp;</div><div class="rem">&nbsp;</div>
+                                        <%
+                                        c +=1
+                                        end %>
+                                    <%
+                                    b +=1
+                                    end %>
+                                <%
+                                a +=1
+                                end %>
+                            </div>
+                        <% elsif part.id == 3  %>
+                            <div class="part_container">
+                            <div class="part">Part <%=part.id %> - <%= link_to part.name, new_standard_part_article_path(:part_id => part, :standard_section_id => @standard_section) , :class => ""%></div>
+                                <%
+                                a = 1
+                                for article in @list_execution_articles %>
+                                    <div class="article"><%="#{part.id}.#{report_article_number(a)}"%> &nbsp; <%= link_to(article.article.name, new_standard_article_paragraph_path(:part_id => part, :standard_part_article_id => article.id, :standard_section_id => @standard_section, :article_id => article.article.number), :class => "") %></div><div class="rem"><%= link_to image_tag("/images/minus.png"), article, :confirm => 'Are you sure want to remove this article?', :method => :delete %></div>
+                                    <%
+                                    b = 97
+                                    for paragraph in article.standard_article_paragraphs%>
+                                        <div class="space2"><%=b.chr.upcase%>. </div><div class="paragraph">&nbsp;<%= link_to(paragraph.paragraph.name, new_standard_subparagraph_path(:standard_article_paragraph_id => paragraph, :standard_section_id => @standard_section), :class => "") %></div><div class="rem"><%= link_to image_tag("/images/minus.png"), paragraph, :confirm => 'Are you sure want to remove this paragraph?', :method => :delete %></div>
+                                        <%
+                                        c = 1
+                                        for subparagraph in paragraph.standard_subparagraphs %>
+                                            <div class="space3"><%= link_to "#{c}.&nbsp;", edit_standard_subparagraph_path(subparagraph.id, :standard_section_id => @standard_section.id, :standard_article_paragraph_id => paragraph.id) %></div><div class="subparagraph"><%=subparagraph.description%>&nbsp;</div><div class="rem">&nbsp;</div>
+                                        <%
+                                        c +=1
+                                        end %>
+                                    <%
+                                    b +=1
+                                    end %>
+                                    <% for paragraph in article.standard_user_paragraphs %>
+                                        <div class="space2"><%=b.chr.upcase%>. </div><div class="paragraph">&nbsp;<%= link_to(paragraph.name, new_standard_user_subparagraph_path(:standard_user_paragraph_id => paragraph), :class => "") %></div><div class="rem"><%= link_to image_tag("/images/minus.png"), paragraph, :confirm => 'Are you sure want to remove this paragraph?', :method => :delete %></div>
+                                        <%
+                                        c = 1
+                                        for subparagraph in paragraph.standard_user_subparagraphs %>
+                                            <div class="space3"><%= link_to "#{c}.&nbsp;", edit_standard_user_subparagraph_path(subparagraph) %></div><div class="subparagraph"><%=subparagraph.description%>&nbsp;</div><div class="rem">&nbsp;</div>
+                                        <%
+                                        c +=1
+                                        end %>
+                                    <%
+                                    b +=1
+                                    end %>
+                                <%
+                                a +=1
+                                end %>
+                                </div>
+                        <% end %>
+                    <% end %>
+                </div>
+            </div>
+        </div>

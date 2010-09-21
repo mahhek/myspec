@@ -1,0 +1,18 @@
+<div class="space">&nbsp;</div>
+<div class="article"><%="#{part.id}.#{report_article_number(a)}"%>. <%=article.article.name%></div>
+								<% 
+								b = 97
+								for paragraph in article.article_paragraphs%>
+									<div class="space2"><%=b.chr.upcase%>. </div><div class="paragraph"><%=paragraph.paragraph.name%></div>
+									<% 
+									c = 1
+									for subparagraph in paragraph.subparagraphs %>
+										<div class="space3"><%=c%>.</div><div class="subparagraph"> <%=  subparagraph.description%></div>
+									<% 
+									c +=1
+									end %>
+									<div class="space3">&nbsp;</div><div class="subparagraph"><%= link_to("Add Subparagraph", new_subparagraph_path(:article_paragraph_id => paragraph, :job_id => @job, :specification_section_id => @specification_section), :class => "button") %></div>
+								<% 
+								b +=1
+								end %>
+								<div class="space2">&nbsp;</div><div class="paragraph"><%= link_to("Add Paragraphs", new_article_paragraph_path(:part_id => part, :part_article_id => article.id, :job_id => @job, :specification_section_id => @specification_section, :article_id => article.article.number), :class => "button") %></div>

@@ -1,0 +1,42 @@
+<% title "Import Standard Section" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => "/jobs/job_info" %>
+  </div>
+  <div class="lt_button_container">
+	    <div><%= link_to "Back to Section",new_spec_sec_part_path(:job_id => @job.id, :specification_section_id => @specification_section.id) , :class => "button-left"%></div>
+	</div>
+</div>
+<div class="right_page">
+	<h3 class="head"><%=yield(:title)%></h3>
+	<div>
+		<% form_tag :action => "create_section" do |f| %>
+			<%=hidden_field "spec_sec_part", "specification_section_id", :value => params[:specification_section_id] %>
+			<p>
+              <%section = @specification_section.section%>
+              Section: <%=section.number%> <%= section.name %>
+              <br/>
+              <br/>
+				<%= label_tag "Select and available standard for this section"%>
+                <br/>
+				<% if !@standard_sections.blank? %>
+                  <br/>
+					<%= select "standard_section", "id", @standard_sections.collect {|p| [p.standard_name,p.id]} %>
+                    <%= observe_field 'standard_section_id',
+                    :url => {:action => 'change_section'},
+                    :on => :change, :with => "standard_section_id"
+                  -%>
+<br/> <br/>
+<%@description = @standard_sections.first.comments%>
+<div id="section_div">
+<%=  render "description"%>
+</div>
+
+				<% else %>
+					No Job Standard for this section
+				<% end %>
+			</p>
+			<p><%=submit_tag "Import Section", :class => "" if !@standard_sections.blank?%></p>
+		<% end %>
+	</div>
+</div>

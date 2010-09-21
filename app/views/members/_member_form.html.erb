@@ -1,0 +1,16 @@
+<%=error_messages_for :user %>
+<% f.inputs do %>
+	<%=f.input :first_name %>
+	<%=f.input :last_name %>
+	<%=f.input :position %>
+	<%=f.input :email %>
+	<%=f.input :username %>
+	<%=f.input :company %>
+	<%=f.input :telephone %>
+	<%#=f.input :roles, :as => :radio, :collection => Role.name_does_not_equal(["manager", "admin", "team"]) if !@member.has_role?(:admin)%>
+	<%#=f.input :password %>
+	<%#=f.input :password_confirmation, :label => "Confirmation"%>
+<% end %>
+<% f.buttons do  %>
+	<%= f.commit_button "Save Changes"%>
+<% end %>

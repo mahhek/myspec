@@ -1,0 +1,35 @@
+<% title "Help and Support Center" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'help_tickets/apps_info' %>
+  </div>
+  <div class="lt_button_container">
+	<%= render :partial => 'help_tickets/support_info' %>
+  </div>
+</div>
+<div class="right_page">
+	<div>
+		<h3>Time Zones</h3>
+		<table id="jobs_table" cellspacing="0" cellpadding="0">
+		  <tr>
+            <th style="width:50px;">Total</th>
+			<th>Zone Name</th>
+		    
+		  </tr>
+		  <% for timezone in @timezones %>
+         	<tr class="<%= cycle("othertdalter", "") %>">
+              <td style="width:50px;padding-left:3px;"><%=h timezone.count_user %></td>
+		      <td>
+                                <%unless timezone.timezone.blank?%>
+					<%=h ActiveSupport::TimeZone[timezone.timezone] %>
+				<%else%>
+					No Zone Defined
+				<%end%>
+				</td>
+		      
+		    </tr>
+		  <% end %>
+		</table>
+	</div>
+	<br/>
+</div>

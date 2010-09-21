@@ -1,0 +1,2 @@
+module TemplateJobsHelper
+end

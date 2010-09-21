@@ -1,0 +1,97 @@
+<div class="tabs_container">
+	<%unless current_user.is_suspended || current_user.is_unpaid?%>
+		<ul id="qm0" class="qmmc">
+			<li><a class="qmparent" href="javascript:void(0)">MySpec</a>
+
+				<ul>
+					<li><%= link_to "Recent Sections", profile_path%></li>
+					<li><%= link_to "Change Member Password", new_password_path%></li>
+				</ul></li>
+
+			<li><a class="qmparent" href="javascript:void(0)">Clients</a>
+
+				<ul>
+					<li><%= link_to "Client List", clients_path%></li>
+					<li><%= link_to "Add Client", new_client_path%></li>
+					<li><%= link_to "Archived Clients", "/clients/archived_client" %></li>
+				</ul></li>
+
+			<li><a class="qmparent" href="javascript:void(0)">Jobs</a>
+
+				<ul>
+					<li><%= link_to "Job List", jobs_path%></li>
+					<li><%= link_to "Add Job", new_job_path%></li>
+					<li><%= link_to "Archived Jobs", "/jobs/archived_job" %></li>
+				</ul></li>
+
+			<li><%= link_to "Search", search_path, :class => "qmparent"%></li>
+			<li><a class="qmparent" href="javascript:void(0);">Admin</a>
+				<ul>
+					<li><%= link_to "Job Templates", template_jobs_path %></li>
+					<li><%= link_to "Standards", standard_sections_path %></li>
+					<li><%= link_to "Page Format", change_format_path %></li>
+					<li><%= link_to "Team Member", staff_path %></li>
+					<li><%= link_to "Collaborators", collaborators_path %></li>
+					<li><%= link_to "Archived Members", "/members/archived_members" %></li>
+					<li><%= link_to "Register As Professional", new_professional_path%></li>
+					<%if current_user.has_role?(:owner) %>
+						<li><span class="qmdivider qmdividerx" ></span></li>
+						<li><%= link_to "Subscriber Information", admin_path %></li>
+						<li><%= link_to "Subscription Settings", change_plan_path %></li>
+						<% if current_user.billing_plan.plan_type_id != 1 %>
+							<li><%= link_to "Payment Information", payment_info_path %></li>
+							<li><%= link_to "Payment History", payment_history_path %></li>
+						<% end %>
+						<li><%= link_to "Cancel Subscription", cancel_path %></li>
+					<%end%>
+				</ul></li>
+			<%if current_user.has_role?(:master) %>
+				<li><a class="qmparent" href="javascript:void(0);">Master</a>
+			
+				<ul>
+					<li><%= link_to "Section Requests", section_requests_path %></li>
+					<li><%= link_to "Division / Section", divisions_path %></li>
+					<li><%= link_to "Article / Paragraph", articles_path %></li>
+				</ul></li>
+			<%end%>
+			<%if current_user.has_role?(:support) %>
+            <%= periodically_call_remote :url => { :controller => "help_tickets" , :action => "update_notification_div" }, :frequency => '15'  %>
+            <li>
+              <%= link_to "Support", help_tickets_path, :class => "qmparent"  %>
+            <div id="support_div" style="float:left;padding-top:14px;visibility:visible;background-color:transparent;border-color:transparent;border-style:none;border-width:0px;padding:0px;">
+			<%= render :partial => "/layouts/support_tab" %>
+            </div>
+            				<ul>
+					<li><%= link_to "Help Tickets", help_tickets_path %></li>
+					<li><%= link_to "Evaluator", evaluators_path %></li>
+					<li><%= link_to "Registered Professional", registered_professionals_path %></li>
+					<li><%= link_to "Subscribers Info", subscribers_path %></li>
+					<li><%= link_to "Notifications", notifications_path %></li>
+					<li><%= link_to "Time Zone", timezones_path %></li>
+					<li><%= link_to "Suspend Account", suspend_user_path %></li>
+					<li><%= link_to "Cancelled Subscriptions", cancelled_subscription_path %></li>
+				</ul>
+                </li>
+			<%end%>
+		<li class="qmclear">&nbsp;</li></ul>
+	<%else%>
+		<ul id="qm0" class="qmmc">
+
+			<li><a class="qmparent" href="javascript:void(0)">MySpec</a></li>
+
+			<li><a class="qmparent" href="javascript:void(0)">Clients</a></li>
+
+			<li><a class="qmparent" href="javascript:void(0)">Jobs</a></li>
+
+			<li><a href="javascript:void(0)">Search</a></li>
+			
+			<!-- <li><a class="qmparent" href="javascript:void(0);">Admin</a></li>
+
+						<li><a class="qmparent" href="javascript:void(0);">Master</a></li>
+
+						<li><a class="qmparent" href="javascript:void(0);">Support</a></li> -->
+
+		<li class="qmclear">&nbsp;</li></ul>
+	<%end%>
+</div>
+<div class="green_bg"></div>

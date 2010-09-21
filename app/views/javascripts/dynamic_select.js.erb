@@ -1,0 +1,113 @@
+document.observe('dom:loaded', function(){
+	if($('admin_format_top_left_1').getValue() == ""){
+		$('chk_1').checked = true;
+		$("ck_1").show();
+		$("sl_1").hide();
+	}else{
+		$("ck_1").hide();
+		$("sl_1").show();
+	}
+	if($('admin_format_top_left_2').getValue() == ""){
+		$('chk_2').checked = true;
+		$("ck_2").show();
+		$("sl_2").hide();
+	}else{
+		$("ck_2").hide();
+		$("sl_2").show();
+	}
+	if($('admin_format_top_left_3').getValue() == ""){
+		$('chk_3').checked = true;
+		$("ck_3").show();
+		$("sl_3").hide();
+	}else{
+		$("ck_3").hide();
+		$("sl_3").show();
+	}
+	
+	if($('admin_format_top_right_1').getValue() == ""){
+		$('chk_4').checked = true;
+		$("ck_4").show();
+		$("sl_4").hide();
+	}else{
+		$("ck_4").hide();
+		$("sl_4").show();
+	}
+	if($('admin_format_top_right_2').getValue() == ""){
+		$('chk_5').checked = true;
+		$("ck_5").show();
+		$("sl_5").hide();
+	}else{
+		$("ck_5").hide();
+		$("sl_5").show();
+	}
+	if($('admin_format_top_right_3').getValue() == ""){
+		$('chk_6').checked = true;
+		$("ck_6").show();
+		$("sl_6").hide();
+	}else{
+		$("ck_6").hide();
+		$("sl_6").show();
+	}
+	
+	if($('admin_format_bottom_left_1').getValue() == ""){
+		$('chk_7').checked = true;
+		$("ck_7").show();
+		$("sl_7").hide();
+	}else{
+		$("ck_7").hide();
+		$("sl_7").show();
+	}
+	if($('admin_format_bottom_left_2').getValue() == ""){
+		$('chk_8').checked = true;
+		$("ck_8").show();
+		$("sl_8").hide();
+	}else{
+		$("ck_8").hide();
+		$("sl_8").show();
+	}
+	if($('admin_format_bottom_left_3').getValue() == ""){
+		$('chk_9').checked = true;
+		$("ck_9").show();
+		$("sl_9").hide();
+	}else{
+		$("ck_9").hide();
+		$("sl_9").show();
+	}
+	
+	if($('admin_format_bottom_right_1').getValue() == ""){
+		$('chk_10').checked = true;
+		$("ck_10").show();
+		$("sl_10").hide();
+	}else{
+		$("ck_10").hide();
+		$("sl_10").show();
+	}
+	if($('admin_format_bottom_right_2').getValue() == ""){
+		$('chk_11').checked = true;
+		$("ck_11").show();
+		$("sl_11").hide();
+	}else{
+		$("ck_11").hide();
+		$("sl_11").show();
+	}
+	if($('admin_format_bottom_right_3').getValue() == ""){
+		$('chk_12').checked = true;
+		$("ck_12").show();
+		$("sl_12").hide();
+	}else{
+		$("ck_12").hide();
+		$("sl_12").show();
+	}
+	
+	<% (1..12).each do |i| %>
+	$('chk_<%=i%>').observe('click', function(){
+		if ($('chk_<%=i%>').checked == true){
+			$('sl_<%=i%>').hide();
+			$('ck_<%=i%>').show();
+		}else{
+			$('sl_<%=i%>').show();
+			$('ck_<%=i%>').hide();
+		}	
+	});
+	<% end %>
+});

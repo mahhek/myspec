@@ -1,0 +1,84 @@
+<% title "Section Editor" %>
+<% javascript 'scriptaculous/scriptaculous'%>
+<% javascript 'modalbox/modalbox' %>
+<% stylesheet 'modalbox'%>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => "/jobs/job_info" %>
+  </div>
+  <div class="lt_button_container">
+	<% if report_article_number(@specification_section.specification.division.short_number) == "00" %>
+		<div>
+        <%= link_to "New Article", new_user_article_path(:part_id => 1, :specification_section_id => @specification_section, :job_id => @job, :collaborator_id => params[:collaborator_id]) , :class => "button-left"  %>
+
+        </div>
+	<% end %>
+    
+	<div><%= (@specification_section.user != nil) ? (link_to "Table of Content", shared_job_path(:job_id => @job.id, :collaborator_id => params[:collaborator_id]),:class => "button-left") : (link_to "Table of Content", @job,:class => "button-left")  %></div>
+    <div><%= link_to "Attachments",section_attachments_path(:specification_section_id => params[:specification_section_id], :job_id => params[:job_id], :collaborator_id => params[:collaborator_id]), :class => "button-left" %></div>
+    <div><%= link_to "Notes",section_notes_path(:specification_section_id => params[:specification_section_id], :job_id => params[:job_id], :collaborator_id => params[:collaborator_id]), :class => "button-left" %></div>
+    <div><%= link_to "Documents",section_documents_path(:specification_section_id => params[:specification_section_id], :job_id => params[:job_id], :collaborator_id => params[:collaborator_id])  , :class => "button-left"%></div>
+ 	<div><%= link_to "Print Section",new_spec_sec_part_path(@job, :format => "pdf", :job_id => @job.id, :specification_section_id => @specification_section.id ), :class => "button-left"%></div>
+    <% if @specification_section.user == nil %>
+		<% if report_article_number(@specification_section.specification.division.short_number) == "00" %>
+			<% if @specification_section.user_articles.size > 0 %>
+				<% show_to :admin, :manager, :support, :master do %>
+		    		<div><%= link_to "Save As Standard", new_standard_section_path(:job_id => @job, :specification_section_id => @specification_section.id) , :class => "button-left"%></div>
+				<% end %>
+			<% end %>
+		<% else %>
+			<% if @list_general_articles.size > 0 || @list_product_articles.size > 0 || @list_execution_articles.size > 0%>
+				<% show_to :admin, :manager, :support, :master do %>
+		    		<div><%= link_to "Save As Standard", new_standard_section_path(:job_id => @job, :specification_section_id => @specification_section.id) , :class => "button-left"%></div>
+				<% end %>
+			<% end %>
+		<% end %>
+	<% end %>
+	<% if report_article_number(@specification_section.specification.division.short_number) == "00" %>
+		<% if @specification_section.user_articles.size == 0 && @standard_sections.count > 0%>
+   			<div><%= link_to "Import Available",import_section_path(:specification_section_id => params[:specification_section_id], :job_id => params[:job_id], :collaborator_id => params[:collaborator_id]), :class => "button-left-yellow"%></div>
+		<% end %>
+	<% else %>
+		<% if @list_general_articles.size == 0 && @list_product_articles.size == 0 && @list_execution_articles.size == 0 && @standard_sections.count > 0%>
+   			<div><%= link_to "Import Available",import_section_path(:specification_section_id => params[:specification_section_id], :job_id => params[:job_id], :collaborator_id => params[:collaborator_id]), :class => "button-left-yellow"%></div>
+		<% end %>
+	<% end %>
+  </div>
+</div>
+<div class="right_page">
+	<div>
+	<h3 class="head"><%=@specification_section.specification.division.name%></h3>
+	</div>
+  	<div>
+	<b><%=@specification_section.section.modif_number%> - <%=@specification_section.section.name%></b>
+    <%= link_to_remote(image_tag("/images/form-ic-info.png", :border => 0),:url => {:action => 'show_related_sections', :id => @specification_section.section.id}) %>
+	</div>
+	<% if report_article_number(@specification_section.specification.division.short_number) != "00" %>
+		<%= render :partial => 'spec_edit' %>
+	<% else %>
+		<%= render :partial => 'div_00' %>
+	<% end %>
+	<div>
+		<b>All Attachments</b>
+		<table id="clients_table">
+		  <tr>
+			<th class="sub-no">No</th>
+			<th class="sub-info">Title</th>
+			<th class="sub-author">Author</th>
+			<th class="sub-date">Date</th>
+		  </tr>
+		  <% 
+			i = 1
+			for section_attachment in @section_attachments %>
+		    <tr class="<%= cycle("othertdalter", "") %>">
+		      	<td><%=h i%></td>
+                <td><%=h link_to section_attachment.title, download_attachment_path(:id => section_attachment.id)  %></td>
+				<td><%=h section_attachment.user.username %></td>
+		      <td><%=h section_attachment.created_at.strftime("%m-%d-%Y") %></td>
+		    </tr>
+		  <% 
+			i += 1
+			end %>
+		</table>
+	</div>
+</div>

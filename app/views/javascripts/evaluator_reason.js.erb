@@ -1,0 +1,16 @@
+document.observe('dom:loaded', function(){
+	if ($('evaluator_request_status_deny').checked){
+		$('evaluator_request_reason_input').show();
+	}else{
+		$('evaluator_request_reason_input').hide();
+	}
+	$('evaluator_request_status_deny').observe('click', function(){
+		$('evaluator_request_reason_input').show();
+	});
+	$('evaluator_request_status_received').observe('click', function(){
+		$('evaluator_request_reason_input').hide();
+	});
+	$('evaluator_request_status_approved').observe('click', function(){
+		$('evaluator_request_reason_input').hide();
+	});
+});

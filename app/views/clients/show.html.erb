@@ -1,0 +1,61 @@
+<% title @client.name %>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => "clients/client_info" %>
+  </div>
+  <div class="lt_button_container">
+	<% show_to :admin, :support, :master do %>
+	    <div><%= link_to "Back", "/clients", :class => "button-left" %></div>
+        <div><%= link_to "Add Contact", new_contact_path(:client_id => @client), :class => "button-left" %></div>
+	    <div><%= link_to "Add Job", new_job_path(:client_id => @client.id), :class => "button-left"  %> </div>
+		<div><%= link_to "Edit Client", edit_client_path(@client), :class => "button-left" %></div>
+        
+	<% end %>
+  </div>
+</div>
+<div class="right_page">
+  	<div>
+		<h3>Client Information</h3>
+	</div>
+  <div class="grid_11">
+    <h3>Contacts</h3>
+    <table id="contacts_table">
+      <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Phone</th>
+        <th>Mobile</th>
+        <th>Email</th>
+        <th></th>
+      </tr>
+      <% for contact in @client.contacts %>
+        <tr class="<%= cycle("othertdalter", "") %>">
+          <td><%=h link_to contact.name, edit_contact_path(contact, :client_id => @client) %></td>
+          <td><%=h contact.position %></td>
+          <td><%=h contact.phone %></td>
+          <td><%=h contact.mobile %></td>
+          <td><%=h contact.email %></td>
+          <td><%= link_to image_tag("/images/minus.png"), contact, :confirm => 'Are you sure want to remove this contact?', :method => :delete %></td>
+        </tr>
+      <% end %>
+    </table>
+    <h3>Jobs</h3>
+    <table id="jobs_table">
+      <tr>
+        <th class="job-no">Job No</th>
+        <th class="job-name">Job Name</th>
+        <th class="job-status">Status</th>
+        <th class="job-contact">Contact</th>
+      </tr>
+      <% for job in @client.jobs.all(:conditions => "is_archive = false") %>
+        <tr class="<%= cycle("othertdalter", "") %>">
+          <td><%=h job.number %></td>
+          <td><%=h link_to job.name, edit_job_path(job) %></td>
+			<td><%=h job.state %></td>
+          <td><%=h job.contact.name %></td>	
+        </tr>
+      <% end %>
+    </table>
+
+  </div>
+</div>

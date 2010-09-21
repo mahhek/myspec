@@ -1,0 +1,54 @@
+<div class="left_page">
+	<div class="lt_nav_container">
+		<%= render :partial => 'standard_sections/standard_information' %>
+	</div>
+	<div class="lt_button_container">
+		<div>
+			<%= link_to "Section Editor", standard_spec_edit_path(:id => params[:standard_section_id]), :class => "button-left" %>
+		</div>
+	</div>
+</div>
+<div class="right_page">
+	<h3><%=yield(:title)%></h3>
+	<% form_for @standard_user_article do |f| %>
+	  
+		<%=f.hidden_field :standard_section_id%>
+	  	<p>
+			<%=f.label :name, "Article Name"%><br/>
+			<%=f.text_field :name, :size => 80%>
+		</p>
+		<p>
+			<% if @standard_user_article.new_record? %>
+				<%=f.submit "Add Article"%>
+			<% else %>
+				<%=f.submit "Save Changes"%>
+			<% end %>
+		</p>
+	<% end %>
+      <b>Already added</b>
+      <table id="jobs_table">
+          <tr>
+              <th class="job-no" style="width:25px;">No</th>
+              <th class="part-name"  style="width:465px;">
+                  Article
+              </th>
+              <th class="sub-author"  style="width:110px;">Author</th>
+              <th class="sub-date"  style="width:80px;">Date</th>
+              <th class="sub-date"  style="width:15px;"></th>
+          </tr>
+          <% a = 1 %>
+          <% for standard_user_article in @standard_section.standard_user_articles %>
+          <tr class="<%= cycle("othertdalter", "") %>">
+                  <td><%="#{(a)}"%></td>
+                  <td><%= link_to standard_user_article.name, "/standard_user_articles/#{standard_user_article.id}/edit/?standard_section_id=#{params[:standard_section_id]}"%></td>
+                  <td><%= standard_user_article.user.username%></td>
+                  <td><%=standard_user_article.created_at.strftime("%m-%d-%Y")%></td>
+                  <td><%= link_to image_tag('/images/minus.png'), standard_user_article, :confirm => 'Are you sure?', :method => :delete %></td>
+              </tr>
+          <%
+          a += 1
+          end %>
+      </table>
+      <br/>
+</div>
+</div>

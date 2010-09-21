@@ -1,0 +1,30 @@
+<% title "Section Requests" %>
+<div class="left_page">
+  <div class="lt_nav_container"></div>
+  <div class="lt_button_container">
+	<div><%= link_to "Division / Section", divisions_path, :class => 'button-left' %></div>
+	<div><%= link_to "Article / Paragraph", articles_path, :class => 'button-left' %></div>
+  </div>
+</div>
+<div class="right_page">
+	<h3><%=yield(:title)%></h3>
+<table id="">
+  <tr>
+    	<th class="req-no">Section No</th>
+	    <th class="req-name">Section Name</th>
+		<th class="sub-author">Author</th>
+		<th class="sub-date">Date</th>
+		<th class="sub-rem2"></th>
+  </tr>
+  <% for section_request in @section_requests %>
+    <tr class="<%= cycle("othertdalter", "") %>">
+      <td><%=h section_request.number %></td>
+      <td><%=h link_to section_request.name, section_request %></td>
+      <td><%=h section_request.user.username %></td>
+		<td><%=h section_request.created_at.strftime("%m-%d%Y") %></td>
+      <td><%= link_to image_tag("/images/minus.png"), section_request, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+</div>

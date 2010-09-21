@@ -1,0 +1,24 @@
+<% replies = HelpTicketMessage.find_by_sql("select * from help_ticket_messages where user_type = 1 and is_read = 0") %>
+<% total = 0 %>
+<%unless replies.blank?%>
+  <% total = total + replies.size %>
+  <%end%>
+  <% new_tickets = HelpTicket.find_all_by_is_read(false) %>
+  <%unless new_tickets.blank?%>
+    <% total = total + new_tickets.size %>
+    <%end%>
+<%  pending_professionals = Professional.all(:conditions => "status = 'received' and expiry_date > #{Time.now.to_date}")%>
+
+<%unless total==0%>
+		          <span class="helpsupport">
+		            <%= total %>
+		          </span>
+		        <%end%>
+		        <%unless pending_professionals.blank?%>
+		          <div style="float:left;padding-top:14px;visibility:visible;background-color:transparent;border-color:transparent;border-style:none;border-width:0px;padding:0px;">
+
+		            <span class="professionalsupport">
+		              <%= pending_professionals.size %>
+		            </span>
+		          </div>
+		        <%end%>

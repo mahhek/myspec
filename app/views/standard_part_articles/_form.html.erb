@@ -1,0 +1,71 @@
+<% title "Part Editor"%>
+<div class="left_page">
+	<div class="lt_nav_container">
+		<%#= render :partial => "/jobs/job_info" %>
+	</div>
+	<div class="lt_button_container">
+		<div>
+          <%= link_to "Part Master","/standard_article_paragraphs/master_paragraph?standard_section_id=#{params[:standard_section_id]}&part_id=#{params[:part_id]}", :class => "button-left" %>
+		</div>
+		<div>
+			<%= link_to "Section Editor", standard_spec_edit_path(:id => params[:standard_section_id]), :class => "button-left" %>
+		</div>
+	</div>
+</div>
+<div class="right_page">
+	<% form_for @standard_part_article, :html => {:class => "form"} do |f| %>
+  <%= f.error_messages %>
+    <%= f.hidden_field :part_id %>
+	<%= f.hidden_field :standard_section_id %>
+	
+    <h3><%=yield(:title)%></h3>
+	<b>Part <%=@part.id%> - <%=@part.name%></b><br /><br />
+	<b>Description:</b>  <br /><%=@part.description%><br /><br />
+	<b>Already added</b>
+	<table id="jobs_table">
+		<tr>
+			<th class="part-check">No</th>
+			<th class="part-name">
+				Article
+			</th>
+			<th class="part-desc">Description</th>
+		</tr>
+		<% a = 1 %>
+		<% for standard_part_article in @have_articles %>
+			<tr>
+				<td><%="#{@part.id}.#{report_article_number(a)}"%></td>
+				<td><%= standard_part_article.article.name%></td>
+				<td><%= standard_part_article.article.description%></td>
+				
+			</tr>
+		<% 
+		a += 1
+		end %>
+	</table>
+	<br/>
+	<b>Available article</b>
+	</table>
+		<table id="jobs_table">
+			<tr>
+				<th class="part-check"><%= check_box_tag('check_all', 'check_all', false,  :onClick => "toggleCheckBoxes('new_standard_part_article')")%></th>
+				<th class="part-name">
+					Article
+				</th>
+				<th class="part-desc">Description</th>
+			</tr>
+			<% for article in @articles %>
+				<% fields_for "articles[]", article do |art| %>
+				<tr>
+					<td><%= art.check_box :id, :checked => false %></td>
+					<td><%= article.name%></td>
+					<td><%= article.description%></td>
+				</tr>
+				<% end %>
+			<% end %>
+		</table>
+	<br/>
+	<div><%= f.submit "Add Articles" %></div>
+<% end %>
+	
+</div>
+</div>

@@ -1,0 +1,9 @@
+ <div class="notification" id="notification">
+	<span id="notification-text">
+   <%- flash.each do |name, msg| -%>
+     <%- if(params[:controller] != "password_resets") %>
+       <%= content_tag :div, msg, :class => "flash#{name} grid_10"%>
+     <% end %>
+   <%- end %>
+</span>
+ </div>

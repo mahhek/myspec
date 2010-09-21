@@ -1,0 +1,18 @@
+<% title "Section Request" %>
+<div class="left_page">
+  <div class="lt_nav_container"></div>
+  <div class="lt_button_container">
+	<%#= render :partial => 'members/admin_menu' %>
+	<div><%= link_to "Help Tickets", help_tickets_path, :class => 'button-left' %></div>
+	<div><%= link_to "Section Request", new_section_request_path, :class => 'button-left' %></div>
+  </div>
+</div>
+<div class="right_page">
+	<h3><%=yield(:title)%></h3>
+	<p>The Master Format team has adopted an annual update process, taking input from users over the course of each year and releasing adjustments to Master Format in response to those proposals annually. </p>
+	<p>You may submit proposals to change Master Format for the Task Team. The deadline for submissions is April 30. </p>	
+	<br/>
+	<div>
+		<%= render :partial => 'form' %>
+	</div>
+</div>

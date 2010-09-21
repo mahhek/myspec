@@ -1,0 +1,25 @@
+<% title "Evaluator Requests" %>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Certificate</th>
+    <th>Description</th>
+    <th>Reason</th>
+    <th>Status</th>
+  </tr>
+  <% for evaluator_request in @evaluator_requests %>
+    <tr class="<%= cycle("othertdalter", "") %>">
+      <td><%=h evaluator_request.user_id %></td>
+      <td><%=h evaluator_request.certificate %></td>
+      <td><%=h evaluator_request.description %></td>
+      <td><%=h evaluator_request.reason %></td>
+      <td><%=h evaluator_request.status %></td>
+      <td><%= link_to "Show", evaluator_request %></td>
+      <td><%= link_to "Edit", edit_evaluator_request_path(evaluator_request) %></td>
+      <td><%= link_to "Destroy", evaluator_request, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Evaluator Request", new_evaluator_request_path %></p>

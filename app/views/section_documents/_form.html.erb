@@ -1,0 +1,31 @@
+<% form_for @section_document, :html => { :multipart => true } do |f| %>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => "/clients/client_info" %>
+  </div>
+  <div class="lt_button_container">
+	
+	<div><%= link_to "Documents", section_documents_path(:job_id => @job.id, :specification_section_id => @specification_section.id),:class => "button-left"  %></div>
+  </div>
+</div>
+<div class="right_page">
+
+	  <%= f.error_messages %>
+	  
+	    <%= f.hidden_field :specification_section_id %>
+	  
+	  <p>
+	    <label>Title*</label><br />
+		    <%= f.text_field :title, :style=> "width:530px;" %>
+	  </p>
+	  <p>
+	     <label>Description</label><br />
+		    <%= f.text_area :note, :style=> "width:530px;height:100px"%>
+	  </p>
+	<p>
+		<%=f.file_field :doc %><br/>
+		PDF only and the maximum permitted file size is 1 MB
+	</p>
+	<div><%= f.submit "Upload File"%></div>
+	<% end %>
+</div>

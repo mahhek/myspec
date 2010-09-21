@@ -1,0 +1,19 @@
+<ul id="navigation">
+  <% if current_user %>
+    <li id="logout"><%= link_to "Logout", logout_path %></li>
+  <% else %>
+    <li id="logout"><%= link_to "Login", login_path,:class=> ( params[:controller] == "user_sessions" ?  "current" : nil) %></li>
+  <% end %>
+  <li><%= link_to "Account", profile_path , :class=> "current"%></li>
+  <li><%= link_to "Help", "#" , :class=> ( params[:controller] == "jobs"  ?  "" : nil)%></li>
+  <li><%= link_to "Store", "#" , :class=> ( params[:controller] == "clients"  ?  "" : nil)%></li>
+
+
+<!-- <li><%= link_to "Settings", settings_path , :class=> ( params[:controller] == "settings"  ?  "current" : nil)%></li>
+		<li><%= link_to "Clients", clients_path , :class=> ( params[:controller] == "clients"  ?  "current" : nil)%></li>
+		<li><%= link_to "Jobs", jobs_path , :class=> ( params[:controller] == "jobs"  ?  "current" : nil)%></li>
+		<li><%= link_to "Job Templates", template_jobs_path , :class=> ( params[:controller] == "template_jobs"  ?  "current" : nil)%></li> -->
+
+
+
+</ul>

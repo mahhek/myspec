@@ -1,0 +1,63 @@
+<% title "Section Request" %>
+<% javascript "reason"%>
+<div class="left_page">
+  <div class="lt_nav_container"></div>
+  <div class="lt_button_container">
+	<%#= render :partial => 'members/admin_menu' %>
+    <div><%= link_to "Division / Section", divisions_path, :class => 'button-left' %></div>
+	<div><%= link_to "Article / Paragraph", articles_path, :class => 'button-left' %></div>
+  </div>
+</div>
+<div class="right_page">
+	<h3><%=yield(:title)%></h3>
+	<% semantic_form_for @section_request, :html => { :multipart => true } do |f| %>
+	<%= f.error_messages %>
+		<% f.inputs do %>
+	<li>
+	  <div class="label">Proposal Type</div>
+	  <div class="value"><%=h @section_request.proposal_type %></div>
+	</li>
+	<li>
+	  <div class="label">Section Number</div>
+	  <div class="value"><%=h @section_request.number %></div>
+	</li>
+	<li>
+	  <div class="label">Section Name</div>
+	  <div class="value"><%=h @section_request.name %></div>
+	</li>
+	<li>
+	  <div class="label">Email</div>
+	  <div class="value"><%=h @section_request.user.email %></div>
+	</li>
+	<li>
+	  <div class="label">Description</div>
+	  <div class="value"><%=h @section_request.description %></div>
+	</li>
+	<li>
+	  <div class="label">Supporting Rationale</div>
+	  <div class="value"><%=h @section_request.supporting_rationale %></div>
+	</li>
+	<li>
+	  <div class="label">Attachment</div>
+		<div class="value"><%=h link_to @section_request.req_file_name, download_req_path(:id => @section_request.id), :target => "_blank" if(!@section_request.req_file_name.blank?) %></div>
+	</li>
+	<li>
+	  <div class="label">Date</div>
+		<div class="value"><%=h @section_request.created_at.strftime("%m-%d-%Y") %></div>
+	</li>
+			<%#=f.input :status, :as => :radio, :collection => ["deny", "pending", "approved"]%>
+			<li>
+				<%=f.label :status%>
+				<%=f.radio_button :status, "received"%>  Received&nbsp;&nbsp;
+				<%=f.radio_button :status, "deny"%>  Deny&nbsp;&nbsp;
+				<%=f.radio_button :status, "pending"%>  Pending&nbsp;&nbsp;
+				<%=f.radio_button :status, "approved"%>  Approved&nbsp;&nbsp;
+			</li>
+			<%=f.input :reason, :input_html => {:rows => 6}%>
+		<% end%>
+	  	<%f.buttons do %>
+			<%=f.commit_button "Update Request"%>
+		<% end %>
+	<% end %>
+	
+</div>

@@ -1,0 +1,16 @@
+<% semantic_form_for @template_job, :html => {:class => "form"} do |f| %>
+	<div>
+		<%= f.error_messages %>
+		<%= f.hidden_field :job_id %>
+	</div>
+	<div>
+			<h3><%=yield(:title)%></h3>
+			<% f.inputs do%>
+				<%=f.input :name, :label => "Job Template Name"%>
+				<%=f.input :description, :input_html => {:class => "mceEditor", :rows => 15, :cols => 80}%>
+			<% end %>
+			<%f.buttons do %>
+				<%=f.commit_button "Save Changes"%>
+			<% end %>
+	</div>
+<% end %>

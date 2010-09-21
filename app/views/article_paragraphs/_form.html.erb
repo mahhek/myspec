@@ -1,0 +1,22 @@
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => "/jobs/job_info" %>
+  </div>
+  <div class="lt_button_container">
+    <div><%= link_to "Section Editor", new_spec_sec_part_path(:job_id => params[:job_id], :specification_section_id => params[:specification_section_id]), :class => "button-left" %></div>
+  </div>
+</div>
+<div class="right_page">
+	<h3 class="head">Paragraph</h3>
+<% form_for @article_paragraph, :html => {:class => "form"} do |f| %>
+  <%= f.error_messages %>
+
+    <%= f.hidden_field :part_article_id %>
+	<ul>
+		<li class="clearfix">
+			<%= f.select :paragraph_id, Paragraph.find(:all, :conditions => {:part_id => params[:part_id], :article_id => params[:article_id]}).collect {|p| [p.name,p.id]} %>
+		</li>
+		<li class="clearfix"><%= f.submit "Save Changes", :class => "button" %></li>
+	 </ul>
+<% end %>
+</div>

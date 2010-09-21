@@ -1,0 +1,7 @@
+<ul id="navigation">
+	<li><%= link_to "Home", home_path , :class=> ( params[:controller] == "home" && params[:action] == "index"  ?  "current" : nil)%></li>
+	<li><%= link_to "Tour", tour_path , :class=> ( params[:controller] == "home" && params[:action] == "tour"  ?  "current" : nil)%></li>
+	<li><%= link_to "Pricing and Sign Up", pricing_and_signup_path , :class=> ( params[:controller] == "home" && params[:action] == "pricing_and_signup"  ?  "current" : nil)%></li>
+	<li><%= link_to "Blog", blog_path , :class=> ( params[:controller] == "home" && params[:action] == "blog"  ?  "current" : nil)%></li>
+	<li><%= link_to "Contact", contact_us_path , :class=> ( params[:controller] == "home" && params[:action] == "contact"  ?  "current" : nil)%></li>	
+</ul>

@@ -1,0 +1,46 @@
+<% title "Archived Jobs" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+    	<%=render :partial => "members/member_info"%>
+  </div>
+  <div class="lt_button_container">
+     <%= link_to "Cancel", "/jobs" , :class => 'button-left' %>
+  </div>
+</div>
+<div class="right_page">
+	<div>
+		<h3><%=yield(:title)%></h3>
+	</div>
+  <div>
+
+    <table id="jobs_table">
+      <tr>
+        <th class="sec-no">Job No</th>
+		<th class="sec-name">Job Name</th>
+        <th class="sec-name">Client Name</th>
+		<th class="sec-name">Client Contact</th>
+		<th></th>
+      </tr>
+      <%unless @jobs.blank?%>
+      <% for job in @jobs %>
+        <tr class="<%= cycle("othertdalter", "") %>">
+          <td><%=h job.number %></td>
+          <td><%=h job.name %></td>
+          <td>
+            <%unless job.client.blank?%>
+<%=h job.client.name %>
+<%end%>
+</td>
+          <td>
+           <%unless job.contact.blank?%>
+<%=h job.contact.name %>
+<%end%>
+</td>
+		  <td><%= link_to(image_tag("/images/minus.png"), "/jobs/destroy_archived_job/#{job.id}", :confirm => 'Are you sure want to remove this job?') %></td>
+        </tr>
+      <% end %>
+      <%end%>
+    </table>
+    <%= will_paginate @jobs %>
+  </div>
+</div>

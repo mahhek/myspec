@@ -1,0 +1,19 @@
+<% title "Standard Article Paragraphs" %>
+
+<table>
+  <tr>
+    <th>Standard Part Article</th>
+    <th>Paragraph</th>
+  </tr>
+  <% for standard_article_paragraph in @standard_article_paragraphs %>
+    <tr>
+      <td><%=h standard_article_paragraph.standard_part_article_id %></td>
+      <td><%=h standard_article_paragraph.paragraph_id %></td>
+      <td><%= link_to "Show", standard_article_paragraph %></td>
+      <td><%= link_to "Edit", edit_standard_article_paragraph_path(standard_article_paragraph) %></td>
+      <td><%= link_to "Destroy", standard_article_paragraph, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Standard Article Paragraph", new_standard_article_paragraph_path %></p>

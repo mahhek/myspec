@@ -1,0 +1,56 @@
+<% title "Standard Section Notes" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => 'standard_sections/standard_information' %>
+  </div>
+  <div class="lt_button_container">
+	<div><%=h link_to "Standard Section", standard_spec_edit_path(:id => @standard_section.id), :class => "button-left"%></div>
+  </div>
+</div>
+<div class="right_page">
+<div>
+			<h3>New Note</h3>
+			<% form_for @standard_section_note do |f| %>
+		  		<%= f.error_messages %>
+				<%=f.hidden_field :standard_section_id%>
+				<p>
+					<%=f.label :title %><br/>
+					<%=f.text_field :title, :size => 50%>
+				</p>
+				<p>
+					<%=f.label :description%><br/>
+					<%=f.text_area :description, :rows => 6, :cols => 104%>
+				</p>
+				<p>
+					<%=f.submit "Add Note"%>
+				</p>
+		<% end %>
+	</div>
+      <div>
+			<h3>Notes</h3>
+            </div>
+	<table id="jobs_table">
+	  <tr>
+			<th class="sub-no">No</th>
+	    	<th class="div-name">Title</th>
+			<th class="div-info">Description</th>
+			<th class="sub-author">Author</th>
+			<th class="sub-date">Date</th>
+		<th></th>
+	  </tr>
+	  <% 
+		i = 1
+		for section_note in @standard_section.standard_section_notes %>
+	    <tr class="<%= cycle("othertdalter", "") %>">
+			<td><%=h i %></td>
+	      <td><%=h link_to section_note.title, edit_standard_section_note_path(section_note) %></td>
+	      <td><%=h section_note.description %></td>
+			<td><%=h section_note.user.username %></td>
+			<td><%=h section_note.created_at.strftime("%m-%d-%Y") %></td>
+	      <td><%= link_to image_tag("/images/minus.png"), section_note, :confirm => 'Are you sure?', :method => :delete %></td>
+	    </tr>
+	  <% 
+		i += 1
+		end %>
+	</table>
+</div>

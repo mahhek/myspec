@@ -1,0 +1,51 @@
+<% title "Forgot Password" %>
+<div id="top-logo">
+	
+</div>
+<% form_tag password_resets_path, :html => {:class => "form"} do %>
+<table>
+	<tr>
+		<td class="form" colspan="2">
+			<p>
+				Fill out the form below and instructions to reset your password will be emailed to you:
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="form">
+						&nbsp;
+		</td>
+		<td class="form" colspan="1" id="msg">
+		
+					<%- flash.each do |name, msg| -%>
+							<%= content_tag :div, msg, :class => "flash#{name} grid_10"%>
+					<%- end -%>
+		</td>
+	</tr>
+	<tr>
+		<td class="form"><%= label_tag "Email" %></td>
+		<td class="form"><%= text_field_tag "email", "",:size => 35 %></td>
+	</tr>
+	<tr>
+		<td class="form" colspan="1">
+					&nbsp;
+		</td>
+		<td class="form" colspan="1"><%= submit_tag "Reset my password", :class => "button" %>
+		</td>
+	</tr>
+	<tr>
+		
+		<td class="form">
+						&nbsp;
+		</td>
+	</tr>
+	<tr>
+		<td class="form" colspan="1">
+					&nbsp;
+		</td>
+		<td class="form" colspan="1">
+			Do you want to <%= link_to "Sign up?", signup_path %> or <%= link_to "Login?", login_path %>
+		</td>
+	</tr>
+</table>
+<% end %>

@@ -1,0 +1,24 @@
+<div class="right_page">
+	<div>
+		<% form_for @section_attachment, :html => {:multipart => true} do |f| %>
+		  <%= f.error_messages %>
+		  <p>
+				<%=f.label :specification_section_id, "Section"%><br/>
+			    <%= f.select :specification_section_id, SpecificationSection.specification_job_id_eq(params[:job_id]).collect {|p| [p.section.name,p.id]} %>
+		  </p>
+		  <p>
+		    <%= f.label :title, :size => 50 %><br />
+		    <%= f.text_field :title %>
+		  </p>
+		  <p>
+		    <%= f.label :note, "Description" %><br />
+		    <%= f.text_area :note, :rows => 3 %>
+		  </p>
+			<p>
+				<%=f.file_field :asset %><br/>
+				PDF only and the maximum permitted file size is 1 MB
+			</p>
+		  <p><%= f.submit "Upload File" %></p>
+		<% end %>
+	</div>
+</div>

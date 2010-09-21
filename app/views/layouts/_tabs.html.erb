@@ -1,0 +1,104 @@
+<div class="tabs_container">
+  <%unless current_user.is_suspended || current_user.is_unpaid?%>
+    <div class= <%= params[:controller] == "members"  && params[:action] == "profile" ?  "tabs_selected" : "tabs_Unselected" %> >
+
+      <%= link_to "MySpec", profile_path%>
+    </div>
+  <%else%>
+    <div class="tabs_Disabled">
+      <%= link_to "MySpec", "#"%>
+    </div>
+  <%end%>
+
+  <%unless current_user.is_suspended || current_user.is_unpaid?%>
+    <div class= <%= params[:controller] == "clients" || params[:controller] == "contacts"  ?  "tabs_selected" : "tabs_Unselected" %> >
+      <%= link_to "Clients", clients_path %>
+
+    </div>
+  <%else%>
+    <div class="tabs_Disabled">
+      <%= link_to "Clients", "#"  %>
+    </div>
+  <%end%>
+  <%unless current_user.is_suspended || current_user.is_unpaid?%>
+    <div class= <%= params[:controller] == "jobs" || params[:controller] == "specification_sections"  || params[:controller] == "spec_sec_parts" || params[:controller] == "article_paragraphs" || params[:controller] == "subparagraphs" || params[:controller] == "section_attachments" || params[:controller] == "section_documents" || params[:controller] == "part_articles" ?  "tabs_selected" : "tabs_Unselected" %>  >
+      <%= link_to "Jobs", jobs_path %>
+    </div>
+  <%else%>
+    <div class="tabs_Disabled">
+      <%= link_to "Jobs", "#"  %>
+    </div>
+  <%end%>
+
+  <%unless current_user.is_suspended || current_user.is_unpaid?%>
+    <div class= <%=  params[:controller] == "search"  ?  "tabs_selected" : "tabs_Unselected"  %>  >
+      <%= link_to "Search", search_path  %>
+    </div>
+  <%else%>
+    <div class="tabs_Disabled">
+      <%= link_to "Search", "#"  %>
+    </div>
+  <%end%>
+
+  <%unless current_user.is_suspended  || current_user.is_unpaid?%>
+    <%if current_user.has_role?(:admin) %>
+      <div class=<%=  params[:action] == "change_plan" || params[:action] == "edit_account" || params[:controller] == "subscription_histories" || params[:controller] == "template_jobs" || params[:controller] == "standard_sections" || params[:action] == "staff_list" || params[:action] == "new_staff" || params[:action] == "edit_staff" ?  "tabs_selected" : "tabs_Unselected"  %> >
+        <%= link_to "Admin", staff_path %>
+      </div>
+    <%elsif current_user.has_role?(:manager)%>
+      <div class=<%=  params[:action] == "change_plan" || params[:action] == "edit_account" || params[:controller] == "subscription_histories" || params[:controller] == "template_jobs" || params[:controller] == "standard_sections" || params[:action] == "staff_list" || params[:action] == "new_staff" || params[:action] == "edit_staff" ?  "tabs_selected" : "tabs_Unselected"  %> >
+        <%= link_to "Admin", "/template_jobs" %>
+      </div>
+    <%end%>
+  <%else%>
+    <div class="tabs_Disabled">
+      <%= link_to "Admin", "#"  %>
+    </div>
+  <%end%>
+  <%unless current_user.is_suspended || current_user.is_unpaid?%>
+    <%if current_user.has_role?(:master) %>
+      <div class=<%=  (params[:controller] == "section_requests" && (params[:action] == "index" || params[:action] == "show")) ?  "tabs_selected" : "tabs_Unselected"  %> >
+        <%= link_to "Master", section_requests_path %>
+      </div>
+    <%end%>
+  <%else%>
+    <div class="tabs_Disabled">
+      <%if current_user.has_role?(:master) %>
+        <%= link_to "Master", "#"  %>
+      <%end%>
+    </div>
+  <%end%>
+  <%unless current_user.is_suspended || current_user.is_unpaid?%>
+    <%if current_user.has_role?(:support) %>
+
+      <div class= <%= ( params[:controller] == "help_tickets" || params[:controller] == "notifications" || params[:action] == "evaluators" || params[:action] == "subscribers" || params[:action] == "subscriber_team" || params[:action] == "timezones")  ?  "tabs_selected" : "tabs_Unselected"  %>  >
+        <%= link_to "Support", help_tickets_path  %>
+        <% replies = HelpTicketMessage.find_by_sql("select * from help_ticket_messages where user_type = 1 and is_read = 0") %>
+        <%  pending_professionals = Professional.all(:conditions => "status = 'received' and expiry_date > #{Time.now.to_date}")%>
+        <%unless replies.blank?%>
+          <span class="helpsupport">
+            <%= replies.size %>
+          </span>
+        <%end%>
+        <%unless pending_professionals.blank?%>
+          <div style="float:left;padding-top:14px">
+
+            <span class="professionalsupport">
+              <%= pending_professionals.size %>
+            </span>
+          </div>
+        <%end%>
+      </div>
+
+    <%end%>
+  <%else%>
+    <%if current_user.has_role?(:support) %>
+      <div class="tabs_Disabled">
+        <%= link_to "Support", "#"  %>
+      <%end%>
+    </div>
+  <%end%>
+
+</div>
+
+<div class="green_bg"></div>

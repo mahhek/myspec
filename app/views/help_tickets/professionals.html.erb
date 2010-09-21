@@ -1,0 +1,135 @@
+<% title "Registered Professionals" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+   <p> Select the division to see a list of registered professionals specializing in that division.
+</p>
+<p>
+Registering as a professional specification writer is free. Complete the registration form in the Admin tab to begin the process. Customer service will contact new registrants to verify the application. Once confirmed, the registration is good for 12 months.
+</p>
+<p>
+Registered professionals may contact support@myspecdata for changes and to request a premium contact listing. Premium content allows professionals to display their logo, a weblink and addition information in the directory.
+</p>
+
+  </div>
+  <div class="lt_button_container">
+    <div><%= link_to "Help Ticket", new_help_ticket_path, :class => 'button-left' %></div>
+    <div><%= link_to "Registered Professionals", "/help_tickets/professionals", :class => 'button-left' %></div>
+  </div>
+</div>
+<div class="right_page">
+  <div>
+    <h3>Premium Content</h3>
+    <div style="width:730px;height:190px;background-color:#EEE;float:left">
+
+      <%unless @features_professionals.blank?%>
+        <%@features_professionals.each do |fp|%>
+          <div style="width:230px;height:50px;float:left;margin-top:10px;margin-left:10px;">
+            <a href="<%=fp.website%>" target="_blank"><%= image_tag fp.logo.url(:small) %></a>
+
+          </div>
+        <%end%>
+      <%end%>
+    </div>
+
+  </div>
+  <div style="float:left;">
+   <h3 style="margin-top:30px;">Providers By Division</h3>
+  <%for div in @divisions%>
+    <div class="otherlabelmargin10"  style="width:750px;">
+      <a href="javascript:toggle_professional_div('<%=div.id%>');">
+        <img src="/images/plus.jpg" height="10px" width="10px" id="img_<%=div.id%>"/>
+      </a>
+      <%= h report_article_number(div.short_number) %> &nbsp; <%= div.name %>
+
+    </div>
+    <div style="display:none;float:left;" id ="div_<%=div.id%>">
+
+      <% div_professionals = Division.find_by_sql("select * from divisions_professionals where division_id = #{div.id}")
+      barts = Array.new
+      x = 0
+      barts[0] = 0
+      for c in div_professionals
+        barts[x] = c.professional_id
+        x += 1
+      end
+      @active_professionals = Professional.id_eq(barts)
+    %>
+
+      <%unless @active_professionals.blank?%>
+        <table id="">
+          <% for professional in @active_professionals %>
+            <tr class="<%= cycle("othertdalter", "") %>">
+              <td style="width:220px">
+                <%if professional.premium_provider%>
+                  <%if professional.premium_provider%>
+                    <span style="color:#407D9A;font-weight:bold">
+                    <%end%>
+                    <%=link_to "#{professional.name}", "/help_tickets/professional_detail/#{professional.id}", :style => "color:#407D9A" %>
+                    <%if professional.premium_provider%>
+                    </span>
+                  <%end%>
+                <%else%>
+                  <%=professional.name%>
+                <%end%>
+              </td>
+              <td style="width:130px">
+                <%if professional.premium_provider%>
+                  <span style="color:#407D9A;font-weight:bold">
+                  <%end%>
+                  <%=professional.company_name%>
+                  <%if professional.premium_provider%>
+                  </span>
+                <%end%>
+              </td>
+              <td style="width:130px">
+                <%if professional.premium_provider%>
+                  <span style="color:#407D9A;font-weight:bold">
+                  <%end%>
+                  <%=professional.telephone%>
+                  <%if professional.premium_provider%>
+                  </span>
+                <%end%>
+              </td>
+              <td style="width:225px">
+                <%if professional.premium_provider%>
+                  <span style="color:#407D9A;font-weight:bold">
+                  <%end%>
+                  <%=  mail_to professional.email%>
+                  <%if professional.premium_provider%>
+                  </span>
+                <%end%>
+
+              </td>
+
+            </tr>
+          <% end %>
+        </table>
+      <%else%>
+        No Registered Professional
+      <%end%>
+
+    </div>
+
+  <%end%>
+</div>
+  <script>
+    function toggle_professional_div(div_id)
+    {
+      div = document.getElementById("div_"+ div_id);
+        img = document.getElementById('img_' + div_id)
+      if(div.style.display == "none")
+      {
+        div.style.display = "block";
+        img.src = "/images/minus.jpg"
+      }
+      else
+      {
+        div.style.display = "none";
+        img.src = "/images/plus.jpg"
+      }
+
+    }
+  </script>
+
+</div>
+

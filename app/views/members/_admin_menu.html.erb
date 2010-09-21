@@ -1,0 +1,31 @@
+<%unless current_user.is_suspended  || current_user.is_unpaid?%>
+	<%if current_user.has_role?(:admin) || current_user.has_role?(:owner) || current_user.has_role?(:manager) %>
+		<div><%= link_to "Job Templates", template_jobs_path, :class => "button-left" %></div>
+		<div><%= link_to "Standards", standard_sections_path, :class => "button-left" %></div>
+		<div><%= link_to "Page Format", change_format_path, :class => "button-left" %></div>
+	<%end%>
+ 	<%if current_user.has_role?(:admin) || current_user.has_role?(:owner) %>
+		<div><%= link_to "Team Member", staff_path, :class => "button-left" %></div>
+		<div><%= link_to "Collaborators", collaborators_path, :class => "button-left" %></div>
+        <div><%= link_to "Archived Member", "/members/archived_members", :class => "button-left" %></div>
+    <%end%>
+   
+    <%if current_user.has_role?(:admin) %>
+    <div><%= link_to "Register As Professional", new_professional_path, :class => "button-left" %></div>
+    <%end%>
+	
+    <%if current_user.has_role?(:owner) %>
+		<div><%= link_to "Subscriber Information", admin_path, :class => "button-owner" %></div>
+      <% if params[:action] != "change_plan" %>
+          <div><%=(link_to "Subscription Settings", change_plan_path, :class => "button-owner") %></div>
+      <% else %>
+          <div><%=(link_to "Subscription Settings", change_plan_path, :class => "button-owner") %></div>
+      <% end %>
+		<% if current_user.billing_plan.plan_type_id != 1 %>
+			<div><%= link_to "Payment Information", payment_info_path, :class => "button-owner" %></div>
+			<div><%= link_to "Payment History", payment_history_path, :class => "button-owner" %></div>
+		<% end %>
+		<div><%= link_to "Cancel Subscription", cancel_path, :class => "button-owner" %></div>
+	<% end %>
+<%end%>
+	

@@ -1,0 +1,47 @@
+
+<% title "Team Members"%>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'subscription_info' %>
+  </div>
+  <div class="lt_button_container">
+	<%= render :partial => 'admin_menu' %>
+  </div>
+</div>
+<div class="right_page">
+	<%= render :partial => 'subscription' %>
+  <div id="team">
+	<h3>Team Members</h3>
+    <table id="users_table">
+      <tr>
+        <th class="member-name">Member Name</th>
+		<th class="member-position">Position</th>
+		<th class="member-email">Email</th>
+		<th class="member-permission">Permission</th>
+		<th class="sub-rem2"></th>
+      </tr>
+      <% for staff in @staffs %>
+        <% if (staff.has_role?(:admin) || staff.has_role?(:manager) || staff.has_role?(:team)) %>
+        <tr class="<%= cycle("othertdalter", "") %>">
+          	<td><%=link_to "#{staff.first_name}", edit_staff_path(:id => staff.id)%></td>
+			<td><%=staff.position%></td>
+			<td><%=link_to "#{staff.email}", edit_staff_path(:id => staff.id)%></td>
+            <% if staff.has_role?(:owner) %>
+				<td><%=link_to "Owner", edit_account_path%></td>
+			<% else %>
+				<td><%=link_to "Team", edit_staff_path(:id => staff.id)%></td>
+			<%end%>
+			<td>
+              
+                <%= link_to "Archive", "/members/archive/#{staff.id}", :confirm => 'Are you sure want to archive this member?' if  !(staff.has_role?(:owner))%>
+            </td>
+        </tr>
+		<% end %>
+      <% end %>
+    </table>
+	<br/>
+	<% form_tag new_staff_path do -%>
+	    <div><%= submit_tag 'Add Member' %></div>
+	  <% end -%>
+  </div>
+</div>

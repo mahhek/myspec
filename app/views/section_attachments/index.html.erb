@@ -1,0 +1,72 @@
+<% title "Attachments" %>
+
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => "/clients/client_info" %>
+  </div>
+  <div class="lt_button_container">
+	<% if params[:collaborator_id] == nil || params[:collaborator_id] == ""%>
+		<div><%= link_to "Cancel", @job,:class => "button-left"  %></div>
+	    <div><%= link_to("Section Editor", new_spec_sec_part_path(:job_id => @job.id, :specification_section_id => @specification_section.id),:class => "button-left") if params[:specification_section_id] != nil  %></div>
+	<% else %>
+		<div><%= link_to "Cancel", shared_job_path(:job_id => @job.id, :collaborator_id => params[:collaborator_id]), :class => 'button-left' %></div>
+		<div><%= link_to("Section Editor", new_spec_sec_part_path(:job_id => @job.id, :specification_section_id => @specification_section.id, :collaborator_id => params[:collaborator_id]),:class => "button-left") if params[:specification_section_id] != nil  %></div>
+	<% end %>
+  </div>
+</div>
+<div class="right_page">
+	<h1></h1>
+	<div>
+		<h3><%=yield(:title)%></h3>
+		<% 
+		semantic_form_for @section_attachment, :html => {:multipart => true} do |f| %>
+			<%=hidden_field_tag "collaborator_id", params[:collaborator_id]%>
+		  <%= f.error_messages %>
+			<%f.inputs do%>
+				<%=f.input :specification_section_id, :include_blank => false, :collection => SpecificationSection.specification_job_id_eq(params[:job_id]).collect {|p| ["#{p.section.number} - #{p.section.name}",p.id]}, :label => "Section"%>
+				<%=f.input :title, :input_html => {:size => 60 } %>
+				<%=f.input :note, :label => "Description", :input_html => {:rows => 6}%>
+				<li>
+					<%=f.label :asset, "File"%>
+					<%=f.file_field :asset %><br/>
+					
+				</li>
+				<li>
+					<label>&nbsp;</label>PDF only and the maximum permitted file size is 1 MB
+				</li>
+			<% end %>
+			
+		  	<%f.buttons do %>
+				<%=f.commit_button "Upload File"%>
+			<% end %>
+		<% end %>
+	</div>
+	<br/>
+	<div>
+		<b>All Attachments</b>
+		<table id="clients_table">
+		  <tr>
+			<th class="att-no">No</th>
+			<th class="att-name">Title</th>
+			<th class="att-info">Description</th>
+			<th class="att-author">Author</th>
+			<th class="att-date">Date</th>
+			<th class="att-rem"></th>
+		  </tr>
+		  <% 
+			i=1
+			for section_attachment in @section_attachments %>
+		    <tr class="<%= cycle("othertdalter", "") %>">
+				<td><%=h i%></td>
+				<td><%=h link_to section_attachment.title, download_attachment_path(:id => section_attachment.id) %></td>
+				<td><%=h section_attachment.note%></td>
+				<td><%=h section_attachment.user.username %></td>
+				<td><%=h section_attachment.created_at.strftime("%m-%d-%Y") %></td>
+				<td><%= link_to image_tag("/images/minus.png"), section_attachment, :confirm => 'Are you sure?', :method => :delete if( section_attachment.user == current_user || section_attachment.user == as_user) %></td>
+		    </tr>
+		  <% 
+			i += 1
+			end %>
+		</table>
+	</div>
+</div>

@@ -1,0 +1,27 @@
+
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => "/clients/client_info" %>
+  </div>
+  <div class="lt_button_container">
+	
+	<div><%= link_to "Notes", section_notes_path(:job_id => @job.id, :specification_section_id => @specification_section.id),:class => "button-left"  %></div>
+  </div>
+</div>
+<div class="right_page">
+		<h3>Edit Note</h3>
+		<b><%=@specification_section.section.modif_number%> - <%=@specification_section.section.name%></b>
+		<br/>
+		<% semantic_form_for @section_note do |f| %>
+			<%=hidden_field_tag "collaborator_id", params[:collaborator_id]%>
+  		<%= f.error_messages %>
+	  	<% f.inputs do %>
+			<%=f.input :specification_section_id , :as => :hidden%>
+			<%=f.input :title%>
+			<%=f.input :note, :label => "Description", :input_html => { :rows => 6}%>
+		<% end %>
+		<% f.buttons do %>
+			<%=f.commit_button "Save Changes"%>
+		<% end %>
+	<% end %>
+</div>

@@ -1,0 +1,115 @@
+<% title "Help and Support Center" %>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	<%= render :partial => 'help_tickets/apps_info' %>
+  </div>
+  <div class="lt_button_container">
+    <div><%= link_to "Back", "/subscriber_team/#{params[:id]}", :class => 'button-left' %></div>
+  </div>
+</div>
+<div class="right_page">
+	<h3>Payment Information</h3>
+  <div style="margin-bottom:20px;">
+    <label>Billing Information</label>
+    <br/>
+      <%unless @credit_card_information.blank?%>
+        <%=@credit_card_information.card_type %>: <%=@credit_card_information.credit_card %>
+        <br/>
+        Expiration: <%= @credit_card_information.expiry_date.strftime("%m-%Y") %>
+      <%else%>
+      No credit card infrmation entered yet!
+      <%end%>
+  </div>
+  <div style="margin-bottom:20px;">
+    <label>Billing Address</label>
+    <br/>
+    <%=@user.billing_address%>
+    <br/>
+    <%=@user.billing_city%>, <%=@user.billing_state%>  <%=@user.billing_zip%>
+    <br/>
+    <%=@user.billing_country%>
+  </div>
+  <div>
+     <label>Account Details</label>
+     <br/>
+     <table>
+       <%total = 0%>
+       <tr>
+         <td width="200px">Team Members</td>
+         <td width="100px"><%= @billing_plan.number_of_user %></td>
+         <td>
+          <%current_billing = 0
+          if !current_user.has_role?(:evaluator)
+              current_billing =  @billing_plan.number_of_user * 10
+          else
+              current_billing =  (@billing_plan.number_of_user - 2) * 10
+          end
+          %>
+          <%total = total + current_billing%>
+          $<%= current_billing %>
+         </td>
+       </tr>
+       <tr>
+         <td width="200px">Premium Professional</td>
+         <td width="100px"><%= @billing_plan.number_of_professional %></td>
+         <td>
+           <%if @billing_plan.number_of_professional == "1"%>
+           <%total = total + 10%>
+             $10
+             <%else%>
+             $0
+             <%end%>
+
+         </td>
+       </tr>
+       <tr>
+         <td width="200px">Storage</td>
+         <td width="100px"> <%= @billing_plan.number_of_space %>GB</td>
+         <td>
+
+           <%
+           unless @billing_plan.number_of_space.blank?
+        if @billing_plan.number_of_space > 5
+         current_storage_billing = (@billing_plan.number_of_space - 5) / 5 * 2
+       else
+         current_storage_billing = 0
+       end
+           else
+             current_storage_billing = 0
+           end
+
+     %>
+     <%total = total + current_storage_billing%>
+     $<%= current_storage_billing %>
+         </td>
+       </tr>
+       <tr>
+         <td>Total</td>
+         <td></td>
+         <td>
+           $<%= total %>
+         </td>
+       </tr>
+     </table>
+     <br/>
+     </div>
+	<table id="clients_table">
+      <tr>
+        <th class="client-name"><%= order @search, :by => :number, :as => "Invoice"%></th>
+        <th class="client-address"><%= order @search, :by => :created_at, :as => "Date"%></th>
+        <th class="client-phone"><%= order @search, :by => :amount, :as => "Amount"%></th>
+		<th class="client-name"><%= order @search, :by => :invoice_type, :as => "Type"%></th>
+      </tr>
+      <% for invoice in @invoices %>
+        <tr class="<%= cycle("othertdalter", "") %>">
+			<td><%=h invoice.number%></td>
+          	<td><%=h invoice.created_at.strftime("%m-%d-%Y")%></td>
+          	<td><%=h number_to_currency(invoice.amount)%></td>
+			<td><%=h (invoice.invoice_type)%></td>
+        </tr>
+      <% end %>
+    </table>
+    <%= will_paginate @invoices %>
+</div>
+  
+</div>

@@ -1,0 +1,41 @@
+<% title "Content Editor"%>
+<% form_for @template_specification, :url => create_template_multiple_divisions_path, :html => {:class => "form"} do |f| %>
+  <div class="left_page">
+    <div class="lt_nav_container">
+      	<%= render :partial => 'template_info' %>
+    </div>
+    <div class="lt_button_container">
+		
+		<div><%= link_to "Cancel", @template_job, :class => 'button-left' %></div>
+      	
+    </div>
+  </div>
+  <div class="right_page">
+	
+        <h3><%=yield(:title)%></h3>	
+      <div>
+        <%= f.hidden_field :template_job_id %>
+		<table id="jobs_table">
+			<tr>
+				<th class="sub-no"><%= check_box_tag('check_all', 'check_all', false,  :onClick => "toggleCheckBoxes('new_template_specification')")%></th>
+				<th class="div-no">Div No.</th>
+				<th class="div-name">Div Name</th>
+				<th class="div-info">Description</th>
+				<th></th>
+			</tr>
+			<% for division in @divisions %>
+				<tr class="<%= cycle("othertdalter", "") %>">
+				<% fields_for "divisions[]", division do |div| %>
+					<td><%= div.check_box :id, :checked => false %></td>
+					<td><b><%= division.modif_number%></b></td>
+					<td><%= division.name%></td>
+					<td colspan="2"></td>
+				<% end %>
+				</tr>
+			<% end %>
+		</table>
+		</div>
+		<div><%= f.submit "Add Divisions"%></div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<% title "Job Standard Sections" %>
+<% javascript ('dynamic_sections')%>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => 'members/subscription_info' %>
+  </div>
+  <div class="lt_button_container">
+	<%= render :partial => 'members/admin_menu' %>
+  </div>
+</div>
+<div class="right_page">
+	<div>
+	<h3>New Standard Section</h3>
+	<% semantic_form_for @standard_section, :url => create_blank_standard_path do |f| %>
+		<%#= error_messages_for :standard_section, :header_message => "Error"%>
+		<br/>
+		
+		<% f.inputs do %>
+			<li>
+				<%=label_tag "Division"%>
+				<%=select_tag "division", options_for_select(Division.all.collect {|p| ["#{p.division_number} - #{p.name}",p.division_number]}), :class => "div_select"%>
+	  		</li>
+			<%=f.input :section, :collection => Section.number_begins_with("00").number_not_begin_with("000000").collect {|p| ["#{p.number} - #{p.name}", p.id]}, :include_blank => false, :input_html => {:class=>"sec_select"}%>
+			<%=f.input :standard_name, :label => "Job Standard Name", :input_html => {:size => 60} %>
+			<%=f.input :comments, :label => "Description"%>
+		<% end %>
+		<%f.buttons do %>
+			<%=f.commit_button "Create Job Standard"%>
+		<% end %>
+	<% end %>
+	</div>
+	<h3>Saved Job Standards</h3>
+	<table id="jobs_table">
+  <tr>
+	<th class="sec-no">Sec No</th>
+	<th class="standard-name">Job Standard Name</th>
+    <th class="sub-author">Author</th>
+	<th class="sub-date">Date</th>
+	<th class="sub-rem2"></th>
+  </tr>
+  <% for standard_section in @standard_sections %>
+    <tr class="<%= cycle("othertdalter", "") %>">
+		<td><%=h standard_section.section.modif_number %></td>
+		<td><%= link_to standard_section.standard_name, standard_spec_edit_path(:id => standard_section.id) %></td>
+		
+      	<td><%=h standard_section.user.username %></td>
+		<td><%=h standard_section.created_at.strftime("%m-%d-%Y") %></td>
+		<td><%= link_to image_tag("/images/minus.png"), standard_section, :confirm => 'Are you sure want to remove this job standard?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+</div>

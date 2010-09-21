@@ -1,0 +1,20 @@
+<% title "User Paragraph" %>
+
+<p>
+  <strong>User:</strong>
+  <%=h @user_paragraph.user_id %>
+</p>
+<p>
+  <strong>Part Article:</strong>
+  <%=h @user_paragraph.part_article_id %>
+</p>
+<p>
+  <strong>Paragraph:</strong>
+  <%=h @user_paragraph.paragraph %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_user_paragraph_path(@user_paragraph) %> |
+  <%= link_to "Destroy", @user_paragraph, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", user_paragraphs_path %>
+</p>

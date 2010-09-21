@@ -1,0 +1,243 @@
+<% title "Admin Settings"%>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => 'help_tickets/apps_info' %>
+  </div>
+  <div class="lt_button_container">
+    <%= render :partial => 'help_tickets/support_info' %>
+  </div>
+</div>
+<div class="right_page">
+   <% form_for @professional, :url => {:action => "update_divisions", :id => @professional.id} , :html => { :multipart => true } do |f| %>
+<div class="otherlabelmargin10"  style="width:700px;">
+ 
+ </div>
+  <h3>Professional Details</h3>
+  <br/>
+  <%= f.error_messages %>
+  <div>
+    <div>
+      
+
+
+         <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+          Request Date:
+        </div>
+        <div class="othervaluefull10">
+
+        <%= @professional.created_at.strftime("%m-%d-%Y") %></div>
+
+        </div>
+      </div>
+         <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+          Expiration Date:
+        </div>
+        <div class="othervaluefull10">
+          <%= f.date_select :expiry_date %>
+           
+
+        </div>
+      </div>
+       <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+          Name:
+        </div>
+        <div class="othervaluefull10">
+          
+            <%= f.text_field :name, :size => 85%>
+          
+        </div>
+      </div>
+
+        <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+          Email:
+        </div>
+        <div class="othervaluefull10">
+
+            <%= @professional.email %>
+
+        </div>
+      </div>
+
+        <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+         Certification:
+        </div>
+        <div class="othervaluefull10">
+            <%availablecert = @professional.certifications%>
+             <%for cert in @certifications%>
+                <%= check_box_tag "professional[certification_ids][]", "#{cert.id}",  availablecert.include?(cert) ? true : false -%>
+                <%= cert.name %>
+              
+            <%end%>
+
+        </div>
+      </div>
+
+      <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+         Company Name:
+        </div>
+        <div class="othervaluefull10">
+
+            <%= f.text_field :company_name, :size => 85 %>
+
+        </div>
+      </div>
+
+      <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+         Time Zone:
+        </div>
+        <div class="othervaluefull10">
+
+            <%=f.time_zone_select :time_zone, nil, {}, :style=> "width:534px"%>
+
+        </div>
+      </div>
+
+      <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+         Website:
+        </div>
+        <div class="othervaluefull10">
+
+              <%= f.text_field :website, :size => 85 %>
+
+        </div>
+      </div>
+      <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+         Telephone:
+        </div>
+        <div class="othervaluefull10">
+
+              <%= f.text_field :telephone, :size => 85 %>
+
+        </div>
+      </div>
+      <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+         Fax:
+        </div>
+        <div class="othervaluefull10">
+
+              <%= f.text_field :fax, :size => 85 %>
+
+        </div>
+      </div>
+      
+      <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+         Physical Adress:
+        </div>
+        <div class="othervaluefull10">
+              <%= f.text_area :physical_address, :rows => 7, :cols => 64%>
+        </div>
+      </div>
+      
+
+      <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+         Mailing Address:
+        </div>
+        <div class="othervaluefull10">
+
+              <%= f.text_area :mailing_address, :rows => 7, :cols => 64%>
+
+        </div>
+      </div>
+       <div style="width:100%">
+        <div class="otherlabelmargin10"  style="width:140px;">
+       Service & Terms:
+        </div>
+        <div class="othervaluefull10">
+              <%= f.text_area :general_description, :rows => 7, :cols => 64%>
+        </div>
+      </div>
+      <div>
+        <% division =  @professional.divisions %>
+
+          <div class="otherlabelmargin10"  style="width:140px;">
+            Logo
+          </div>
+          <div class="othervaluefull10">
+          <%= f.file_field :logo, :size => 71%>
+
+          </div>
+          
+          <div class="otherlabelmargin10"  style="width:140px;">
+            Existing Logo
+          </div>
+          <div class="othervaluefull10">
+          <%= image_tag @professional.logo.url(:small) %>
+            &nbsp;
+          </div>
+
+<div class="otherlabelmargin10"  style="width:140px;">
+            Premium Provider
+          </div>
+          <div class="othervaluefull10">
+            <%= f.check_box :premium_provider %>
+            
+          </div>
+          <div class="otherlabelmargin10"  style="width:140px;">
+            Status
+          </div>
+          <div class="othervaluefull10">
+
+            <%=f.radio_button :status, "received"%>  Received/Verified&nbsp;&nbsp;
+            <%=f.radio_button :status, "pending"%>  Pending&nbsp;&nbsp;
+            <%=f.radio_button :status, "active"%>  Approved&nbsp;&nbsp;
+            <%=f.radio_button :status, "denied"%>  Deny&nbsp;&nbsp;
+          </div>
+          <div>
+
+            <div class="otherlabelmargin10"  style="width:140px;">
+              Reason To Reject
+            </div>
+            <div class="othervaluefull10">
+              <%= text_field_tag "reason_to_reject", "", :size => 85%>
+            </div>
+          </div>
+          <div style="width:100%">
+            <div class="otherlabelmargin10"  style="width:140px;">
+              &nbsp;
+            </div>
+            <div class="othervaluefull10">
+              &nbsp;
+            </div>
+          </div>
+          <div style="width:100%">
+            <div class="otherlabelmargin10"  style="width:140px;">
+              Divisions:
+            </div>
+            <div class="othervaluefull10">
+              &nbsp;
+            </div>
+          </div>
+
+          <div>
+            <%for div in @divisions%>
+              <div class="otherlabelmargin10"  style="width:375px;font-weight:normal;">
+                <%= check_box_tag "professional[division_ids][]", "#{div.id}",  division.include?(div) ? true : false -%>
+                <%= h report_article_number(div.short_number) %> &nbsp;<%= div.name %>
+              </div>
+            <%end%>
+          </div>
+          <div>
+
+            <div class="otherlabelmargin20"  style="width:375px;">
+              <%=f.submit "Update Professional"%>
+
+            </div>
+          </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+
+</div>

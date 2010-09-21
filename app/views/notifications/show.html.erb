@@ -1,0 +1,20 @@
+<% title "Notification" %>
+
+<p>
+  <strong>Title:</strong>
+  <%=h @notification.title %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @notification.description %>
+</p>
+<p>
+  <strong>Due On:</strong>
+  <%=h @notification.due_on %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_notification_path(@notification) %> |
+  <%= link_to "Destroy", @notification, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", notifications_path %>
+</p>

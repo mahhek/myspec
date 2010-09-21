@@ -1,0 +1,2 @@
+module JobPageFormatsHelper
+end

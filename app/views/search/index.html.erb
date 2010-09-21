@@ -1,0 +1,72 @@
+<% title 'Search Job' %>
+<div class="left_page">
+  <div class="lt_nav_container">
+    <%= render :partial => '/members/member_info' %>
+
+  </div>
+</div>
+<div class="right_page">
+  <h3>Search Job</h3>
+  <% form_tag search_path, :method => 'get', :class => "form" do |f| -%>
+    <div class="grid_12 clearfix">
+        <%=label_tag "Keyword:" %>&nbsp;&nbsp;&nbsp;&nbsp;
+		<%= text_field_tag :q, params[:q], :size =>50 %><br/><br/>
+        <%=label_tag "Search by:" %> &nbsp;
+        <%if params[:criteria].blank?%>
+		<%= select_tag  "criteria", options_for_select([ "Job Information", "Division", "Section", "Article", "Paragraph", "Subparagraph", "Notes", "Attachments", "Documents", "CSI MasterFormat"])%>
+        <%else%>
+        <%= select_tag  "criteria", options_for_select([ "Job Information", "Division", "Section", "Article", "Paragraph", "Subparagraph", "Notes", "Attachments", "Documents", "CSI MasterFormat"], params[:criteria])%>
+        <%end%>
+        <br/>
+        <br/>
+      <%= submit_tag "Search", :name => nil%>
+    </div>
+  <% end -%>
+	<br/>
+  <div id="search_div">
+    <%unless @jobs.blank?%>
+       <%= render :partial => 'job_list' %>
+    <%end%>
+    <%unless  @divisions.blank?%>
+       <%= render :partial => 'division_list' %>
+    <%end%>
+    <%unless  @specification_sections.blank?%>
+        <%= render :partial => 'section_list' %>
+    <%end%>
+    <%unless  @articles.blank?%>
+        <%= render :partial => 'article_list' %>
+    <%end%>
+   <%unless @paragraphs.blank?%>
+        <%= render :partial => 'paragraph_list' %>
+   <%end%>
+   <%unless @subparagraphs.blank?%>
+        <%= render :partial => 'subparagraph_list' %>
+   <%end%>
+   <%unless @notes.blank?%>
+        <%= render :partial => 'note_list' %>
+   <%end%>
+   <%unless @attachments.blank?%>
+     <%= render :partial => 'attachment_list' %>
+   <%end%>
+   <%unless @documents.blank?%>
+     <%= render :partial => 'document_list' %>
+   <%end%>
+   <%unless @documents.blank?%>
+     <%= render :partial => 'document_list' %>
+   <%end%>
+   <%unless @sections.blank?%>
+     <%= render :partial => 'master_section_list' %>
+   <%end%>
+   <%if @jobs.blank? &&  @divisions.blank? && @specification_sections.blank? && @articles.blank? && @paragraphs.blank? &&  @subparagraphs.blank?  &&  @notes.blank? && @documents.blank? && @attachments.blank? && @sections.blank?%>
+     <b>Search Result (0)</b>
+<div>
+  <table id="users_table">
+    <tr><td colspan="4"></td></tr>
+      <tr>
+		      	<td colspan="4">no results</td>
+		    </tr>
+  </table>
+</div>
+    <%end%>
+  </div>
+</div>

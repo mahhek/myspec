@@ -1,0 +1,97 @@
+<% title 'Sign up'%>
+<div id="top-logo">
+	
+</div>
+<% form_for @user do |f| -%>
+
+	<table>
+		
+		<tr>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form" colspan="2" id="msg">
+				<%=error_messages_for :users%>
+						<%- flash.each do |name, msg| -%>
+								<%= content_tag :div, msg, :class => "flash#{name}"%>
+						<%- end -%>
+			</td>
+			
+		</tr>
+		
+		<tr>
+			<td class="form">
+				
+							<%= f.label :email %>
+			</td>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form">
+							<%= f.text_field :email %>
+							<%= error_message_on :user, :email %>
+			</td>
+		</tr>
+		<tr>
+			<td class="form">
+							<%= f.label :password %>
+			</td>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form">
+							<%= f.password_field :password %>
+							<%= error_message_on :user, :password %>
+			</td>
+		</tr>
+		<tr>
+			<td class="form">
+							<%= f.label :password_confirmation, "Repeat" %>
+			</td>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form">
+							<%= f.password_field :password_confirmation %>
+			</td>
+		</tr>
+		<tr>
+			<td class="form">
+							<%= f.label :time_zone, "Time Zone" %>
+			</td>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form">
+							<%= f.time_zone_select :time_zone %>
+			</td>
+		</tr>
+		<tr>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form">
+							&nbsp;
+			</td>
+			<td class="form">
+							<%= f.submit "Sign up", :class => "button" %>
+			</td>
+		</tr>
+		<tr>
+			<td class="form" colspan="3">
+						&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td class="form" colspan="1">
+						&nbsp;
+			</td>
+			<td class="form" colspan="2">
+						Forgot your <%= link_to "password?", new_user_password_path %> or want to <%= link_to "Login?", new_user_session_path %>
+			</td>
+		</tr>
+		
+	</table>
+<% end -%>
+
+<%#= render :partial => "shared/devise_links" %>

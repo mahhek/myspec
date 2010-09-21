@@ -1,0 +1,27 @@
+<% title "Choose a job template"%>
+<div class="left_page">
+  <div class="lt_nav_container"></div>
+</div>
+<div class="right_page">
+  <div class="grid_11">
+    <table id="templates_table">
+      <tr>
+        <th>Template Name</th>
+        <th>Classification</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <% for template_job in @template_jobs %>
+        <tr>
+          <td><%=h template_job.name %></td>
+          <td><%=h template_job.description %></td>
+          <td><%= link_to "Show", template_job_path(template_job,:client_id => params[:client_id]), :class => "button" %></td>
+          <td><%= link_to "Choose", new_from_template_path(:template_id => template_job,:client_id => params[:client_id]), :class => "button" %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <div class="grid_12 clearfix">
+    <%= link_to "Back to Job", client_path(params[:client_id]), :class => 'button' %>
+  </div>
+</div>

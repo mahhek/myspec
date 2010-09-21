@@ -1,0 +1,15 @@
+<div><%= link_to "Evaluator", evaluators_path, :class => 'button-left' %></div>
+<div><%= link_to "Registered Professionals", registered_professionals_path, :class => 'button-left' %></div>
+<div><%= link_to "Subscribers Info", subscribers_path, :class => 'button-left' %></div>	
+<% show_to  :support do %>
+	<div><%= link_to "Notifications", notifications_path, :class => 'button-left' %></div>    
+    <div>  
+        <%= link_to "Time Zone", timezones_path, :class => 'button-left' %>
+	</div>
+     <div>
+        <%= link_to "Suspend Account", "/suspend_user", :class => 'button-left' %>
+	</div>
+    <div>
+        <%= link_to "Cancelled Subscriptions", "/cancelled_subscription", :class => 'button-left' %>
+	</div>
+<% end %>

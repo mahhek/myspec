@@ -1,0 +1,162 @@
+<% title "Professional Details"%>
+<div class="left_page">
+  <div class="lt_nav_container">
+  	
+  </div>
+	<div class="lt_button_container">
+		  <div><%= link_to "Help Ticket", new_help_ticket_path, :class => 'button-left' %></div>
+  <div><%= link_to "Registered Professionals", "/help_tickets/professionals", :class => 'button-left' %></div>
+	  </div>
+</div>
+<div class="right_page">
+
+  <h3>Professional Details</h3>
+  
+   <div>
+      <div>
+      
+      <div>
+        <div class="otherlabel" style="width:140px;margin-top:20px;">
+          Name:
+        </div>
+        <div class="othervaluehalf20">
+           <%= @professional.name%>
+        </div>
+        <div class="otherlabelshort20">
+          Email:
+        </div>
+          <div class="othervaluehalf20">
+          <%= @professional.email %>
+        </div>
+      </div>
+      <div>
+        <div class="otherlabelmargin10" style="width:140px;">
+          Certification:
+        </div>
+        <div class="othervaluefull10">
+           <%if @professional.certifications.blank?%>
+          &nbsp;
+          <%else%>
+          <% @professional.certifications.each do |cert|%>
+            <li>
+            <%= cert.name%>
+            </li>
+            <%end%>
+          <%end%>
+        </div>
+       
+      </div>
+      <div>
+        <div class="otherlabelmargin10"  style="width:140px;">
+          Company Name:
+        </div>
+        <div class="othervaluefull10">
+           <%if @professional.company_name.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @professional.company_name %>
+          <%end%>
+        </div>
+        
+      </div>
+
+      <div>
+        <div class="otherlabelmargin20"  style="width:140px;">
+          Time Zone:
+        </div>
+        <div class="othervaluefull20">
+           
+          <%= ActiveSupport::TimeZone[@professional.time_zone] %>
+        </div>
+      </div>
+      <div>
+        <div class="otherlabelmargin10"  style="width:140px;">
+          Website:
+        </div>
+        <div class="othervaluefull10">
+           <%if @professional.website.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @professional.website %>
+          <%end%>
+        </div>
+      </div>
+      <div>
+        <div class="otherlabelmargin10"  style="width:140px;">
+          Telephone:
+        </div>
+        <div class="othervaluehalf10">
+           <%if @professional.telephone.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @professional.telephone %>
+          <%end%>
+        </div>
+        <div class="otherlabelshort10">
+          Fax:
+        </div>
+          <div class="othervaluehalf10">
+           <%if @professional.fax.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @professional.fax %>
+          <%end%>
+        </div>
+      </div>
+
+      <div>
+        <div class="otherlabelmargin20"  style="width:140px;">
+          Location:
+        </div>
+        <div class="othervaluebottom">
+           <%if @professional.physical_address.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @professional.physical_address%>
+          <%end%>
+        </div>
+        <div class="otherlabelbottom">
+          Post:
+        </div>
+          <div class="othervaluebottom">
+          <%if @professional.mailing_address.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @professional.mailing_address %>
+          <%end%>
+        </div>
+      </div>
+
+      <div>
+        <div class="otherlabelmargin10"  style="width:140px;">
+          Services & Terms:
+        </div>
+        <div class="othervaluefull10">
+           <%if @professional.general_description.blank?%>
+          &nbsp;
+          <%else%>
+          <%= @professional.general_description%>
+          <%end%>
+        </div>
+      </div>
+      <div>
+        <div class="otherlabelmargin10"  style="width:140px;">
+          Divisions:
+        </div>
+        <div class="othervaluefull10">
+
+          
+          <% @professional.divisions.each do |div|%>
+            <li>
+                <%= h report_article_number(div.short_number) %>&nbsp; <%= div.name%>
+            </li>
+            
+            <%end%>
+
+        </div>
+      </div>
+      </div>
+    </div>
+
+  </div>
+ 

@@ -1,0 +1,90 @@
+<% title "Specification Editor" %>
+<div class="left_page">
+  <%= render :partial => 'left_menu' %>
+
+</div>
+<div class="right_page">
+  <div><h3 class="head"><%=@specification_section.section.modif_number%> - <%=@specification_section.section.name%></h3></div>
+  <div class="white_bg">
+    <div class="w100">
+      <div class="">
+        <% for part in @parts%>
+          <% if part.id == 1 %>
+            <div class="part">Part <%=part.id %> - <%=part.name%></div>
+            <%
+            a = 1
+            for article in @list_general_articles %>
+              <div class="space">&nbsp;</div><div class="article"><%=a%>. <%=article.article.name%></div>
+              <%
+              b = 97
+              for paragraph in article.article_paragraphs%>
+                <div class="space">&nbsp;</div><div class="space"><%=b.chr.upcase%>. </div><div class="paragraph"><%=paragraph.paragraph.name%></div>
+                <%
+                c = 1
+                for subparagraph in paragraph.subparagraphs %>
+                  <div class="space">&nbsp;</div><div class="space">&nbsp;</div><div class="space"><%=c%>.</div><div class="subparagraph"> <%=  subparagraph.description%></div>
+                  <%
+                  c +=1
+                end %>
+                <div class="space">&nbsp;</div><div class="space">&nbsp;</div><div class="space">&nbsp;</div><div class="subparagraph"><%= link_to ("Add Subparagraph", new_subparagraph_path(:article_paragraph_id => paragraph, :job_id => @job, :specification_section_id => @specification_section), :class => "button") %></div>
+                <%
+                b +=1
+              end %>
+              <div class="space">&nbsp;</div><div class="space">&nbsp;</div><div class="paragraph"><%= link_to ("Add Paragraph", new_article_paragraph_path(:part_id => part, :part_article_id => article.id, :job_id => @job, :specification_section_id => @specification_section, :article_id => article.article.number), :class => "button") %></div>
+              <%
+              a +=1
+            end %>
+            <div class="space">&nbsp;</div><div class="article"><% form_for @part_article do |f| %>
+                <%= f.error_messages %>
+                <%= f.hidden_field :part_id, :value => part.id %>
+                <%= f.hidden_field :specification_section_id %>
+                <ul class="sections">
+                  <li>
+                    <%= f.select :article_id, Article.part_category_eq(part).id_does_not_equal(@already_have_1).collect {|p| [p.name, p.id]} %><br/>
+                    <%= f.submit "Add Article", :class => "button" %>
+                  </li>
+                </ul>
+                <%= link_to "Add Articles", "#", :class => "button" %>
+              <% end %></div>
+          <% elsif part.id == 2  %>
+            <div class="part">Part <%=part.id %> - <%=part.name%></div>
+            <%
+            a = 1
+            for article in @list_product_articles %>
+              <div class="space">&nbsp;</div><div class="article"><%=a%>. <%=article.article.name%></div>
+            <% end %>
+            <div class="space">&nbsp;</div><div class="article"><% form_for @part_article do |f| %>
+                <%= f.error_messages %>
+                <%= f.hidden_field :part_id, :value => part.id %>
+                <%= f.hidden_field :specification_section_id %>
+                <ul class="sections">
+                  <li>
+                    <%= f.select :article_id, Article.part_category_eq(part).id_does_not_equal(@already_have_2).collect {|p| [p.name, p.id]} %><br/>
+                    <%= f.submit "Add Article", :class => "button" %>
+                  </li>
+                </ul>
+              <% end %></div>
+          <% elsif part.id == 3  %>
+            <div class="part">Part <%=part.id %> - <%=part.name%></div>
+            <%
+            a = 1
+            for article in @list_execution_articles %>
+              <div class="space">&nbsp;</div><div class="article"><%=a%>. <%=article.article.name%></div>
+            <% end %>
+            <div class="space">&nbsp;</div><div class="article"><% form_for @part_article do |f| %>
+                <%= f.error_messages %>
+                <%= f.hidden_field :part_id, :value => part.id %>
+                <%= f.hidden_field :specification_section_id %>
+                <ul class="sections">
+                  <li>
+                    <%= f.select :article_id, Article.part_category_eq(part).id_does_not_equal(@already_have_2).collect {|p| [p.name, p.id]} %><br/>
+                    <%= f.submit "Add Article", :class => "button" %>
+                  </li>
+                </ul>
+              <% end %></div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

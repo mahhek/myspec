@@ -1,0 +1,21 @@
+<% title "User Paragraphs" %>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Part Article</th>
+    <th>Paragraph</th>
+  </tr>
+  <% for user_paragraph in @user_paragraphs %>
+    <tr>
+      <td><%=h user_paragraph.user_id %></td>
+      <td><%=h user_paragraph.part_article_id %></td>
+      <td><%=h user_paragraph.paragraph %></td>
+      <td><%= link_to "Show", user_paragraph %></td>
+      <td><%= link_to "Edit", edit_user_paragraph_path(user_paragraph) %></td>
+      <td><%= link_to "Destroy", user_paragraph, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New User Paragraph", new_user_paragraph_path %></p>

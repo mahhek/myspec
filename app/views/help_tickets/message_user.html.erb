@@ -1,0 +1,175 @@
+<% title "Help and Support Center" %>
+<div class="left_page">
+  <div class="lt_nav_container"></div>
+  <div class="lt_button_container">
+    <div>
+        <%= link_to "Cancel", "/help_tickets/new", :class => 'button-left' %>
+	</div>
+
+  </div>
+</div>
+<div class="right_page">
+
+<div  style="float:left;width:785px;">
+    <h3>Ticket Message Center</h3>
+    <div  style="float:left;width:780px;">
+      <table width="775px;">
+
+        <tr style="width: 100%">
+              <td style="width: 18%;border-bottom:0px;" class="label">Title</td>
+              <td style="width: 78%;border-bottom:0px;">
+            <%= @help_ticket.title %>
+              </td>
+         </tr>
+        <tr style="width: 100%">
+              <td style="border-bottom:0px;" class="label">Start mood</td>
+              <td style="width: 30px;border-bottom:0px;">
+                <%unless @help_ticket.mood.blank?%>
+                  <%=h image_tag(@help_ticket.mood) %>
+                <%end%>
+              
+              </td>
+         </tr>
+         <tr style="width: 100%">
+              <td style="border-bottom:0px;" class="label">Current mood</td>
+              <td style="width: 30px;border-bottom:0px;">
+                <%unless @help_ticket.end_mood.blank?%>
+                  <%=h image_tag(@help_ticket.end_mood) %>
+                <%end%> 
+              </td>
+         </tr>
+         <tr style="width: 100%">
+              <td style="border-bottom:0px;" class="label">Change Mood</td>
+              <td style="width: 78%;border-bottom:0px;">
+              
+        	<%=radio_button_tag :mood, "struck_emot.gif"%>  <%=image_tag("struck_emot.gif")%>&nbsp;&nbsp;
+			<%=radio_button_tag :mood, "smile_emot.gif"%>  <%=image_tag("smile_emot.gif")%>&nbsp;&nbsp;
+			<%=radio_button_tag :mood, "confuse_emot.gif"%>  <%=image_tag("confuse_emot.gif")%>&nbsp;&nbsp;
+			<%=radio_button_tag :mood, "bad_emot.gif"%>  <%=image_tag("bad_emot.gif")%>&nbsp;&nbsp;
+
+		<%= observe_field 'mood_struck_emotgif',
+:url => {:action => 'change_mood', :id => @help_ticket.id, :mood => "struck_emot.gif" },
+:on => :click -%>
+<%= observe_field 'mood_smile_emotgif',
+:url => {:action => 'change_mood', :id => @help_ticket.id, :mood => "smile_emot.gif" },
+:on => :click -%>
+<%= observe_field 'mood_confuse_emotgif',
+:url => {:action => 'change_mood', :id => @help_ticket.id, :mood => "confuse_emot.gif" },
+:on => :click -%>
+<%= observe_field 'mood_bad_emotgif',
+:url => {:action => 'change_mood', :id => @help_ticket.id, :mood => "bad_emot.gif" },
+:on => :click -%>
+              </td>
+         </tr>
+          
+        <tr style="width: 100%">
+              <td style="width: 18%;border-bottom:0px;" class="label">Status</td>
+              <td style="width: 78%;border-bottom:0px;">
+                <%= @help_ticket.status %>
+              </td>
+         </tr>
+         <tr style="width: 100%">
+              <td style="border-bottom:0px;" class="label">Created On</td>
+              <td style="width: 78%;border-bottom:0px;">
+                <%= @help_ticket.created_at.strftime("%m-%d-%Y") %>
+              </td>
+         </tr>
+         <tr style="width: 100%">
+              <td style="width: 18%;border-bottom:0px;" class="label">Description</td>
+              <td style="width: 78%;border-bottom:0px;">
+                <%= @help_ticket.description %>
+              </td>
+         </tr>
+
+
+</table>
+      </div>
+
+
+    </div>
+    
+    <div>
+    <div style="float:left;width:785px;margin-top:20px;">
+      <h3>Post a Reply</h3>
+    </div>
+    <div style="float:left;width:780px;">
+
+      <table width="775px;">
+        <% form_for :help_ticket_message do |f| %>
+          <%= f.error_messages %>
+
+        <tr style="width: 100%">
+            <td style="width: 18%;border-bottom:0px;" class="label">Subject*</td>
+            <td style="width: 78%;border-bottom:0px;">
+              <%=f.text_field :subject, :size => 60%>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 18%;border-bottom:0px;" class="label">
+            Message*</td>
+
+            <td style="width: 78%;border-bottom:0px;">
+              <div style="float:left;">
+                <%=f.text_area :message, :class => "mceEditor", :rows => 15, :cols => 40,  :style => "width: 530px;"%>
+              </div>
+            </td>
+          </tr>
+          <tr><td  style="border-bottom:0px;"></td><td style="border-bottom:0px;"><%=f.submit "Post Reply"%></td></tr>
+
+        </table>
+      </div>
+
+
+
+
+
+    <% end %>
+
+  </div>
+  
+  <div style="padding-top:25px;float:left;width:100%;">
+    <div>
+      <h3>Replies Posted</h3>
+    </div>
+  <% unless @messages.blank? %>
+       <table id="jobs_table">
+		<tr>
+
+			<th class="part-name">
+				Subject
+			</th>
+			<th class="part-desc">Message</th>
+		</tr>
+
+       <% @messages.each do |message| %>
+       <tr class="<%= cycle("othertdalter", "") %>">
+
+         <td> <%= message.subject %>
+          <br/>
+          <br/>
+          <i>
+            <%if message.user_type == "1"%>
+            You
+            <%else%>
+            SpecWriter
+            <%end%>
+          <br/>
+            <%= message.created_at.strftime("%m-%d-%Y") %>
+            </i>
+          </td>
+         <td>
+           <div  id="help_ticket_div">
+          <%= message.message %>
+           </div>
+</td>
+       </tr>
+
+       <%end%>
+      </table>
+      <%else%>
+      No Replies Yet
+     <%end%>
+
+  </div>
+  
+</div>

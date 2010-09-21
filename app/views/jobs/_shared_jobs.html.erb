@@ -1,0 +1,38 @@
+<div>
+  <br/>
+	<h3>Shared Jobs</h3>
+</div>
+<div>
+<%  if @collaborators.size == 0 %>
+	<h4>There is no shared job with any consultant.</h4>
+<%  end %>
+</div>
+<div>
+  		<% for collaborator in @collaborators  %>
+          <div class="list_name"><%=h collaborator.user.username%> (<%=h collaborator.user.company%>)</div>
+    		<table id="jobs_table">
+	      <tr>
+	        <th class="job-no"><%= order @search, :by => :number, :as => "Job No"%></th>
+			<th class="job-name"><%= order @search, :by => :name, :as => "Job Name"%></th>
+			<th class="job-contact"><%= order @search, :by => :contact_name, :as => "Contact Name"%></th>
+			<th class="job-status" style="width:13%"><%= order @search, :by => :status, :as => "Status"%></th>
+			<th class="sub-rem2"></th>
+	      </tr>
+	      <% for job in collaborator.jobs %>
+	        <tr class="<%= cycle("othertdalter", "") %>">
+	          	<td><%=h job.number %></td>
+				<td><%=  link_to job.name, shared_job_path(:collaborator_id => collaborator, :job_id => job) %></td>
+				<td><%=h job.contact.name %></td>
+				<td><%=h job.status %></td>
+				<td></td>
+	        </tr>
+	      	<% end %>
+            <br/>
+	    </table>
+	    <br/>
+        <%end%>
+  	</div>
+
+
+			
+			    

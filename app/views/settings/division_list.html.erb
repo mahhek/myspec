@@ -1,0 +1,15 @@
+<% title "Application Settings > Division list "%>
+<table id="users_table">
+  <tr>
+	<th>ID</th>
+    <th>Division Name</th>
+	<th></th>
+  </tr>
+  <% for division in @divisions %>
+    <tr>
+      <td><%=h division.id %></td>
+      <td><%=h division.name %></td>
+      <td><%= link_to "x", division, :confirm => 'Are you sure?', :method => :delete, :class => 'button' %></td>
+    </tr>
+  <% end %>
+</table>

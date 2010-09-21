@@ -1,0 +1,16 @@
+<% title "Standard Part Article" %>
+
+<p>
+  <strong>Part:</strong>
+  <%=h @standard_part_article.part_id %>
+</p>
+<p>
+  <strong>Article:</strong>
+  <%=h @standard_part_article.article_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_standard_part_article_path(@standard_part_article) %> |
+  <%= link_to "Destroy", @standard_part_article, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", standard_part_articles_path %>
+</p>

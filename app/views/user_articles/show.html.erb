@@ -1,0 +1,24 @@
+<% title "User Article" %>
+
+<p>
+  <strong>User:</strong>
+  <%=h @user_article.user_id %>
+</p>
+<p>
+  <strong>Part:</strong>
+  <%=h @user_article.part_id %>
+</p>
+<p>
+  <strong>Name:</strong>
+  <%=h @user_article.name %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @user_article.description %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_user_article_path(@user_article) %> |
+  <%= link_to "Destroy", @user_article, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", user_articles_path %>
+</p>

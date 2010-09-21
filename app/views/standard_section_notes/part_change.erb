@@ -1,0 +1,4 @@
+<option value="">--select article--</option>
+<% for part_article in @standard_part_articles %>
+	<option value="<%=part_article.id%>"><%=part_article.article.name%></option>
+<% end %>

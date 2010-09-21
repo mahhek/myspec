@@ -1,0 +1,16 @@
+<% title "Standard Article Subparagraph" %>
+
+<p>
+  <strong>Standard Article Paragraph:</strong>
+  <%=h @standard_article_subparagraph.standard_article_paragraph_id %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @standard_article_subparagraph.description %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_standard_article_subparagraph_path(@standard_article_subparagraph) %> |
+  <%= link_to "Destroy", @standard_article_subparagraph, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", standard_article_subparagraphs_path %>
+</p>
